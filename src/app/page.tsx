@@ -6,6 +6,7 @@ import MaximizeResultsSection from "@/components/results";
 import MetricsSection from "@/components/metrics-section";
 import CTASection from "@/components/cta-section";
 import PortfolioSection from "@/components/portfolio-section";
+import { Footer } from "@/components/footer";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <MetricsSection />
       <PortfolioSection />
       <CTASection />
+      <Footer />
     </div>
   );
 }
