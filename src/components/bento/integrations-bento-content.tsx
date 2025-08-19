@@ -385,7 +385,7 @@ const IntegrationsBentoContent: React.FC<IntegrationsBentoContentProps> = ({
       height: "60px",
       position: "relative",
       borderRadius: "9px",
-      // @ts-ignore
+      // @ts-expect-error
 
       border: `1px ${themeVars["--oci-border-color"]} solid`,
       display: "flex",
@@ -394,16 +394,15 @@ const IntegrationsBentoContent: React.FC<IntegrationsBentoContentProps> = ({
       overflow: "hidden",
       flexShrink: 0,
       background: isInitiallyFilled
-        ? // @ts-ignore
+        ? // @ts-expect-error
 
           `linear-gradient(180deg, ${themeVars["--oci-gradient-light-gray-start"]} 0%, ${themeVars["--oci-gradient-light-gray-end"]} 100%)`
         : logo
         ? "hsl(var(--background) / 0.5)"
         : "hsl(var(--muted) / 0.1)", // Darker for filled, lighter for empty
-      // @ts-ignore
 
       boxShadow: isInitiallyFilled
-        ? `0px 1px 2px ${// @ts-ignore
+        ? `0px 1px 2px ${// @ts-expect-error
           themeVars["--oci-shadow-color"]}`
         : "none",
       backdropFilter: isInitiallyFilled ? "blur(18px)" : "none",
@@ -443,7 +442,7 @@ const IntegrationsBentoContent: React.FC<IntegrationsBentoContentProps> = ({
               // For SVG components, pass current themeVars for fill/stroke
 
               <logo.src
-                // @ts-ignore
+                // @ts-expect-error
 
                 className={cn(
                   "transition-all duration-300 ease-in-out",
@@ -491,23 +490,21 @@ const IntegrationsBentoContent: React.FC<IntegrationsBentoContentProps> = ({
             left: "0px",
             top: "24px",
             position: "absolute",
-            // @ts-ignore
             background: `radial-gradient(ellipse 103.87% 77.04% at 52.56% -1.80%,
             ${
-              // @ts-ignore
+              // @ts-expect-error
               themeVars["--oci-foreground-color"]
             }00 0%,
             ${
-              // @ts-ignore
+              // @ts-expect-error
               themeVars["--oci-foreground-color"]
             }F5 15%,
             ${
-              // @ts-ignore
+              // @ts-expect-error
               themeVars["--oci-foreground-color"]
             }66 49%,
             ${
-              // @ts-ignore
-              // @ts-ignore
+              // @ts-expect-error
               themeVars["--oci-foreground-color"]
             }00 100%)`,
             opacity: isHovered ? 0.1 : 0.05,
