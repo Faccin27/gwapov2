@@ -136,3 +136,37 @@ html{
 
 
 
+
+
+.portfolio-carousel {
+  display: flex;
+  width: fit-content;
+  animation: portfolio-scroll-infinite var(--carousel-speed-desktop) linear infinite;
+  will-change: transform;
+}
+
+.portfolio-carousel:hover {
+  animation-play-state: paused;
+}
+
+.portfolio-group {
+  display: flex;
+  gap: 24px;
+  flex-shrink: 0;
+  width: calc(7 * (320px + 24px)); /* 7 projetos * (largura + gap) */
+}
+
+@media (max-width: 768px) {
+  .portfolio-carousel {
+    animation: portfolio-scroll-infinite var(--carousel-speed-mobile) linear infinite;
+  }
+}
+
+@keyframes portfolio-scroll-infinite {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(calc(-7 * (320px + 24px)), 0, 0);
+  }
+}
