@@ -357,8 +357,9 @@ const IntegrationsBentoContent: React.FC<IntegrationsBentoContentProps> = ({ isH
               />
             ) : (
               // For SVG components, pass current themeVars for fill/stroke
-              // @ts-expect-error Passing props to dynamic SVG component
               <logo.src
+                            // @ts-expect-error Passing props to dynamic SVG component
+
                 className={cn(
                   "transition-all duration-300 ease-in-out",
                   isHoveredCard && !isFadingOut ? "grayscale-0 opacity-100 scale-100" : "grayscale opacity-70 scale-90",
