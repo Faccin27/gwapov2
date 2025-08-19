@@ -1,35 +1,29 @@
-"use client";
+"use client"
 
-import type React from "react";
-import { useEffect, useState, useRef } from "react";
-import Image from "next/image";
-import { cn } from "@/lib/utils";
+import type React from "react"
+import { useEffect, useState, useRef } from "react"
+import Image from "next/image"
+import { cn } from "@/lib/utils"
 
 interface IntegrationsBentoContentProps {
-  isHovered: boolean;
+  isHovered: boolean
 }
 
 interface IntegrationLogo {
-  src: string | React.FC; // Can be a path for Image or a React Component for SVG
-  alt: string;
-  type: "image" | "svg_component";
+  src: string | React.FC // Can be a path for Image or a React Component for SVG
+  alt: string
+  type: "image" | "svg_component"
 }
 
 interface GridBox {
-  id: string;
-  logo: IntegrationLogo | null;
-  isInitiallyFilled: boolean;
+  id: string
+  logo: IntegrationLogo | null
+  isInitiallyFilled: boolean
 }
 
 // Define custom SVG logo components as React FCs (kept for reference, not used in allIntegrationLogos as per user's provided list)
 const FigmaLogoSvg: React.FC = () => (
-  <svg
-    width="36"
-    height="37"
-    viewBox="0 0 36 37"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width="36" height="37" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g clipPath="url(#clip0_254_68688)">
       <path
         d="M0.440897 22.2606C0.360977 21.9189 0.767777 21.704 1.01582 21.9521L14.1601 35.0964C14.4085 35.3448 14.1933 35.7516 13.8516 35.6713C7.21862 34.115 1.99682 28.8936 0.440897 22.2606ZM0.00061684 16.9923C-0.00235205 17.0427 0.00541993 17.0932 0.0234181 17.1404C0.0414162 17.1875 0.0692298 17.2303 0.105017 17.2659L18.8459 36.0079C18.9183 36.0799 19.018 36.1184 19.1195 36.1123C19.9727 36.0587 20.8097 35.9467 21.6262 35.7786C21.9016 35.7221 21.997 35.384 21.7983 35.1853L0.927257 14.3136C0.728537 14.1152 0.390497 14.2106 0.333977 14.486C0.164325 15.3126 0.0529306 16.1501 0.00061684 16.9923ZM1.5155 10.8061C1.48646 10.8719 1.47807 10.945 1.49144 11.0157C1.50481 11.0864 1.53931 11.1514 1.59038 11.2021L24.9097 34.5215C25.0138 34.6259 25.1711 34.6565 25.3057 34.5963C25.9463 34.311 26.5695 33.9883 27.1723 33.6301C27.2185 33.6024 27.2578 33.5644 27.287 33.5192C27.3163 33.4739 27.3348 33.4226 27.3412 33.3691C27.3475 33.3155 27.3415 33.2613 27.3237 33.2104C27.3059 33.1596 27.2766 33.1135 27.2382 33.0757L3.03686 8.87327C2.99905 8.8348 2.95294 8.8055 2.90206 8.78761C2.85118 8.76973 2.79687 8.76374 2.74331 8.7701C2.68976 8.77646 2.63836 8.795 2.59308 8.8243C2.5478 8.85361 2.50984 8.89289 2.4821 8.93914C2.12386 9.54195 1.80123 10.1652 1.51586 10.8057L1.5155 10.8061ZM4.55678 6.61894C4.49232 6.55515 4.45472 6.46909 4.45171 6.37845C4.4487 6.2878 4.48049 6.19944 4.54058 6.1315C7.8407 2.4379 12.6399 0.112305 17.9826 0.112305C27.933 0.112305 35.9999 8.17882 35.9999 18.1296C35.9999 23.472 33.6743 28.2715 29.9807 31.5713C29.9128 31.6313 29.8244 31.6631 29.7338 31.6601C29.6431 31.6571 29.5571 31.6195 29.4933 31.5551L4.55714 6.61894H4.55678Z"
@@ -38,25 +32,14 @@ const FigmaLogoSvg: React.FC = () => (
     </g>
     <defs>
       <clipPath id="clip0_254_68688">
-        <rect
-          width="36"
-          height="36"
-          fill="white"
-          transform="translate(0 0.112305)"
-        />
+        <rect width="36" height="36" fill="white" transform="translate(0 0.112305)" />
       </clipPath>
     </defs>
   </svg>
-);
+)
 
 const VercelLogoSvg: React.FC = () => (
-  <svg
-    width="36"
-    height="37"
-    viewBox="0 0 36 37"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width="36" height="37" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g clipPath="url(#clip0_254_68704)">
       <path
         d="M36 16.7736H25.4731L34.5898 11.51L32.5877 8.0412L23.471 13.3048L28.7333 4.18878L25.2645 2.18544L20.0022 11.3016V0.775391H15.9978V11.3026L10.7333 2.18544L7.26567 4.1878L12.5291 13.3037L3.41227 8.0412L1.41005 11.509L10.5268 16.7726H0V20.7772H10.5258L1.41005 26.0408L3.41227 29.5096L12.5281 24.247L7.26455 33.363L10.7333 35.3653L15.9968 26.2483V36.7754H20.0012V26.2492L25.2637 35.3653L28.7322 33.363L23.4689 24.246L32.5856 29.5096L34.5881 26.0408L25.4721 20.7782H35.9979V16.7736H36ZM18 24.2218C14.9805 24.2218 12.5331 21.7745 12.5331 18.7549C12.5331 15.7354 14.9805 13.2879 18 13.2879C21.0195 13.2879 23.4668 15.7354 23.4668 18.7549C23.4668 21.7745 21.0195 24.2218 18 24.2218Z"
@@ -65,25 +48,14 @@ const VercelLogoSvg: React.FC = () => (
     </g>
     <defs>
       <clipPath id="clip0_254_68704">
-        <rect
-          width="36"
-          height="36"
-          fill="white"
-          transform="translate(0 0.775391)"
-        />
+        <rect width="36" height="36" fill="white" transform="translate(0 0.775391)" />
       </clipPath>
     </defs>
   </svg>
-);
+)
 
 const GitHubLogoSvg: React.FC = () => (
-  <svg
-    width="36"
-    height="37"
-    viewBox="0 0 36 37"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width="36" height="37" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g clipPath="url(#clip0_254_68698)">
       <path
         fillRule="evenodd"
@@ -94,25 +66,14 @@ const GitHubLogoSvg: React.FC = () => (
     </g>
     <defs>
       <clipPath id="clip0_254_68698">
-        <rect
-          width="36"
-          height="36"
-          fill="white"
-          transform="translate(0 0.111328)"
-        />
+        <rect width="36" height="36" fill="white" transform="translate(0 0.111328)" />
       </clipPath>
     </defs>
   </svg>
-);
+)
 
 const SlackLogoSvg: React.FC = () => (
-  <svg
-    width="36"
-    height="29"
-    viewBox="0 0 36 29"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width="36" height="29" viewBox="0 0 36 29" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g clipPath="url(#clip0_254_68690)">
       <path
         d="M30.1094 1.82111C32.5374 0.000749489 36 1.73304 36 4.76642V25.6297C36 26.9857 34.9018 28.0846 33.5459 28.0848H27.8184V14.1746L18 21.5389L8.18164 14.1746V28.0848H2.45508C1.09889 28.0848 0 26.9858 0 25.6297V4.76642C0 1.73314 3.46259 0.000650114 5.89062 1.82111L8.18164 3.53888L18 10.9022L27.8184 3.53888L30.1094 1.82111Z"
@@ -125,16 +86,10 @@ const SlackLogoSvg: React.FC = () => (
       </clipPath>
     </defs>
   </svg>
-);
+)
 
 const VSCodeLogoSvg: React.FC = () => (
-  <svg
-    width="36"
-    height="38"
-    viewBox="0 0 36 38"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width="36" height="38" viewBox="0 0 36 38" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g clipPath="url(#clip0_254_68700)">
       <path
         d="M21.043 36.4463C20.0985 37.6356 18.1836 36.984 18.1609 35.4653L17.8281 13.2539H32.7631C35.4682 13.2539 36.9769 16.3783 35.2948 18.4969L21.043 36.4463Z"
@@ -174,16 +129,11 @@ const VSCodeLogoSvg: React.FC = () => (
         <stop offset="1" stopOpacity="0" />
       </linearGradient>
       <clipPath id="clip0_254_68700">
-        <rect
-          width="36"
-          height="37.3211"
-          fill="white"
-          transform="translate(0 0.0224609)"
-        />
+        <rect width="36" height="37.3211" fill="white" transform="translate(0 0.0224609)" />
       </clipPath>
     </defs>
   </svg>
-);
+)
 
 const allIntegrationLogos: IntegrationLogo[] = [
   { src: "/icons/paypal.png", alt: "Paypal", type: "image" },
@@ -206,28 +156,26 @@ const allIntegrationLogos: IntegrationLogo[] = [
   { src: "/icons/windows.png", alt: "Windows", type: "image" },
   { src: "/icons/tik-tok.png", alt: "Tiktok", type: "image" },
   { src: "/icons/bitcoin.png", alt: "Bitcoin", type: "image" },
-];
+]
 
 const initialFilledLogos: IntegrationLogo[] = [
   { src: "/icons/paypal.png", alt: "Paypal", type: "image" },
   { src: "/icons/discord-alt.png", alt: "Discord", type: "image" },
   { src: "/icons/amazon-web-services.png", alt: "AWS", type: "image" },
   { src: "/icons/excel.png", alt: "Excel", type: "image" },
-];
+]
 
-const GRID_ROWS = 4;
-const GRID_COLS = 5; // Changed from 10 to 5 to better fit 18 unique icons (4x5 = 20 boxes)
-const GRID_SIZE = GRID_ROWS * GRID_COLS;
-const FILL_DELAY_MS = 200; // Slower delay between each box filling
+const GRID_ROWS = 4
+const GRID_COLS = 5 // Changed from 10 to 5 to better fit 18 unique icons (4x5 = 20 boxes)
+const GRID_SIZE = GRID_ROWS * GRID_COLS
+const FILL_DELAY_MS = 200 // Slower delay between each box filling
 
-const IntegrationsBentoContent: React.FC<IntegrationsBentoContentProps> = ({
-  isHovered,
-}) => {
-  const [gridState, setGridState] = useState<GridBox[]>([]);
-  const [isFadingOutLogos, setIsFadingOutLogos] = useState(false); // New state for global fade out
+const IntegrationsBentoContent: React.FC<IntegrationsBentoContentProps> = ({ isHovered }) => {
+  const [gridState, setGridState] = useState<GridBox[]>([])
+  const [isFadingOutLogos, setIsFadingOutLogos] = useState(false) // New state for global fade out
 
-  const fillAnimationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const fadeOutLogosTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const fillAnimationTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const fadeOutLogosTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   const themeVars = {
     "--oci-primary-color": "hsl(var(--primary))",
@@ -238,155 +186,123 @@ const IntegrationsBentoContent: React.FC<IntegrationsBentoContentProps> = ({
     "--oci-shadow-color": "rgba(0, 0, 0, 0.12)",
     "--oci-gradient-light-gray-start": "hsl(var(--foreground) / 0.2)",
     "--oci-gradient-light-gray-end": "transparent",
-  } as React.CSSProperties;
+  } as React.CSSProperties
 
   // Initialize grid state on mount
   useEffect(() => {
-    const newGrid: GridBox[] = Array.from({ length: GRID_SIZE }).map(
-      (_, i) => ({
-        id: `box-${i}`,
-        logo: null,
-        isInitiallyFilled: false,
-      })
-    );
+    const newGrid: GridBox[] = Array.from({ length: GRID_SIZE }).map((_, i) => ({
+      id: `box-${i}`,
+      logo: null,
+      isInitiallyFilled: false,
+    }))
 
     // Randomly assign initial logos
-    const shuffledInitialLogos = [...initialFilledLogos].sort(
-      () => 0.5 - Math.random()
-    );
-    let assignedCount = 0;
-    while (
-      assignedCount < shuffledInitialLogos.length &&
-      assignedCount < GRID_SIZE
-    ) {
-      const randomIndex = Math.floor(Math.random() * GRID_SIZE);
+    const shuffledInitialLogos = [...initialFilledLogos].sort(() => 0.5 - Math.random())
+    let assignedCount = 0
+    while (assignedCount < shuffledInitialLogos.length && assignedCount < GRID_SIZE) {
+      const randomIndex = Math.floor(Math.random() * GRID_SIZE)
       if (!newGrid[randomIndex].logo) {
-        newGrid[randomIndex].logo = shuffledInitialLogos[assignedCount];
-        newGrid[randomIndex].isInitiallyFilled = true;
-        assignedCount++;
+        newGrid[randomIndex].logo = shuffledInitialLogos[assignedCount]
+        newGrid[randomIndex].isInitiallyFilled = true
+        assignedCount++
       }
     }
-    setGridState(newGrid);
-  }, []);
+    setGridState(newGrid)
+  }, [])
 
   // Handle hover animation
   useEffect(() => {
     // Clear any existing timeouts to prevent multiple animations running
     if (fillAnimationTimeoutRef.current) {
-      clearTimeout(fillAnimationTimeoutRef.current);
+      clearTimeout(fillAnimationTimeoutRef.current)
     }
     if (fadeOutLogosTimeoutRef.current) {
-      clearTimeout(fadeOutLogosTimeoutRef.current);
-      fadeOutLogosTimeoutRef.current = null;
+      clearTimeout(fadeOutLogosTimeoutRef.current)
+      fadeOutLogosTimeoutRef.current = null
     }
 
     if (isHovered) {
-      setIsFadingOutLogos(false);
+      setIsFadingOutLogos(false)
 
       // Get all boxes that are currently empty
-      const emptyBoxes = gridState.filter((box) => !box.logo);
-      const shuffledEmptyBoxes = [...emptyBoxes].sort(
-        () => 0.5 - Math.random()
-      );
+      const emptyBoxes = gridState.filter((box) => !box.logo)
+      const shuffledEmptyBoxes = [...emptyBoxes].sort(() => 0.5 - Math.random())
 
       // Get all logos currently in the grid (initial + dynamically added)
       const currentLogoKeys = new Set(
         gridState
-          .map((box) =>
-            box.logo
-              ? typeof box.logo.src === "string"
-                ? box.logo.src
-                : box.logo.alt
-              : null
-          )
-          .filter(Boolean)
-      );
+          .map((box) => (box.logo ? (typeof box.logo.src === "string" ? box.logo.src : box.logo.alt) : null))
+          .filter(Boolean),
+      )
 
       // Filter all available logos to only include those not currently in the grid
       // This ensures we only pick unique logos that are not already displayed
       const logosAvailableForFill = allIntegrationLogos.filter((logo) => {
-        const logoKey = typeof logo.src === "string" ? logo.src : logo.alt;
-        return !currentLogoKeys.has(logoKey);
-      });
+        const logoKey = typeof logo.src === "string" ? logo.src : logo.alt
+        return !currentLogoKeys.has(logoKey)
+      })
 
       // Shuffle the logos that are available to be filled
-      const shuffledLogosToFill = [...logosAvailableForFill].sort(
-        () => 0.5 - Math.random()
-      );
+      const shuffledLogosToFill = [...logosAvailableForFill].sort(() => 0.5 - Math.random())
 
-      let fillIndex = 0;
+      let fillIndex = 0
       const animateFill = () => {
         // Stop if no more empty boxes or no more unique logos to fill
-        if (
-          fillIndex >= shuffledEmptyBoxes.length ||
-          fillIndex >= shuffledLogosToFill.length
-        ) {
-          fillAnimationTimeoutRef.current = null;
-          return;
+        if (fillIndex >= shuffledEmptyBoxes.length || fillIndex >= shuffledLogosToFill.length) {
+          fillAnimationTimeoutRef.current = null
+          return
         }
 
-        const boxToFill = shuffledEmptyBoxes[fillIndex];
-        const logoToAssign = shuffledLogosToFill[fillIndex];
+        const boxToFill = shuffledEmptyBoxes[fillIndex]
+        const logoToAssign = shuffledLogosToFill[fillIndex]
 
         setGridState((prevGrid) => {
-          const newGrid = [...prevGrid];
-          const targetIndex = newGrid.findIndex(
-            (box) => box.id === boxToFill.id
-          );
+          const newGrid = [...prevGrid]
+          const targetIndex = newGrid.findIndex((box) => box.id === boxToFill.id)
           if (targetIndex !== -1) {
             newGrid[targetIndex] = {
               ...newGrid[targetIndex],
               logo: logoToAssign,
-            };
+            }
           }
-          return newGrid;
-        });
+          return newGrid
+        })
 
-        fillIndex++;
-        fillAnimationTimeoutRef.current = setTimeout(
-          animateFill,
-          FILL_DELAY_MS
-        );
-      };
+        fillIndex++
+        fillAnimationTimeoutRef.current = setTimeout(animateFill, FILL_DELAY_MS)
+      }
 
       // Start the animation
-      fillAnimationTimeoutRef.current = setTimeout(animateFill, FILL_DELAY_MS);
+      fillAnimationTimeoutRef.current = setTimeout(animateFill, FILL_DELAY_MS)
     } else {
       // On unhover, start fade out
-      setIsFadingOutLogos(true);
+      setIsFadingOutLogos(true)
       fadeOutLogosTimeoutRef.current = setTimeout(() => {
         // After fade out, reset dynamically filled boxes (keep only initially filled)
-        setGridState((prevGrid) =>
-          prevGrid.map((box) =>
-            box.isInitiallyFilled ? box : { ...box, logo: null }
-          )
-        );
-        setIsFadingOutLogos(false); // Reset fade out state
-      }, 300); // Match CSS transition duration
+        setGridState((prevGrid) => prevGrid.map((box) => (box.isInitiallyFilled ? box : { ...box, logo: null })))
+        setIsFadingOutLogos(false) // Reset fade out state
+      }, 300) // Match CSS transition duration
     }
 
     // Cleanup function
     return () => {
-      if (fillAnimationTimeoutRef.current)
-        clearTimeout(fillAnimationTimeoutRef.current);
-      if (fadeOutLogosTimeoutRef.current)
-        clearTimeout(fadeOutLogosTimeoutRef.current);
-    };
-  }, [isHovered]); // Dependency array only includes isHovered
+      if (fillAnimationTimeoutRef.current) clearTimeout(fillAnimationTimeoutRef.current)
+      if (fadeOutLogosTimeoutRef.current) clearTimeout(fadeOutLogosTimeoutRef.current)
+    }
+  }, [isHovered]) // Dependency array only includes isHovered
 
   const LogoBox: React.FC<{
-    logo: IntegrationLogo | null;
-    isInitiallyFilled: boolean; // This prop is used to distinguish initial from dynamic fills
-    isHoveredCard: boolean; // Pass the card's hover state
-    isFadingOut: boolean; // New prop for fade out effect
+    logo: IntegrationLogo | null
+    isInitiallyFilled: boolean // This prop is used to distinguish initial from dynamic fills
+    isHoveredCard: boolean // Pass the card's hover state
+    isFadingOut: boolean // New prop for fade out effect
   }> = ({ logo, isInitiallyFilled, isHoveredCard, isFadingOut }) => {
     const boxStyle: React.CSSProperties = {
       width: "60px",
       height: "60px",
       position: "relative",
       borderRadius: "9px",
-      // @ts-expect-error
-
+      // @ts-expect-error Accessing theme variables from themeVars object
       border: `1px ${themeVars["--oci-border-color"]} solid`,
       display: "flex",
       justifyContent: "center",
@@ -394,21 +310,24 @@ const IntegrationsBentoContent: React.FC<IntegrationsBentoContentProps> = ({
       overflow: "hidden",
       flexShrink: 0,
       background: isInitiallyFilled
-        ? // @ts-expect-error
-
+        ? // Added description for @ts-expect-error directive
+          // @ts-expect-error Accessing theme variables for gradient background
           `linear-gradient(180deg, ${themeVars["--oci-gradient-light-gray-start"]} 0%, ${themeVars["--oci-gradient-light-gray-end"]} 100%)`
         : logo
-        ? "hsl(var(--background) / 0.5)"
-        : "hsl(var(--muted) / 0.1)", // Darker for filled, lighter for empty
+          ? "hsl(var(--background) / 0.5)"
+          : "hsl(var(--muted) / 0.1)", // Darker for filled, lighter for empty
 
       boxShadow: isInitiallyFilled
-        ? `0px 1px 2px ${// @ts-expect-error
-          themeVars["--oci-shadow-color"]}`
+        ? `0px 1px 2px ${
+            // Added description for @ts-expect-error directive
+            // @ts-expect-error Accessing theme variables for shadow color
+            themeVars["--oci-shadow-color"]
+          }`
         : "none",
       backdropFilter: isInitiallyFilled ? "blur(18px)" : "none",
       padding: isInitiallyFilled ? "6px 8px" : "0",
       transition: "background 0.3s ease-in-out", // Smooth background transition
-    };
+    }
 
     const innerContentStyle: React.CSSProperties = {
       width: "36px",
@@ -418,7 +337,7 @@ const IntegrationsBentoContent: React.FC<IntegrationsBentoContentProps> = ({
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-    };
+    }
 
     return (
       <div style={boxStyle}>
@@ -432,24 +351,18 @@ const IntegrationsBentoContent: React.FC<IntegrationsBentoContentProps> = ({
                 height={36}
                 className={cn(
                   "object-contain transition-all duration-300 ease-in-out",
-                  isHoveredCard && !isFadingOut
-                    ? "grayscale-0 opacity-100 scale-100"
-                    : "grayscale opacity-70 scale-90",
-                  isFadingOut && "opacity-0" // Apply fade out
+                  isHoveredCard && !isFadingOut ? "grayscale-0 opacity-100 scale-100" : "grayscale opacity-70 scale-90",
+                  isFadingOut && "opacity-0", // Apply fade out
                 )}
               />
             ) : (
               // For SVG components, pass current themeVars for fill/stroke
-
+              // @ts-expect-error Passing props to dynamic SVG component
               <logo.src
-                // @ts-expect-error
-
                 className={cn(
                   "transition-all duration-300 ease-in-out",
-                  isHoveredCard && !isFadingOut
-                    ? "grayscale-0 opacity-100 scale-100"
-                    : "grayscale opacity-70 scale-90",
-                  isFadingOut && "opacity-0" // Apply fade out
+                  isHoveredCard && !isFadingOut ? "grayscale-0 opacity-100 scale-100" : "grayscale opacity-70 scale-90",
+                  isFadingOut && "opacity-0", // Apply fade out
                 )}
                 style={
                   {
@@ -457,9 +370,7 @@ const IntegrationsBentoContent: React.FC<IntegrationsBentoContentProps> = ({
                     height: "36px",
                     // Pass theme variables to SVG for dynamic coloring
                     "--oci-primary-color":
-                      isHoveredCard && !isFadingOut
-                        ? "hsl(var(--primary))"
-                        : "hsl(var(--muted-foreground))",
+                      isHoveredCard && !isFadingOut ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))",
                   } as React.CSSProperties
                 }
               />
@@ -467,19 +378,16 @@ const IntegrationsBentoContent: React.FC<IntegrationsBentoContentProps> = ({
           </div>
         )}
       </div>
-    );
-  };
+    )
+  }
 
   return (
-    <div
-      className="flex flex-col items-center justify-center h-full w-full p-4"
-      style={themeVars}
-    >
+    <div className="flex flex-col items-center justify-center h-full w-full p-4" style={themeVars}>
       <div
         className={cn(
           "relative z-10 p-4 rounded-lg border border-border shadow-lg w-full h-full flex items-center justify-center overflow-hidden",
           "transition-all duration-300",
-          isHovered ? "bg-background/80" : "bg-background/60"
+          isHovered ? "bg-background/80" : "bg-background/60",
         )}
       >
         {/* Background radial gradient from previous version, kept for general style */}
@@ -492,19 +400,19 @@ const IntegrationsBentoContent: React.FC<IntegrationsBentoContentProps> = ({
             position: "absolute",
             background: `radial-gradient(ellipse 103.87% 77.04% at 52.56% -1.80%,
             ${
-              // @ts-expect-error
+              // @ts-expect-error Accessing theme variables for radial gradient foreground color
               themeVars["--oci-foreground-color"]
             }00 0%,
             ${
-              // @ts-expect-error
+              // @ts-expect-error Accessing theme variables for radial gradient foreground color
               themeVars["--oci-foreground-color"]
             }F5 15%,
             ${
-              // @ts-expect-error
+              // @ts-expect-error Accessing theme variables for radial gradient foreground color
               themeVars["--oci-foreground-color"]
             }66 49%,
             ${
-              // @ts-expect-error
+              // @ts-expect-error Accessing theme variables for radial gradient foreground color
               themeVars["--oci-foreground-color"]
             }00 100%)`,
             opacity: isHovered ? 0.1 : 0.05,
@@ -542,7 +450,7 @@ const IntegrationsBentoContent: React.FC<IntegrationsBentoContentProps> = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default IntegrationsBentoContent;
+export default IntegrationsBentoContent

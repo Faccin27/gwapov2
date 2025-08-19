@@ -1,11 +1,11 @@
 "use client"
 
-import { Menu, X, ChevronDown } from 'lucide-react'
+import { Menu, X, ChevronDown } from "lucide-react"
 import Link from "next/link"
 import { useState, useRef, useEffect } from "react"
 
 import { Button } from "@/components/ui/button"
-import Image from 'next/image'
+import Image from "next/image"
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
@@ -30,9 +30,9 @@ export default function Header() {
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener("mousedown", handleClickOutside)
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener("mousedown", handleClickOutside)
     }
   }, [isMegaMenuClicked])
 
@@ -127,7 +127,7 @@ export default function Header() {
 
               {/* Portfolio with Custom Mega Menu */}
               <div className="relative">
-                <button 
+                <button
                   ref={portfolioButtonRef}
                   className="inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-rose-50/10 hover:text-rose-400 focus:bg-rose-50/10 focus:text-rose-400 focus:outline-none"
                   onClick={handlePortfolioClick}
@@ -135,12 +135,14 @@ export default function Header() {
                   onMouseLeave={handlePortfolioLeave}
                 >
                   Portfolio
-                  <ChevronDown className={`ml-1 h-3 w-3 transition-transform duration-200 ${isMegaMenuOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown
+                    className={`ml-1 h-3 w-3 transition-transform duration-200 ${isMegaMenuOpen ? "rotate-180" : ""}`}
+                  />
                 </button>
 
                 {/* Custom Mega Menu */}
                 {isMegaMenuOpen && (
-                  <div 
+                  <div
                     ref={megaMenuRef}
                     className="absolute top-full left-0 mt-3 w-[800px] bg-zinc-800 rounded-lg shadow-lg p-6 z-[102]"
                     onMouseEnter={handleMegaMenuEnter}
@@ -149,9 +151,7 @@ export default function Header() {
                     <div className="grid grid-cols-3 gap-6">
                       <div className="col-span-2 space-y-6">
                         <div>
-                          <h3 className="text-lg font-semibold text-white mb-3">
-                            Websites & E-commerce
-                          </h3>
+                          <h3 className="text-lg font-semibold text-white mb-3">Websites & E-commerce</h3>
                           <div className="grid grid-cols-2 gap-4">
                             <Link
                               href="/portfolio/websites-corporativos"
@@ -160,20 +160,14 @@ export default function Header() {
                               <div className="text-sm font-bold text-white group-hover:text-rose-400">
                                 Sites Corporativos
                               </div>
-                              <div className="text-xs text-gray-300">
-                                Presença digital profissional
-                              </div>
+                              <div className="text-xs text-gray-300">Presença digital profissional</div>
                             </Link>
                             <Link
                               href="/portfolio/e-commerce"
                               className="group block space-y-1 rounded-md p-3 hover:bg-zinc-700 transition-colors"
                             >
-                              <div className="text-sm font-bold text-white group-hover:text-rose-400">
-                                E-commerce
-                              </div>
-                              <div className="text-xs text-gray-300">
-                                Lojas virtuais completas
-                              </div>
+                              <div className="text-sm font-bold text-white group-hover:text-rose-400">E-commerce</div>
+                              <div className="text-xs text-gray-300">Lojas virtuais completas</div>
                             </Link>
                             <Link
                               href="/portfolio/landing-pages"
@@ -182,9 +176,7 @@ export default function Header() {
                               <div className="text-sm font-bold text-white group-hover:text-rose-400">
                                 Landing Pages
                               </div>
-                              <div className="text-xs text-gray-300">
-                                Páginas de conversão
-                              </div>
+                              <div className="text-xs text-gray-300">Páginas de conversão</div>
                             </Link>
                             <Link
                               href="/portfolio/aplicativos"
@@ -193,17 +185,13 @@ export default function Header() {
                               <div className="text-sm font-bold text-white group-hover:text-rose-400">
                                 Aplicativos Web
                               </div>
-                              <div className="text-xs text-gray-300">
-                                Soluções personalizadas
-                              </div>
+                              <div className="text-xs text-gray-300">Soluções personalizadas</div>
                             </Link>
                           </div>
                         </div>
 
                         <div>
-                          <h3 className="text-lg font-semibold text-white mb-3">
-                            Design & Branding
-                          </h3>
+                          <h3 className="text-lg font-semibold text-white mb-3">Design & Branding</h3>
                           <div className="grid grid-cols-2 gap-4">
                             <Link
                               href="/portfolio/identidade-visual"
@@ -212,20 +200,14 @@ export default function Header() {
                               <div className="text-sm font-bold text-white group-hover:text-rose-400">
                                 Identidade Visual
                               </div>
-                              <div className="text-xs text-gray-300">
-                                Logos e branding completo
-                              </div>
+                              <div className="text-xs text-gray-300">Logos e branding completo</div>
                             </Link>
                             <Link
                               href="/portfolio/ui-ux"
                               className="group block space-y-1 rounded-md p-3 hover:bg-zinc-700 transition-colors"
                             >
-                              <div className="text-sm font-bold text-white group-hover:text-rose-400">
-                                UI/UX Design
-                              </div>
-                              <div className="text-xs text-gray-300">
-                                Experiência do usuário
-                              </div>
+                              <div className="text-sm font-bold text-white group-hover:text-rose-400">UI/UX Design</div>
+                              <div className="text-xs text-gray-300">Experiência do usuário</div>
                             </Link>
                           </div>
                         </div>
@@ -233,9 +215,11 @@ export default function Header() {
 
                       <div className="relative">
                         <div className="sticky top-0">
-                          <img
+                          <Image
                             src="/images/modern-website-showcase.png"
                             alt="Portfolio showcase"
+                            width={300}
+                            height={300}
                             className="w-full h-[300px] object-cover rounded-lg shadow-lg"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-rose-600/20 to-transparent rounded-lg" />
@@ -243,10 +227,7 @@ export default function Header() {
                             <p className="text-white text-sm font-bold mb-2">
                               Projetos incríveis que transformam negócios
                             </p>
-                            <Button
-                              size="sm"
-                              className="w-full bg-zinc-700 text-white hover:bg-zinc-600"
-                            >
+                            <Button size="sm" className="w-full bg-zinc-700 text-white hover:bg-zinc-600">
                               Ver todos os projetos
                             </Button>
                           </div>
@@ -280,11 +261,7 @@ export default function Header() {
             className="lg:hidden text-white hover:bg-white/10 relative z-[102]"
             onClick={() => setIsOpen(!isOpen)}
           >
-            {isOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
+            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             <span className="sr-only">Menu</span>
           </Button>
         </div>
@@ -317,14 +294,14 @@ export default function Header() {
 
               {/* CTA Buttons */}
               <div className="p-4 flex space-x-3">
-                <Button 
+                <Button
                   variant="outline"
-                  className="flex-1 border-rose-500 text-rose-500 hover:bg-rose-500 hover:text-white py-3"
+                  className="flex-1 border-rose-500 text-rose-500 hover:bg-rose-500 hover:text-white py-3 bg-transparent"
                   onClick={() => setIsOpen(false)}
                 >
                   Ver Portfolio
                 </Button>
-                <Button 
+                <Button
                   className="flex-1 bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 text-white py-3"
                   onClick={() => setIsOpen(false)}
                 >
@@ -342,7 +319,7 @@ export default function Header() {
                   >
                     Serviços
                   </Link>
-                  
+
                   <Link
                     href="/producoes"
                     className="block text-white hover:text-rose-400 py-4 text-lg transition-colors"
@@ -357,13 +334,11 @@ export default function Header() {
                       onClick={() => setIsPortfolioOpen(!isPortfolioOpen)}
                     >
                       <span>Portfolio</span>
-                      <ChevronDown 
-                        className={`h-5 w-5 transition-transform duration-200 ${
-                          isPortfolioOpen ? 'rotate-180' : ''
-                        }`} 
+                      <ChevronDown
+                        className={`h-5 w-5 transition-transform duration-200 ${isPortfolioOpen ? "rotate-180" : ""}`}
                       />
                     </button>
-                    
+
                     {isPortfolioOpen && (
                       <div className="pl-4 py-2 space-y-2 border-l border-gray-800">
                         <Link
@@ -424,7 +399,7 @@ export default function Header() {
 
               {/* Footer */}
               <div className="p-4 border-t border-gray-800">
-                <Button 
+                <Button
                   className="w-full bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 text-white py-3"
                   onClick={() => setIsOpen(false)}
                 >

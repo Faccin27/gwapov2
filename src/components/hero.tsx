@@ -1,7 +1,7 @@
-"use client";
-import { useState, useEffect } from "react";
-import { ArrowRight } from "lucide-react";
-import Image from "next/image";
+"use client"
+import { useState, useEffect } from "react"
+import { ArrowRight } from "lucide-react"
+import Image from "next/image"
 
 const tools = [
   // Front-end
@@ -95,8 +95,7 @@ const tools = [
     color1: "#E95420",
     color2: "#333333",
   },
-
-];
+]
 
 const svgGroups = [
   [
@@ -117,10 +116,10 @@ const svgGroups = [
     { name: "Company 11", src: "/american-airlines.svg" },
     { name: "Company 12", src: "/tiktok.svg" },
   ],
-];
+]
 interface ToolItemProps {
-  tool: { name: string; icon: string; color1: string; color2: string };
-  index: number;
+  tool: { name: string; icon: string; color1: string; color2: string }
+  index: number
 }
 
 function ToolItem({ tool, index }: ToolItemProps) {
@@ -141,14 +140,13 @@ function ToolItem({ tool, index }: ToolItemProps) {
       {/* Intense noise overlay */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-90 transition-opacity duration-300 noise-bg-intense" />
 
-      <a
-        href="#"
-        className="flex items-center justify-center w-full h-full p-2 relative z-10"
-      >
-        <img
+      <a href="#" className="flex items-center justify-center w-full h-full p-2 relative z-10">
+        <Image
           src={tool.icon || "/placeholder.svg"}
           alt={tool.name}
-          className="w-8 h-8 object-contain transition-all duration-300 group-hover:scale-110 md:grayscale md:group-hover:grayscale-0"
+          width={32}
+          height={32}
+          className="object-contain transition-all duration-300 group-hover:scale-110 md:grayscale md:group-hover:grayscale-0"
         />
       </a>
 
@@ -158,24 +156,24 @@ function ToolItem({ tool, index }: ToolItemProps) {
         <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-black"></div>
       </div>
     </div>
-  );
+  )
 }
 
 export default function Hero() {
-  const [currentGroup, setCurrentGroup] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [currentGroup, setCurrentGroup] = useState(0)
+  const [isTransitioning, setIsTransitioning] = useState(false)
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setIsTransitioning(true);
+      setIsTransitioning(true)
       setTimeout(() => {
-        setCurrentGroup((prev) => (prev + 1) % svgGroups.length);
-        setIsTransitioning(false);
-      }, 1000); // Increased delay for slower transition
-    }, 4000);
+        setCurrentGroup((prev) => (prev + 1) % svgGroups.length)
+        setIsTransitioning(false)
+      }, 1000) // Increased delay for slower transition
+    }, 4000)
 
-    return () => clearInterval(interval);
-  }, []);
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <section className="py-8 md:py-28 relative overflow-hidden bg-[#19191c] mt-32 border-b border-[#ffffff0f]">
@@ -197,17 +195,14 @@ export default function Hero() {
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
         <div className="flex flex-col md:flex-row md:items-center md:gap-x-12">
           <div className="flex-none space-y-4 sm:space-y-5 max-w-full md:max-w-[50%] lg:max-w-[33.33%] xl:max-w-[50%]">
-            <h1 className="text-sm text-rose-400 font-medium">
-              Mais de 200 projetos entregues com sucesso
-            </h1>{" "}
+            <h1 className="text-sm text-rose-400 font-medium">Mais de 200 projetos entregues com sucesso</h1>{" "}
             <h2 className="text-3xl sm:text-4xl text-gray-100 font-extrabold md:text-5xl max-w-11/12 leading-tight">
               Nós criamos sites que geram resultados
               <span className="text-rose-500">_</span>
             </h2>
             <p className="text-gray-300 text-base sm:text-lg leading-relaxed">
-              Desenvolvemos sites modernos, rápidos e responsivos, pensados para
-              impulsionar sua presença online e atrair mais clientes para o seu
-              negócio.
+              Desenvolvemos sites modernos, rápidos e responsivos, pensados para impulsionar sua presença online e
+              atrair mais clientes para o seu negócio.
             </p>
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-x-3">
               <a
@@ -227,12 +222,7 @@ export default function Hero() {
           </div>
           <div className="md:hidden w-full mt-8">
             <div className="relative h-64 sm:h-80 w-full">
-              <Image
-                src="/image.png"
-                fill
-                className="object-cover rounded-lg"
-                alt="Team working on a laptop"
-              />
+              <Image src="/image.png" fill className="object-cover rounded-lg" alt="Team working on a laptop" />
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent via-50% to-[#19191c] rounded-lg" />
             </div>
           </div>
@@ -253,32 +243,20 @@ export default function Hero() {
                 {/* First set */}
                 <div className="flex flex-nowrap overflow-visible">
                   {tools.map((tool, index) => (
-                    <ToolItem
-                      key={`mobile-1-${index}`}
-                      tool={tool}
-                      index={index}
-                    />
+                    <ToolItem key={`mobile-1-${index}`} tool={tool} index={index} />
                   ))}
                 </div>
                 {/* Duplicate for seamless loop */}
                 <div className="flex flex-nowrap overflow-visible">
                   {tools.map((tool, index) => (
-                    <ToolItem
-                      key={`mobile-2-${index}`}
-                      tool={tool}
-                      index={index}
-                    />
+                    <ToolItem key={`mobile-2-${index}`} tool={tool} index={index} />
                   ))}
                 </div>
               </div>
               {/* Desktop: Static grid */}
               <div className="hidden md:flex w-full flex-nowrap divide-x divide-dashed divide-[#ffffff0f] overflow-visible">
                 {tools.slice(0, 14).map((tool, index) => (
-                  <ToolItem
-                    key={`desktop-${index}`}
-                    tool={tool}
-                    index={index}
-                  />
+                  <ToolItem key={`desktop-${index}`} tool={tool} index={index} />
                 ))}
               </div>
             </div>
@@ -294,10 +272,7 @@ export default function Hero() {
         <div className="relative h-20 md:h-20 overflow-hidden">
           <div className="flex justify-center items-center max-w-6xl mx-auto px-4">
             {svgGroups.map((group, groupIndex) => (
-              <div
-                key={groupIndex}
-                className="absolute inset-0 flex justify-center items-center"
-              >
+              <div key={groupIndex} className="absolute inset-0 flex justify-center items-center">
                 {/* Desktop: Single row */}
                 <div className="hidden md:flex gap-8 w-full justify-center">
                   {group.map((svg, index) => (
@@ -309,19 +284,21 @@ export default function Hero() {
                             ? "transform -translate-y-full opacity-0 blur-[8px]"
                             : "transform translate-y-0 opacity-100 blur-0"
                           : groupIndex === (currentGroup + 1) % svgGroups.length
-                          ? isTransitioning
-                            ? "transform translate-y-0 opacity-100 blur-0"
+                            ? isTransitioning
+                              ? "transform translate-y-0 opacity-100 blur-0"
+                              : "transform translate-y-full opacity-0 blur-[8px]"
                             : "transform translate-y-full opacity-0 blur-[8px]"
-                          : "transform translate-y-full opacity-0 blur-[8px]"
                       }`}
                       style={{
                         aspectRatio: "8/2",
                         transitionDelay: `${index * 100}ms`,
                       }}
                     >
-                      <img
+                      <Image
                         src={svg.src || "/placeholder.svg"}
                         alt={svg.name}
+                        width={200}
+                        height={48}
                         className="w-full h-full object-contain opacity-60 hover:opacity-100 transition-opacity duration-300"
                       />
                     </div>
@@ -339,19 +316,21 @@ export default function Hero() {
                             ? "transform -translate-y-full opacity-0 blur-[8px]"
                             : "transform translate-y-0 opacity-100 blur-0"
                           : groupIndex === (currentGroup + 1) % svgGroups.length
-                          ? isTransitioning
-                            ? "transform translate-y-0 opacity-100 blur-0"
+                            ? isTransitioning
+                              ? "transform translate-y-0 opacity-100 blur-0"
+                              : "transform translate-y-full opacity-0 blur-[8px]"
                             : "transform translate-y-full opacity-0 blur-[8px]"
-                          : "transform translate-y-full opacity-0 blur-[8px]"
                       }`}
                       style={{
                         aspectRatio: "8/2",
                         transitionDelay: `${index * 100}ms`,
                       }}
                     >
-                      <img
+                      <Image
                         src={svg.src || "/placeholder.svg"}
                         alt={svg.name}
+                        width={120}
+                        height={32}
                         className="w-full h-full object-contain opacity-60 hover:opacity-100 transition-opacity duration-300"
                       />
                     </div>
@@ -547,5 +526,5 @@ export default function Hero() {
         }
       `}</style>
     </section>
-  );
+  )
 }
