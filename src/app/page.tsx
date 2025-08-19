@@ -4,6 +4,7 @@ import Cardsection from "@/components/card-section";
 import { BentoSection } from "@/components/bento-section";
 import MaximizeResultsSection from "@/components/results";
 import MetricsSection from "@/components/metrics-section";
+import CTASection from "@/components/cta-section";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <BentoSection />
       <MaximizeResultsSection />
       <MetricsSection />
+      <CTASection />
     </div>
   );
 }
