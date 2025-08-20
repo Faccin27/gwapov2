@@ -3,7 +3,6 @@ import AuthBentoContent from "./bento/auth-bento-content"
 import DatabaseBentoContent from "./bento/database-bento-content"
 import StorageBentoContent from "./bento/storage-bento-content"
 import FunctionsBentoContent from "./bento/functions-bento-content"
-import IntegrationsBentoContent from "./bento/integrations-bento-content" // New import for Integrations
 import ChatBentoContent from "./bento/chat-bento-content"
 
 export function BentoSection() {
@@ -12,34 +11,31 @@ export function BentoSection() {
       title: "Auth",
       description: "Gerencie o acesso de usuários com segurança e facilidade.",
       Component: AuthBentoContent,
-      icon: '/auth.png'
+      icon: "/auth.png",
     },
     {
       title: "Databases",
       description: "Conecte e gerencie seus bancos de dados sem esforço.",
       Component: DatabaseBentoContent,
-      icon: '/databases.png'
-
+      icon: "/databases.png",
     },
     {
       title: "Storage",
       description: "Armazene e gerencie seus arquivos de forma segura e escalável.",
       Component: StorageBentoContent,
-      icon: '/storage.png'
-
+      icon: "/storage.png",
     },
     {
       title: "Functions",
       description: "Execute lógica de backend sem gerenciar servidores.",
       Component: FunctionsBentoContent,
-      icon: '/functions.png'
-
+      icon: "/functions.png",
     },
     {
       title: "Messaging", // New title for the third card in the second row
       description: "Conecte-se facilmente com pessoas ou com nossa IA nos chats.",
       Component: ChatBentoContent, // Assign the new IntegrationsBentoContent
-      icon: '/messaging.png'
+      icon: "/messaging.png",
     },
   ]
 

@@ -72,7 +72,7 @@ const AiCodeReviews: React.FC = () => {
             </p>
             <p style={{ margin: 0, whiteSpace: "pre-wrap", fontWeight: 400 }}> icon: (</p>
             <p style={{ margin: 0, whiteSpace: "pre-wrap", fontWeight: 400 }}>
-              {'            <svg className={\'baseIconClasses\'} fill="none" viewBox="0 0 14 14">'}
+              {'            <svg className="baseIconClasses" fill="none" viewBox="0 0 14 14">'}
             </p>
             <p style={{ margin: 0, whiteSpace: "pre-wrap", fontWeight: 400 }}> &lt;path</p>
             <p style={{ margin: 0, whiteSpace: "pre-wrap", fontWeight: 400 }}>
@@ -166,7 +166,7 @@ const AiCodeReviews: React.FC = () => {
             </p>
             <p style={{ margin: 0, whiteSpace: "pre-wrap", fontWeight: 400 }}> icon: (</p>
             <p style={{ margin: 0, whiteSpace: "pre-wrap", fontWeight: 400 }}>
-              {'            <svg className={\'baseIconClasses\'} fill="none" viewBox="0 0 14 14">'}
+              {'            <svg className="baseIconClasses" fill="none" viewBox="0 0 14 14">'}
             </p>
             <p style={{ margin: 0, whiteSpace: "pre-wrap", fontWeight: 400 }}> &lt;path</p>
             <p style={{ margin: 0, whiteSpace: "pre-wrap", fontWeight: 400 }}>

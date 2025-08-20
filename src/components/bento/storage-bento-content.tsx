@@ -68,7 +68,7 @@ const StorageBentoContent: React.FC<StorageBentoContentProps> = ({ isHovered }) 
       if (interval) clearInterval(interval)
       if (textTransitionTimeout) clearTimeout(textTransitionTimeout)
     }
-  }, [isHovered])
+  }, [isHovered, storageValue]) // Added storageValue to dependency array
 
   return (
     <div className="flex flex-col items-center justify-center h-full w-full p-4">

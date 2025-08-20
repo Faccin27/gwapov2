@@ -15,6 +15,8 @@ const RealtimeCodingPreviews: React.FC = () => {
     "--realtime-connection-color": "hsl(var(--muted-foreground))",
   }
 
+  const baseIconClasses = "icon-classes" // Declare the variable here
+
   return (
     <div
       className="" // Remove className prop if not used
@@ -83,31 +85,34 @@ const RealtimeCodingPreviews: React.FC = () => {
             <p style={{ margin: 0, whiteSpace: "pre-wrap", fontWeight: 400, display: "block" }}> return {"{"}</p>
             <p style={{ margin: 0, whiteSpace: "pre-wrap", fontWeight: 400, display: "block" }}>
               {" "}
-              border: theme === 'dark' ? 'border-[rgba(34,197,94,0.4)]' : 'border-green-200',
+              border: 'dark' ? 'border-[rgba(34,197,94,0.4)]' : 'border-green-200',
             </p>
             <p style={{ margin: 0, whiteSpace: "pre-wrap", fontWeight: 400, display: "block" }}> icon: (</p>
             <p style={{ margin: 0, whiteSpace: "pre-wrap", fontWeight: 400, display: "block" }}>
               {" "}
-              &lt;svg className={"{baseIconClasses}"} fill="none" viewBox="0 0 14 14"&gt;
+              &lt;svg className=&quot;{baseIconClasses}&quot; fill=&quot;none&quot; viewBox=&quot;0 0 14 14&quot;&gt;
             </p>
             <p style={{ margin: 0, whiteSpace: "pre-wrap", fontWeight: 400, display: "block" }}> &lt;path</p>
             <p style={{ margin: 0, whiteSpace: "pre-wrap", fontWeight: 400, display: "block" }}>
               {" "}
-              d="M3.85156 7.875L6.47656 10.5L10.8516 3.5"
+              d=&quot;M3.85156 7.875L6.47656 10.5L10.8516 3.5&quot;
             </p>
             <p style={{ margin: 0, whiteSpace: "pre-wrap", fontWeight: 400, display: "block" }}>
               {" "}
-              stroke="var(--realtime-primary-color)"
+              stroke=&quot;var(--realtime-primary-color)&quot;
             </p>
             <p style={{ margin: 0, whiteSpace: "pre-wrap", fontWeight: 400, display: "block" }}>
               {" "}
-              strokeLinecap="round"
+              strokeLinecap=&quot;round&quot;
             </p>
             <p style={{ margin: 0, whiteSpace: "pre-wrap", fontWeight: 400, display: "block" }}>
               {" "}
-              strokeLinejoin="round"
+              strokeLinejoin=&quot;round&quot;
             </p>
-            <p style={{ margin: 0, whiteSpace: "pre-wrap", fontWeight: 400, display: "block" }}> strokeWidth="1.5"</p>
+            <p style={{ margin: 0, whiteSpace: "pre-wrap", fontWeight: 400, display: "block" }}>
+              {" "}
+              strokeWidth=&quot;1.5&quot;
+            </p>
             <p style={{ margin: 0, whiteSpace: "pre-wrap", fontWeight: 400, display: "block" }}> /&gt;</p>
             <p style={{ margin: 0, whiteSpace: "pre-wrap", fontWeight: 400, display: "block" }}> &lt;/svg&gt;</p>
           </div>
