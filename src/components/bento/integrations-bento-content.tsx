@@ -260,10 +260,7 @@ const IntegrationsBentoContent: React.FC<IntegrationsBentoContentProps> = ({ isH
           const newGrid = [...prevGrid]
           const targetIndex = newGrid.findIndex((box) => box.id === boxToFill.id)
           if (targetIndex !== -1) {
-            newGrid[targetIndex] = {
-              ...newGrid[targetIndex],
-              logo: logoToAssign,
-            }
+            newGrid[targetIndex] = { ...newGrid[targetIndex], logo: logoToAssign }
           }
           return newGrid
         })
@@ -302,7 +299,6 @@ const IntegrationsBentoContent: React.FC<IntegrationsBentoContentProps> = ({ isH
       height: "60px",
       position: "relative",
       borderRadius: "9px",
-      // @ts-expect-error Accessing theme variables from themeVars object
       border: `1px ${themeVars["--oci-border-color"]} solid`,
       display: "flex",
       justifyContent: "center",
@@ -310,20 +306,11 @@ const IntegrationsBentoContent: React.FC<IntegrationsBentoContentProps> = ({ isH
       overflow: "hidden",
       flexShrink: 0,
       background: isInitiallyFilled
-        ? // Added description for @ts-expect-error directive
-          // @ts-expect-error Accessing theme variables for gradient background
-          `linear-gradient(180deg, ${themeVars["--oci-gradient-light-gray-start"]} 0%, ${themeVars["--oci-gradient-light-gray-end"]} 100%)`
+        ? `linear-gradient(180deg, ${themeVars["--oci-gradient-light-gray-start"]} 0%, ${themeVars["--oci-gradient-light-gray-end"]} 100%)`
         : logo
           ? "hsl(var(--background) / 0.5)"
           : "hsl(var(--muted) / 0.1)", // Darker for filled, lighter for empty
-
-      boxShadow: isInitiallyFilled
-        ? `0px 1px 2px ${
-            // Added description for @ts-expect-error directive
-            // @ts-expect-error Accessing theme variables for shadow color
-            themeVars["--oci-shadow-color"]
-          }`
-        : "none",
+      boxShadow: isInitiallyFilled ? `0px 1px 2px ${themeVars["--oci-shadow-color"]}` : "none",
       backdropFilter: isInitiallyFilled ? "blur(18px)" : "none",
       padding: isInitiallyFilled ? "6px 8px" : "0",
       transition: "background 0.3s ease-in-out", // Smooth background transition
@@ -358,8 +345,6 @@ const IntegrationsBentoContent: React.FC<IntegrationsBentoContentProps> = ({ isH
             ) : (
               // For SVG components, pass current themeVars for fill/stroke
               <logo.src
-                            // @ts-expect-error Passing props to dynamic SVG component
-
                 className={cn(
                   "transition-all duration-300 ease-in-out",
                   isHoveredCard && !isFadingOut ? "grayscale-0 opacity-100 scale-100" : "grayscale opacity-70 scale-90",
@@ -400,22 +385,11 @@ const IntegrationsBentoContent: React.FC<IntegrationsBentoContentProps> = ({ isH
             top: "24px",
             position: "absolute",
             background: `radial-gradient(ellipse 103.87% 77.04% at 52.56% -1.80%,
-            ${
-              // @ts-expect-error Accessing theme variables for radial gradient foreground color
-              themeVars["--oci-foreground-color"]
-            }00 0%,
-            ${
-              // @ts-expect-error Accessing theme variables for radial gradient foreground color
-              themeVars["--oci-foreground-color"]
-            }F5 15%,
-            ${
-              // @ts-expect-error Accessing theme variables for radial gradient foreground color
-              themeVars["--oci-foreground-color"]
-            }66 49%,
-            ${
-              // @ts-expect-error Accessing theme variables for radial gradient foreground color
-              themeVars["--oci-foreground-color"]
-            }00 100%)`,
+            ${themeVars["--oci-foreground-color"]}00 0%,
+            ${themeVars["--oci-foreground-color"]}F5 15%,
+            ${themeVars["--oci-foreground-color"]}66 49%,
+            ${themeVars["--oci-foreground-color"]}F5 87%,
+            ${themeVars["--oci-foreground-color"]}00 100%)`,
             opacity: isHovered ? 0.1 : 0.05,
             transition: "opacity 0.5s ease-in-out",
           }}

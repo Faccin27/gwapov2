@@ -4,7 +4,10 @@ import { ArrowRight } from "lucide-react"
 
 export default function MaximizeResultsSection() {
   return (
-    <section className="bg-white max-w-[96%] mx-auto rounded-t-4xl text-gray-900 pt-20  md:pt-28 md:pb-6">
+    <section
+      data-section="results"
+      className="bg-white max-w-[96%] mx-auto rounded-t-4xl text-gray-900 pt-20  md:pt-28 md:pb-6 border-0 shadow-none"
+    >
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 md:px-8 flex flex-col md:flex-row items-center justify-between gap-12">
         {/* Left Content Area */}
         <div className="flex-1 text-center md:text-left">
@@ -25,7 +28,7 @@ export default function MaximizeResultsSection() {
         <div className="flex-1 flex justify-center md:justify-end">
           <div className="relative w-[533px] h-[570px] md:max-w-full sm:max-w-[75%] max-w-[60%]">
             <Image
-              src="/images/woman.webp"
+              src="/woman.webp"
               alt="Mulher sorrindo"
               fill
               className="object-cover rounded-tr-lg rounded-bl-lg rounded-tl-[100px] rounded-br-[100px] "

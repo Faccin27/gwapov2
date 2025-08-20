@@ -1,6 +1,5 @@
 import type React from "react"
 import { Search } from "lucide-react"
-import Image from "next/image"
 
 interface McpConnectivityIllustrationProps {
   className?: string
@@ -114,12 +113,10 @@ const McpConnectivityIllustration: React.FC<McpConnectivityIllustrationProps> = 
                     flexShrink: 0,
                   }}
                 >
-                  <Image
+                  <img
                     src={integration.icon || "/placeholder.svg"}
                     alt={integration.name}
-                    width={24}
-                    height={24}
-                    className="object-contain opacity-70 grayscale"
+                    className="w-full h-full object-contain opacity-70 grayscale" // Apply opacity and grayscale
                   />
                 </div>
                 <span

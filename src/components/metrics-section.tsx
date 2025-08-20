@@ -1,8 +1,14 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
+import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger)
+}
 
 interface Testimonial {
   quote: string
@@ -76,6 +82,11 @@ export default function MetricsSection() {
   const [isDesktop, setIsDesktop] = useState(true)
   const [animatedCounts, setAnimatedCounts] = useState(metrics.map(() => 0))
 
+  const sectionRef = useRef<HTMLElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const testimonialRef = useRef<HTMLDivElement>(null)
+  const metricsRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     const interval = setInterval(() => {
       setIsAnimating(true)
@@ -89,13 +100,9 @@ export default function MetricsSection() {
       setIsDesktop(window.innerWidth >= 768)
     }
 
-    // Check on mount
     checkIsDesktop()
-
-    // Add event listener for window resize
     window.addEventListener("resize", checkIsDesktop)
 
-    // Cleanup
     return () => {
       clearInterval(interval)
       window.removeEventListener("resize", checkIsDesktop)
@@ -103,6 +110,76 @@ export default function MetricsSection() {
   }, [])
 
   useEffect(() => {
+    if (typeof window === "undefined") return
+
+    const ctx = gsap.context(() => {
+      // Title animation
+      gsap.fromTo(
+        titleRef.current,
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: titleRef.current,
+            start: "top 80%",
+            end: "bottom 20%",
+            toggleActions: "play none none reverse",
+          },
+        },
+      )
+
+      // Testimonial animation
+      gsap.fromTo(
+        testimonialRef.current,
+        { opacity: 0, x: -50 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: testimonialRef.current,
+            start: "top 80%",
+            end: "bottom 20%",
+            toggleActions: "play none none reverse",
+          },
+        },
+      )
+
+      if (metricsRef.current) {
+        const metricElements = metricsRef.current.querySelectorAll(".metric-item")
+        gsap.fromTo(
+          metricElements,
+          { opacity: 0, scale: 0.8, y: 30 },
+          {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "back.out(1.7)",
+            stagger: 0.1,
+            scrollTrigger: {
+              trigger: metricsRef.current,
+              start: "top 80%",
+              end: "bottom 20%",
+              toggleActions: "play none none reverse",
+              onEnter: () => {
+                // Start counter animation when metrics come into view
+                animateCounters()
+              },
+            },
+          },
+        )
+      }
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [])
+
+  const animateCounters = () => {
     const duration = 2000
     let startTime: number
     let animationFrame: number
@@ -122,7 +199,7 @@ export default function MetricsSection() {
 
     animationFrame = requestAnimationFrame(animate)
     return () => cancelAnimationFrame(animationFrame)
-  }, [])
+  }
 
   const formatValue = (value: number, originalValue: string) => {
     if (originalValue.includes("K")) {
@@ -137,16 +214,21 @@ export default function MetricsSection() {
   const currentTestimonial = testimonials[currentTestimonialIndex]
 
   return (
-    <section className="relative w-full overflow-hidden bg-white max-w-[96%] mx-auto rounded-b-4xl text-gray-900">
+    <section
+      ref={sectionRef}
+      data-section="metrics"
+      className="relative w-full overflow-hidden bg-white  mx-auto rounded-b-4xl text-gray-900 border-0 shadow-none"
+    >
       {/* Top white/light gray section */}
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 md:px-8 py-20 md:py-28 relative z-10">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-12">
           {/* Left Content Area */}
           <div className="flex-1 text-center md:text-left max-w-2xl">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight mb-6">
+            <h2 ref={titleRef} className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight mb-6">
               Resultados que impulsionam o seu sucesso
             </h2>
             <div
+              ref={testimonialRef}
               key={currentTestimonialIndex}
               className={cn(
                 "mt-8 flex flex-col items-center md:items-start text-center md:text-left",
@@ -182,14 +264,14 @@ export default function MetricsSection() {
           }}
         />
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="relative w-full h-full max-w-screen-xl mx-auto px-4 sm:px-6 md:px-8">
+          <div ref={metricsRef} className="relative w-full h-full max-w-screen-xl mx-auto px-4 sm:px-6 md:px-8">
             {isDesktop ? (
               // Desktop layout - posicionamento absoluto mantido
               <div className="relative w-full h-full">
                 {metrics.map((metric, index) => (
                   <div
                     key={index}
-                    className="absolute text-left text-gray-900 flex flex-col items-start"
+                    className="metric-item absolute text-left text-gray-900 flex flex-col items-start"
                     style={{
                       top: metric.position.top,
                       left: metric.position.left,
@@ -207,7 +289,7 @@ export default function MetricsSection() {
               // Mobile layout - stack vertical com barrinha rosa
               <div className="flex flex-col justify-center h-full space-y-8 px-4">
                 {metrics.map((metric, index) => (
-                  <div key={index} className="flex items-center gap-4">
+                  <div key={index} className="metric-item flex items-center gap-4">
                     {/* Barrinha rosa à esquerda */}
                     <div className="w-1 h-16 bg-rose-500 rounded-full flex-shrink-0" />
                     <div className="flex flex-col">

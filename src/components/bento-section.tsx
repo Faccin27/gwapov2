@@ -4,6 +4,7 @@ import DatabaseBentoContent from "./bento/database-bento-content"
 import StorageBentoContent from "./bento/storage-bento-content"
 import FunctionsBentoContent from "./bento/functions-bento-content"
 import IntegrationsBentoContent from "./bento/integrations-bento-content" // New import for Integrations
+import ChatBentoContent from "./bento/chat-bento-content"
 
 export function BentoSection() {
   const cards = [
@@ -35,10 +36,10 @@ export function BentoSection() {
 
     },
     {
-      title: "Integrations", // New title for the third card in the second row
-      description: "Conecte-se facilmente com suas ferramentas e serviços favoritos.",
-      Component: IntegrationsBentoContent, // Assign the new IntegrationsBentoContent
-      icon: '/realtime.png'
+      title: "Messaging", // New title for the third card in the second row
+      description: "Conecte-se facilmente com pessoas ou com nossa IA nos chats.",
+      Component: ChatBentoContent, // Assign the new IntegrationsBentoContent
+      icon: '/messaging.png'
     },
   ]
 

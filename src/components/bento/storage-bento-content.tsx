@@ -149,7 +149,7 @@ const StorageBentoContent: React.FC<StorageBentoContentProps> = ({ isHovered }) 
           </div>
           <div className="w-full bg-muted/30 rounded-full h-2">
             <div
-              className="bg-gradient-to-r from-primary to-primary/70 h-2 rounded-full transition-all duration-300"
+              className="bg-gradient-to-r from-primary to-rose-500/70 h-2 rounded-full transition-all duration-300"
               style={{ width: `${(storageValue / 10) * 100}%` }}
             />
           </div>

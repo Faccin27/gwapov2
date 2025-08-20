@@ -3,9 +3,14 @@
 import { Menu, X, ChevronDown } from "lucide-react"
 import Link from "next/link"
 import { useState, useRef, useEffect } from "react"
+import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 
 import { Button } from "@/components/ui/button"
-import Image from "next/image"
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger)
+}
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
@@ -15,6 +20,9 @@ export default function Header() {
   const megaMenuRef = useRef<HTMLDivElement>(null)
   const portfolioButtonRef = useRef<HTMLButtonElement>(null)
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  const headerRef = useRef<HTMLElement>(null)
+  const [isOverWhiteSection, setIsOverWhiteSection] = useState(false)
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -35,6 +43,61 @@ export default function Header() {
       document.removeEventListener("mousedown", handleClickOutside)
     }
   }, [isMegaMenuClicked])
+
+  useEffect(() => {
+    if (typeof window === "undefined") return
+
+    const ctx = gsap.context(() => {
+      // Smooth scroll
+      gsap.to("html", {
+        scrollBehavior: "smooth",
+      })
+
+      // Header entrance animation
+      gsap.fromTo(headerRef.current, { y: -100, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" })
+
+      ScrollTrigger.create({
+        trigger: "body",
+        start: "top top",
+        end: "bottom bottom",
+        onUpdate: (self) => {
+          const scrollY = self.scroll()
+          const headerHeight = 80
+
+          const metricsSection = document.querySelector('[data-section="metrics"]')
+          const resultsSection = document.querySelector('[data-section="results"]')
+
+          let isOverWhite = false
+
+          // Check metrics section
+          if (metricsSection) {
+            const rect = metricsSection.getBoundingClientRect()
+            const sectionTop = rect.top + scrollY
+            const sectionBottom = rect.bottom + scrollY
+
+            if (scrollY + headerHeight >= sectionTop && scrollY <= sectionBottom) {
+              isOverWhite = true
+            }
+          }
+
+          // Check results section
+          if (resultsSection && !isOverWhite) {
+            const rect = resultsSection.getBoundingClientRect()
+            const sectionTop = rect.top + scrollY
+            const sectionBottom = rect.bottom + scrollY
+
+            if (scrollY + headerHeight >= sectionTop && scrollY <= sectionBottom) {
+              isOverWhite = true
+            }
+          }
+
+          setIsOverWhiteSection(isOverWhite)
+        },
+      })
+    }, headerRef)
+
+    return () => ctx.revert()
+  }, [])
 
   useEffect(() => {
     return () => {
@@ -94,33 +157,40 @@ export default function Header() {
   }
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-[101] bg-transparent backdrop-blur-lg border-b border-white/10  font-aeonik">
+    <header
+      ref={headerRef}
+      className="fixed top-0 left-0 right-0 z-[101] bg-transparent backdrop-blur-lg border-b border-white/10 font-aeonik"
+    >
       <div className="container mx-auto px-4 lg:px-6">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center space-x-8">
             <Link href="/" className="flex items-center space-x-3">
-              <Image
-                src="/images/logo.png"
-                width={40}
-                height={40}
-                alt="Gwapo"
-                className="w-20 h-20 object-cover rounded"
-              />
-              <span className="text-2xl  text-white mb-2 -translate-x-4  font-aeonik font-bold">gwapo</span>
+              <img src="/logo.png" alt="Gwapo" className="w-20 h-20 object-cover rounded" />
+              <span
+                className={`text-2xl mb-2 -translate-x-4 font-aeonik font-bold transition-colors duration-300 ${
+                  isOverWhiteSection ? "text-gray-900" : "text-white"
+                }`}
+              >
+                gwapo
+              </span>
             </Link>
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-2">
               <Link
                 href="/servicos"
-                className="inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-rose-50/10 hover:text-rose-400 focus:bg-rose-50/10 focus:text-rose-400 focus:outline-none"
+                className={`inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-bold transition-colors hover:bg-rose-50/10 hover:text-rose-400 focus:bg-rose-50/10 focus:text-rose-400 focus:outline-none ${
+                  isOverWhiteSection ? "text-gray-900" : "text-white"
+                }`}
               >
                 Serviços
               </Link>
 
               <Link
                 href="/producoes"
-                className="inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-rose-50/10 hover:text-rose-400 focus:bg-rose-50/10 focus:text-rose-400 focus:outline-none"
+                className={`inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-bold transition-colors hover:bg-rose-50/10 hover:text-rose-400 focus:bg-rose-50/10 focus:text-rose-400 focus:outline-none ${
+                  isOverWhiteSection ? "text-gray-900" : "text-white"
+                }`}
               >
                 Produções
               </Link>
@@ -129,7 +199,9 @@ export default function Header() {
               <div className="relative">
                 <button
                   ref={portfolioButtonRef}
-                  className="inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-rose-50/10 hover:text-rose-400 focus:bg-rose-50/10 focus:text-rose-400 focus:outline-none"
+                  className={`inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-bold transition-colors hover:bg-rose-50/10 hover:text-rose-400 focus:bg-rose-50/10 focus:text-rose-400 focus:outline-none ${
+                    isOverWhiteSection ? "text-gray-900" : "text-white"
+                  }`}
                   onClick={handlePortfolioClick}
                   onMouseEnter={handlePortfolioEnter}
                   onMouseLeave={handlePortfolioLeave}
@@ -215,11 +287,9 @@ export default function Header() {
 
                       <div className="relative">
                         <div className="sticky top-0">
-                          <Image
-                            src="/images/modern-website-showcase.png"
+                          <img
+                            src="/modern-website-showcase.png"
                             alt="Portfolio showcase"
-                            width={300}
-                            height={300}
                             className="w-full h-[300px] object-cover rounded-lg shadow-lg"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-rose-600/20 to-transparent rounded-lg" />
@@ -240,7 +310,9 @@ export default function Header() {
 
               <Link
                 href="/contato"
-                className="inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-rose-50/10 hover:text-rose-400 focus:bg-rose-50/10 focus:text-rose-400 focus:outline-none"
+                className={`inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-bold transition-colors hover:bg-rose-50/10 hover:text-rose-400 focus:bg-rose-50/10 focus:text-rose-400 focus:outline-none ${
+                  isOverWhiteSection ? "text-gray-900" : "text-white"
+                }`}
               >
                 Contato
               </Link>
@@ -273,13 +345,7 @@ export default function Header() {
               {/* Header */}
               <div className="flex items-center justify-between p-4 border-b border-gray-800">
                 <div className="flex items-center space-x-3">
-                  <Image
-                    src="/images/logo.png"
-                    width={40}
-                    height={40}
-                    alt="Gwapo"
-                    className="w-20 h-20 object-cover rounded"
-                  />
+                  <img src="/gwapo-logo.png" alt="Gwapo" className="w-8 h-8 object-cover rounded" />
                   <span className="text-xl font-bold text-rose-500">gwapo</span>
                 </div>
                 <Button
