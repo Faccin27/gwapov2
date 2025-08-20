@@ -135,9 +135,6 @@ html{
 }
 
 
-
-
-
 .portfolio-carousel {
   display: flex;
   width: fit-content;
@@ -169,4 +166,19 @@ html{
   100% {
     transform: translate3d(calc(-7 * (320px + 24px)), 0, 0);
   }
+}
+
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Para Firefox */
+html {
+  scrollbar-width: none; /* oculta a barra */
+}
+
+/* Para IE/Edge antigo */
+body {
+  -ms-overflow-style: none; /* IE e Edge legado */
 }
