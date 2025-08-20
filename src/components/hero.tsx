@@ -1,7 +1,14 @@
 "use client"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { ArrowRight } from "lucide-react"
 import Image from "next/image"
+import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+import AdminDashboard from "./admin-dashboard"
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger)
+}
 
 const tools = [
   // Front-end
@@ -95,26 +102,32 @@ const tools = [
     color1: "#E95420",
     color2: "#333333",
   },
+  {
+    name: "Ubuntu",
+    icon: "/techs/ubuntu.png",
+    color1: "#E95420",
+    color2: "#333333",
+  },
 ]
 
 const svgGroups = [
   [
-    { name: "Company 1", src: "/american-airlines.svg" },
-    { name: "Company 2", src: "/tiktok.svg" },
-    { name: "Company 3", src: "/american-airlines.svg" },
-    { name: "Company 4", src: "/tiktok.svg" },
+    { name: "Company 1", src: "/brands/discord.svg" },
+    { name: "Company 2", src: "/brands/tiktok.svg" },
+    { name: "Company 3", src: "/brands/facebook.svg" },
+    { name: "Company 4", src: "/brands/maps.svg" },
   ],
   [
-    { name: "Company 5", src: "/tiktok.svg" },
-    { name: "Company 6", src: "/american-airlines.svg" },
-    { name: "Company 7", src: "/tiktok.svg" },
-    { name: "Company 8", src: "/american-airlines.svg" },
+    { name: "Company 5", src: "/brands/youtube.svg" },
+    { name: "Company 6", src: "/brands/github.svg" },
+    { name: "Company 8", src: "/brands/instagram.svg" },
+    { name: "Company 7", src: "/brands/gmail.svg" },
   ],
   [
-    { name: "Company 9", src: "/tiktok.svg" },
-    { name: "Company 10", src: "/american-airlines.svg" },
-    { name: "Company 11", src: "/american-airlines.svg" },
-    { name: "Company 12", src: "/tiktok.svg" },
+    { name: "Company 9", src: "/brands/linkedin.svg" },
+    { name: "Company 10", src: "/brands/paypal.svg" },
+    { name: "Company 11", src: "/brands/whatsapp.svg" },
+    { name: "Company 12", src: "/brands/amazon.svg" },
   ],
 ]
 interface ToolItemProps {
@@ -125,7 +138,7 @@ interface ToolItemProps {
 function ToolItem({ tool, index }: ToolItemProps) {
   return (
     <div
-      className={`group relative flex h-16 w-16 max-w-[66px] max-h-[66px] items-center justify-center border-dashed border-[#ffffff0f] md:mt-0 md:w-full lg:border-r ${
+      className={`group tech-item relative flex h-16 w-16 max-w-[66px] max-h-[66px] items-center justify-center border-dashed border-[#ffffff0f] md:mt-0 md:w-full lg:border-r ${
         index === 0 ? "lg:border-l" : ""
       }`}
     >
@@ -141,12 +154,10 @@ function ToolItem({ tool, index }: ToolItemProps) {
       <div className="absolute inset-0 opacity-0 group-hover:opacity-90 transition-opacity duration-300 noise-bg-intense" />
 
       <a href="#" className="flex items-center justify-center w-full h-full p-2 relative z-10">
-        <Image
+        <img
           src={tool.icon || "/placeholder.svg"}
           alt={tool.name}
-          width={32}
-          height={32}
-          className="object-contain transition-all duration-300 group-hover:scale-110 md:grayscale md:group-hover:grayscale-0"
+          className="w-8 h-8 object-contain transition-all duration-300 group-hover:scale-110 md:grayscale md:group-hover:grayscale-0"
         />
       </a>
 
@@ -163,57 +174,117 @@ export default function Hero() {
   const [currentGroup, setCurrentGroup] = useState(0)
   const [isTransitioning, setIsTransitioning] = useState(false)
 
+  const heroRef = useRef<HTMLElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const subtitleRef = useRef<HTMLHeadingElement>(null)
+  const descriptionRef = useRef<HTMLParagraphElement>(null)
+  const buttonsRef = useRef<HTMLDivElement>(null)
+  const techSectionRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     const interval = setInterval(() => {
       setIsTransitioning(true)
       setTimeout(() => {
         setCurrentGroup((prev) => (prev + 1) % svgGroups.length)
         setIsTransitioning(false)
-      }, 1000) // Increased delay for slower transition
+      }, 1000)
     }, 4000)
 
     return () => clearInterval(interval)
   }, [])
 
-  return (
-    <section className="py-8 md:py-28 relative overflow-hidden bg-[#19191c] mt-32 border-b border-[#ffffff0f]">
-      {/* Lighting Effect */}
-      <div className="animate-lighting absolute -top-12 left-0 z-50 h-screen w-[200vw] -translate-x-[25%] translate-y-8 rotate-12 overflow-hidden blur-3xl md:w-full bg-[image:radial-gradient(ellipse_390px_50px_at_10%_30%,_rgba(254,_149,_103,_0.5)_0%,_rgba(254,_149,_103,_0)_70%),_radial-gradient(ellipse_1100px_170px_at_15%_40%,_rgba(253,_54,_110,_0.4)_0%,_rgba(253,_54,_110,_0)_70%),_radial-gradient(ellipse_1200px_180px_at_30%_30%,_rgba(253,_54,_110,_0.4)_0%,_rgba(253,_54,_110,_0)_70%)] bg-position-[0%_0%]" />
+  useEffect(() => {
+    if (typeof window === "undefined") return
 
-      <div className="hidden md:block absolute right-0 top-0 h-[680px] w-1/2 lg:w-2/3 xl:w-1/2">
+    const ctx = gsap.context(() => {
+      // Hero entrance animations
+      const tl = gsap.timeline()
+
+      if (techSectionRef.current) {
+        const techItems = techSectionRef.current.querySelectorAll(".tech-item")
+
+        gsap.fromTo(
+          techItems,
+          {
+            x: 200,
+            opacity: 0,
+          },
+          {
+            x: 0,
+            opacity: 1,
+            duration: 0.6, // Slightly faster animation
+            ease: "power2.out",
+            stagger: 0.1, // Faster stagger for quicker completion
+          },
+        )
+      }
+
+      tl.fromTo(titleRef.current, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" })
+        .fromTo(
+          subtitleRef.current,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
+          "-=0.4",
+        )
+        .fromTo(
+          descriptionRef.current,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
+          "-=0.3",
+        )
+        .fromTo(
+          buttonsRef.current,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
+          "-=0.2",
+        )
+    }, heroRef)
+
+    return () => ctx.revert()
+  }, [])
+
+  return (
+    <section
+      ref={heroRef}
+      className="py-8 md:py-28 relative overflow-hidden bg-[#19191c] mt-32 border-b border-[#ffffff0f]"
+    >
+      <div className="animate-lighting absolute -top-12 left-0 z-0 h-screen w-[200vw] -translate-x-[25%] translate-y-8 rotate-12 overflow-hidden blur-3xl md:w-full bg-[image:radial-gradient(ellipse_390px_50px_at_10%_30%,_rgba(254,_149,_103,_0.5)_0%,_rgba(254,_149,_103,_0)_70%),_radial-gradient(ellipse_1100px_170px_at_15%_40%,_rgba(253,_54,_110,_0.4)_0%,_rgba(253,_54,_110,_0)_70%),_radial-gradient(ellipse_1200px_180px_at_30%_30%,_rgba(253,_54,_110,_0.4)_0%,_rgba(253,_54,_110,_0)_70%)] bg-position-[0%_0%] pointer-events-none" />
+      <div className="hidden md:block absolute right-0 top-0 h-[680px] w-1/2 lg:w-2/3 xl:w-1/2 z-50">
         <div className="relative h-full">
-          <Image
-            src="/image.png"
-            fill
-            className="object-cover object-left rounded-t-md h-full block"
-            alt="Team working on a laptop"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent via-50% to-[#19191c]" />
+          <AdminDashboard />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent via-50% to-[#19191c] pointer-events-none" />
         </div>
       </div>
-
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
-        <div className="flex flex-col md:flex-row md:items-center md:gap-x-12">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 md:px-8 relative z-40">
+        <div className="flex flex-col md:flex-row md:items-start md:gap-x-12">
           <div className="flex-none space-y-4 sm:space-y-5 max-w-full md:max-w-[50%] lg:max-w-[33.33%] xl:max-w-[50%]">
-            <h1 className="text-sm text-rose-400 font-medium">Mais de 200 projetos entregues com sucesso</h1>{" "}
-            <h2 className="text-3xl sm:text-4xl text-gray-100 font-extrabold md:text-5xl max-w-11/12 leading-tight">
+            <h1 ref={titleRef} className="text-sm text-rose-400 font-medium">
+              Mais de 200 projetos entregues com sucesso
+            </h1>
+            <h2
+              ref={subtitleRef}
+              className="text-3xl sm:text-4xl text-gray-100 font-extrabold md:text-5xl max-w-11/12 leading-tight"
+            >
               Nós criamos sites que geram resultados
               <span className="text-rose-500">_</span>
             </h2>
-            <p className="text-gray-300 text-base sm:text-lg leading-relaxed">
+            <p ref={descriptionRef} className="text-gray-300 text-base sm:text-lg leading-relaxed">
               Desenvolvemos sites modernos, rápidos e responsivos, pensados para impulsionar sua presença online e
               atrair mais clientes para o seu negócio.
             </p>
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-x-3">
+            <div
+              ref={buttonsRef}
+              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-x-3 relative z-20"
+            >
               <a
                 href="#"
-                className="block py-3 px-6 text-center text-white font-medium bg-rose-600 duration-150 hover:bg-fuchsia-500 active:bg-fuchsia-700 rounded-lg shadow-lg hover:shadow-none text-base"
+                className="block py-3 px-6 text-center text-white font-medium bg-rose-600 duration-150 hover:bg-fuchsia-500 active:bg-fuchsia-700 rounded-lg shadow-lg hover:shadow-none text-base relative z-30"
               >
                 {"Vamos começar"}
               </a>
               <a
                 href="#"
-                className="flex items-center justify-center gap-x-2 py-3 px-6 text-gray-200 hover:text-gray-400 font-medium duration-150 active:bg-gray-800 border rounded-lg border-gray-700 text-base"
+                className="flex items-center justify-center gap-x-2 py-3 px-6 text-gray-200 hover:text-gray-400 font-medium duration-150 active:bg-gray-800 border rounded-lg border-gray-700 text-base relative z-30"
               >
                 Ver Portfólio
                 <ArrowRight className="w-5 h-5" />
@@ -228,12 +299,11 @@ export default function Hero() {
           </div>
         </div>
       </div>
-
-      <div className="relative z-[100] mt-12 md:mt-52 ">
+      <div ref={techSectionRef} className="relative z-[100] mt-12 md:mt-52 ">
         <div className="border-[#ffffff0f] relative z-10 border-dashed border-[1px] overflow-visible">
           <div className="container max-w-6xl mx-auto flex flex-col items-center md:flex-row overflow-visible">
             <span className="-mb-1 block bg-gradient-to-r from-[#f8a1ba] to-white bg-clip-text pb-1 text-transparent ">
-              <span className="flex items-center pr-4 text-sm font-medium md:w-full md:max-w-[185px] ">
+              <span className="flex items-center pr-4 text-sm font-medium md:w-full md:max-w-[185px]  ">
                 Desenvolvido com as melhores tecnologias
               </span>
             </span>
@@ -241,7 +311,7 @@ export default function Hero() {
               {/* Mobile: Scrolling animation */}
               <div className="md:hidden flex animate-scroll-infinite overflow-visible">
                 {/* First set */}
-                <div className="flex flex-nowrap overflow-visible">
+                <div className="flex flex-nowrap overflow-visible ">
                   {tools.map((tool, index) => (
                     <ToolItem key={`mobile-1-${index}`} tool={tool} index={index} />
                   ))}
@@ -255,7 +325,7 @@ export default function Hero() {
               </div>
               {/* Desktop: Static grid */}
               <div className="hidden md:flex w-full flex-nowrap divide-x divide-dashed divide-[#ffffff0f] overflow-visible">
-                {tools.slice(0, 14).map((tool, index) => (
+                {tools.slice(0, 15).map((tool, index) => (
                   <ToolItem key={`desktop-${index}`} tool={tool} index={index} />
                 ))}
               </div>
@@ -263,7 +333,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-
       <div className="relative z-[100] mt-12">
         <p className="text-greyscale-100 text-description mx-auto max-w-[312px] text-center text-xl text-pretty mb-20">
           Utilizamos as tecnologias mais inovadoras para criar o seu site
@@ -294,17 +363,14 @@ export default function Hero() {
                         transitionDelay: `${index * 100}ms`,
                       }}
                     >
-                      <Image
+                      <img
                         src={svg.src || "/placeholder.svg"}
                         alt={svg.name}
-                        width={200}
-                        height={48}
                         className="w-full h-full object-contain opacity-60 hover:opacity-100 transition-opacity duration-300"
                       />
                     </div>
                   ))}
                 </div>
-
                 {/* Mobile: 2x2 Grid */}
                 <div className="md:hidden grid grid-cols-2 gap-4 w-full max-w-sm mx-auto">
                   {group.map((svg, index) => (
@@ -326,11 +392,9 @@ export default function Hero() {
                         transitionDelay: `${index * 100}ms`,
                       }}
                     >
-                      <Image
+                      <img
                         src={svg.src || "/placeholder.svg"}
                         alt={svg.name}
-                        width={120}
-                        height={32}
                         className="w-full h-full object-contain opacity-60 hover:opacity-100 transition-opacity duration-300"
                       />
                     </div>
@@ -341,7 +405,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-
       <style jsx>{`
         @keyframes scroll-infinite {
           0% {
