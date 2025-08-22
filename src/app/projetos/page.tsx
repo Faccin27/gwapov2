@@ -1,20 +1,26 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Image from "next/image"
-import Link from "next/link"
-import { ArrowLeft, Eye, Filter, Search } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowLeft, Eye, Filter, Search } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface Project {
-  id: string
-  name: string
-  image: string
-  type: "Sites Corporativos" | "E-commerce" | "Landing Pages" | "Aplicativos Web" | "Identidade Visual" | "UI/UX Design"
-  description: string
-  forSale?: boolean
-  year: number
-  technologies: string[]
+  id: string;
+  name: string;
+  image: string;
+  type:
+    | "Sites Corporativos"
+    | "E-commerce"
+    | "Landing Pages"
+    | "Aplicativos Web"
+    | "Identidade Visual"
+    | "UI/UX Design";
+  description: string;
+  forSale?: boolean;
+  year: number;
+  technologies: string[];
 }
 
 const allProjects: Project[] = [
@@ -93,7 +99,7 @@ const allProjects: Project[] = [
     year: 2024,
     technologies: ["React", "Chart.js", "Node.js"],
   },
-]
+];
 
 const projectTypes = [
   "Todos",
@@ -103,7 +109,7 @@ const projectTypes = [
   "Aplicativos Web",
   "Identidade Visual",
   "UI/UX Design",
-]
+];
 
 const typeColors = {
   "Sites Corporativos": "bg-blue-500/20 text-blue-400 border-blue-500/30",
@@ -112,23 +118,25 @@ const typeColors = {
   "Aplicativos Web": "bg-orange-500/20 text-orange-400 border-orange-500/30",
   "Identidade Visual": "bg-pink-500/20 text-pink-400 border-pink-500/30",
   "UI/UX Design": "bg-cyan-500/20 text-cyan-400 border-cyan-500/30",
-}
+};
 
 export default function ProjectsPage() {
-  const [selectedType, setSelectedType] = useState("Todos")
-  const [searchTerm, setSearchTerm] = useState("")
-  const [hoveredProject, setHoveredProject] = useState<string | null>(null)
-  const [showOnlyForSale, setShowOnlyForSale] = useState(false)
+  const [selectedType, setSelectedType] = useState("Todos");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [hoveredProject, setHoveredProject] = useState<string | null>(null);
+  const [showOnlyForSale, setShowOnlyForSale] = useState(false);
 
   const filteredProjects = allProjects.filter((project) => {
     const matchesType =
-      selectedType === "Todos" || (selectedType === "À Venda" && project.forSale) || project.type === selectedType
+      selectedType === "Todos" ||
+      (selectedType === "À Venda" && project.forSale) ||
+      project.type === selectedType;
     const matchesSearch =
       project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      project.description.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesForSale = !showOnlyForSale || project.forSale
-    return matchesType && matchesSearch && matchesForSale
-  })
+      project.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesForSale = !showOnlyForSale || project.forSale;
+    return matchesType && matchesSearch && matchesForSale;
+  });
 
   return (
     <div className="min-h-screen bg-[#19191c] text-gray-200">
@@ -172,7 +180,6 @@ export default function ProjectsPage() {
             {/* Checkbox for filtering only for sale projects */}
             <div className="flex items-center gap-3">
               <label className="flex items-center gap-2 cursor-pointer text-sm text-muted-foreground hover:text-foreground transition-colors">
-
                 Somente projetos a venda
                 <div className="relative">
                   <input
@@ -184,10 +191,14 @@ export default function ProjectsPage() {
                   <div
                     className={cn(
                       "w-5 h-5 rounded-full border-2 transition-all duration-200 flex items-center justify-center",
-                      showOnlyForSale ? "bg-rose-500 border-rose-500" : "border-white/30 hover:border-white/50",
+                      showOnlyForSale
+                        ? "bg-rose-500 border-rose-500"
+                        : "border-white/30 hover:border-white/50"
                     )}
                   >
-                    {showOnlyForSale && <div className="w-2 h-2 bg-zinc-200 rounded-full" />}
+                    {showOnlyForSale && (
+                      <div className="w-2 h-2 bg-zinc-200 rounded-full" />
+                    )}
                   </div>
                 </div>
               </label>
@@ -208,7 +219,7 @@ export default function ProjectsPage() {
                   "px-4 py-2 rounded-full text-sm font-medium border transition-all duration-200",
                   selectedType === type
                     ? "bg-rose-500/20 text-rose-400 border-rose-500/30"
-                    : "bg-background/30 text-muted-foreground border-white/10 hover:border-white/20 hover:text-foreground",
+                    : "bg-background/30 text-muted-foreground border-white/10 hover:border-white/20 hover:text-foreground"
                 )}
               >
                 {type}
@@ -240,34 +251,37 @@ export default function ProjectsPage() {
                   <div
                     className={cn(
                       "absolute inset-0 bg-black/70 flex items-center justify-center transition-all duration-300",
-                      hoveredProject === project.id ? "opacity-100" : "opacity-0",
+                      hoveredProject === project.id
+                        ? "opacity-100"
+                        : "opacity-0"
                     )}
                   >
                     <div className="bg-white/20 backdrop-blur-sm rounded-full p-4 transform transition-all duration-300 hover:scale-110">
                       <Eye className="w-8 h-8 text-white" />
                     </div>
                   </div>
-
-                  {/* For Sale Badge */}
-                  {project.forSale && (
-                    <div className="absolute top-4 right-4">
-                      <span className="px-3 py-1 rounded-full text-xs font-medium border backdrop-blur-sm bg-red-500  border-red-500/70 animate-pulse">
-                        À Venda
-                      </span>
-                    </div>
-                  )}
                 </div>
 
                 {/* Project Info */}
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
+                    <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors flex items-center gap-2">
                       {project.name}
+                      {project.forSale && (
+                        <span className="px-2 py-1 rounded-full text-[11px] font-semibold border backdrop-blur-sm bg-red-500 border-red-500/70 animate-pulse">
+                          À Venda
+                        </span>
+                      )}
                     </h3>
-                    <span className="text-sm text-muted-foreground">{project.year}</span>
+
+                    <span className="text-sm text-muted-foreground">
+                      {project.year}
+                    </span>
                   </div>
 
-                  <p className="text-muted-foreground text-sm mb-4">{project.description}</p>
+                  <p className="text-muted-foreground text-sm mb-4">
+                    {project.description}
+                  </p>
 
                   {/* Technologies */}
                   <div className="flex flex-wrap gap-2">
@@ -295,11 +309,15 @@ export default function ProjectsPage() {
         {filteredProjects.length === 0 && (
           <div className="text-center py-16">
             <div className="text-6xl mb-4">🔍</div>
-            <h3 className="text-xl font-semibold text-foreground mb-2">Nenhum projeto encontrado</h3>
-            <p className="text-muted-foreground">Tente ajustar os filtros ou termo de busca</p>
+            <h3 className="text-xl font-semibold text-foreground mb-2">
+              Nenhum projeto encontrado
+            </h3>
+            <p className="text-muted-foreground">
+              Tente ajustar os filtros ou termo de busca
+            </p>
           </div>
         )}
       </div>
     </div>
-  )
+  );
 }
