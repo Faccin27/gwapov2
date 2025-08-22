@@ -161,6 +161,12 @@ export default function ProjectsPage() {
         </div>
       </div>
 
+      <div className="animate-lighting absolute -top-12 left-0 z-0 h-screen w-[200vw] -translate-x-[25%] translate-y-8 rotate-12 overflow-hidden blur-3xl md:w-full bg-[image:radial-gradient(ellipse_390px_50px_at_10%_30%,_rgba(254,_149,_103,_0.5)_0%,_rgba(254,_149,_103,_0)_70%),_radial-gradient(ellipse_1100px_170px_at_15%_40%,_rgba(253,_54,_110,_0.4)_0%,_rgba(253,_54,_110,_0)_70%),_radial-gradient(ellipse_1200px_180px_at_30%_30%,_rgba(253,_54,_110,_0.4)_0%,_rgba(253,_54,_110,_0)_70%)] bg-position-[0%_0%] pointer-events-none" />
+
+      <div className="w-[300px] h-[400px] absolute bottom-[-40dvh] right-[1%] bg-rose-500/20 blur-[80px] z-0" />
+
+      {/* Bottom glow effect */}
+
       <div className="max-w-7xl mx-auto px-6 py-12">
         {/* Filters and Search */}
         <div className="mb-12 space-y-6">

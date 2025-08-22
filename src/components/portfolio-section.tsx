@@ -141,20 +141,17 @@ export default function PortfolioSection() {
                             <Eye className="w-8 h-8 text-white" />
                           </div>
                         </div>
-
-                        {project.forSale && (
-                          <div className="absolute top-4 right-4">
-                            <span className="px-3 py-1 rounded-full text-xs font-medium border backdrop-blur-sm bg-red-500  border-red-500/70 animate-pulse">
-                              À Venda
-                            </span>
-                          </div>
-                        )}
                       </div>
 
                       {/* Project Info */}
                       <div className="p-6">
-                        <h3 className="text-xl font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
+                        <h3 className="text-xl font-semibold text-foreground mb-2 group-hover:text-primary transition-colors flex items-center gap-2">
                           {project.name}
+                          {project.forSale && (
+                            <span className="px-2 py-1 rounded-full text-[11px] font-semibold border backdrop-blur-sm bg-red-500 border-red-500/70 animate-pulse">
+                              À Venda
+                            </span>
+                          )}
                         </h3>
                         <p className="text-muted-foreground text-sm">
                           {project.description}
