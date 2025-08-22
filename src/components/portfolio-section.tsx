@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { Eye } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 interface Project {
   id: string;
@@ -17,6 +18,7 @@ interface Project {
     | "Identidade Visual"
     | "UI/UX Design";
   description: string;
+  forSale?: boolean;
 }
 
 const projects: Project[] = [
@@ -26,6 +28,7 @@ const projects: Project[] = [
     image: "/projects/myimob.png",
     type: "Sites Corporativos",
     description: "Presença digital profissional",
+    forSale: true, // Marcando alguns projetos como à venda
   },
   {
     id: "2",
@@ -40,6 +43,7 @@ const projects: Project[] = [
     image: "/projects/croche.png",
     type: "Landing Pages",
     description: "Página de conversão",
+    forSale: true, // Marcando alguns projetos como à venda
   },
   {
     id: "4",
@@ -54,6 +58,7 @@ const projects: Project[] = [
     image: "/projects/capsule.png",
     type: "Identidade Visual",
     description: "Logo e branding completo",
+    forSale: true, // Marcando alguns projetos como à venda
   },
   {
     id: "6",
@@ -71,14 +76,7 @@ const projects: Project[] = [
   },
 ];
 
-const typeColors = {
-  "Sites Corporativos": "bg-blue-500/20 text-blue-400 border-blue-500/30",
-  "E-commerce": "bg-green-500/20 text-green-400 border-green-500/30",
-  "Landing Pages": "bg-purple-500/20 text-purple-400 border-purple-500/30",
-  "Aplicativos Web": "bg-orange-500/20 text-orange-400 border-orange-500/30",
-  "Identidade Visual": "bg-pink-500/20 text-pink-400 border-pink-500/30",
-  "UI/UX Design": "bg-cyan-500/20 text-cyan-400 border-cyan-500/30",
-};
+// const typeColors = { ... };
 
 export default function PortfolioSection() {
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
@@ -144,17 +142,13 @@ export default function PortfolioSection() {
                           </div>
                         </div>
 
-                        {/* Type Badge */}
-                        <div className="absolute top-4 left-4">
-                          <span
-                            className={cn(
-                              "px-3 py-1 rounded-full text-xs font-medium border backdrop-blur-sm",
-                              typeColors[project.type]
-                            )}
-                          >
-                            {project.type}
-                          </span>
-                        </div>
+                        {project.forSale && (
+                          <div className="absolute top-4 right-4">
+                            <span className="px-3 py-1 rounded-full text-xs font-medium border backdrop-blur-sm bg-red-500  border-red-500/70 animate-pulse">
+                              À Venda
+                            </span>
+                          </div>
+                        )}
                       </div>
 
                       {/* Project Info */}
@@ -175,7 +169,7 @@ export default function PortfolioSection() {
               <div className="portfolio-group">
                 {projects.map((project) => (
                   <div
-                    key={project.id}
+                    key={`${project.id}-duplicate`}
                     className="flex-shrink-0 w-80 group cursor-pointer"
                     onMouseEnter={() => setHoveredProject(project.id)}
                     onMouseLeave={() => setHoveredProject(null)}
@@ -204,17 +198,13 @@ export default function PortfolioSection() {
                           </div>
                         </div>
 
-                        {/* Type Badge */}
-                        <div className="absolute top-4 left-4">
-                          <span
-                            className={cn(
-                              "px-3 py-1 rounded-full text-xs font-medium border backdrop-blur-sm",
-                              typeColors[project.type]
-                            )}
-                          >
-                            {project.type}
-                          </span>
-                        </div>
+                        {project.forSale && (
+                          <div className="absolute top-4 right-4">
+                            <span className="px-3 py-1 rounded-full text-xs font-medium border backdrop-blur-sm bg-red-500  border-red-500/70 animate-pulse">
+                              À Venda
+                            </span>
+                          </div>
+                        )}
                       </div>
 
                       {/* Project Info */}
@@ -235,9 +225,11 @@ export default function PortfolioSection() {
 
           {/* Call to Action */}
           <div className="text-center mt-16">
-            <button className="bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 text-white font-bold px-8 py-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-              Ver todos os projetos
-            </button>
+            <Link href="/projetos">
+              <button className="bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 text-white font-bold px-8 py-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                Ver todos os projetos
+              </button>
+            </Link>
           </div>
         </div>
       </div>
