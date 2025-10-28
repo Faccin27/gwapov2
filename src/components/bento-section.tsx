@@ -44,7 +44,6 @@ export function BentoSection() {
 	return (
 		<section className="w-full max-w-7xl mx-auto px-5 flex flex-col justify-center items-center overflow-visible bg-transparent pb-52">
 			<div className="w-full relative flex flex-col justify-start items-start gap-6">
-				<div className="w-[547px] h-[938px] fixed top-[214px] left-[320px] origin-top-left rotate-[-33.39deg] bg-rose-500/10 blur-[130px] z-0" />
 				<div className="self-stretch flex flex-col gap-6 z-10">
 					{/* First row: 2 cards */}
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
