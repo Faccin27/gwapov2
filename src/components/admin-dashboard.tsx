@@ -1,6 +1,7 @@
 "use client"
 import { useState, useEffect } from "react"
 import { BarChart3, Database, Shield, Zap, HardDrive, MessageSquare, Globe, ChevronRight } from "lucide-react"
+import Image from "next/image"
 
 const sidebarItems = [
   { name: "Overview", icon: BarChart3, active: true },
@@ -35,11 +36,14 @@ export default function AdminDashboard() {
       <div className="w-48 bg-[#19191c] border-r border-zinc-800 flex flex-col">
         {/* Header */}
         <div className="p-4 border-b border-zinc-800">
-          <div className="flex items-center gap-2 text-zinc-400 text-sm mb-1">
-            <span className="text-white font-medium">gwapo</span>
-            <span>/</span>
-            <span>Acme Corp</span>
-            <span>/</span>
+          <div className="flex items-center justify-center gap-2 text-zinc-400 text-sm mb-1">
+            <Image
+								src="/logos-svg/6.svg"
+								alt="Gwapo Logo"
+								width={80}
+								height={80}
+								className="object-contain"
+							/>
           </div>
         </div>
 

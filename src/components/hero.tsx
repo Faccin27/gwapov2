@@ -138,9 +138,8 @@ interface ToolItemProps {
 function ToolItem({ tool, index }: ToolItemProps) {
 	return (
 		<div
-			className={`group tech-item relative flex h-16 w-16 max-w-[66px] max-h-[66px] items-center justify-center border-dashed border-[#ffffff0f] md:mt-0 md:w-full lg:border-r ${
-				index === 0 ? "lg:border-l" : ""
-			}`}
+			className={`group tech-item relative flex h-16 w-16 max-w-[66px] max-h-[66px] items-center justify-center border-dashed border-[#ffffff0f] md:mt-0 md:w-full lg:border-r ${index === 0 ? "lg:border-l" : ""
+				}`}
 		>
 			{/* Gradient background */}
 			<div
@@ -300,7 +299,9 @@ export default function Hero() {
 								Ver Portfólio
 								<ArrowRight className="w-5 h-5" />
 							</a>
+
 						</div>
+
 					</div>
 					<div className="md:hidden w-full mt-8">
 						<div className="relative h-64 sm:h-80 w-full">
@@ -378,17 +379,16 @@ export default function Hero() {
 									{group.map((svg, index) => (
 										<div
 											key={index}
-											className={`flex-1 max-w-[200px] h-12 flex items-center justify-center transition-all duration-[1500ms] ease-in-out ${
-												groupIndex === currentGroup
+											className={`flex-1 max-w-[200px] h-12 flex items-center justify-center transition-all duration-[1500ms] ease-in-out ${groupIndex === currentGroup
+												? isTransitioning
+													? "transform -translate-y-full opacity-0 blur-[8px]"
+													: "transform translate-y-0 opacity-100 blur-0"
+												: groupIndex === (currentGroup + 1) % svgGroups.length
 													? isTransitioning
-														? "transform -translate-y-full opacity-0 blur-[8px]"
-														: "transform translate-y-0 opacity-100 blur-0"
-													: groupIndex === (currentGroup + 1) % svgGroups.length
-														? isTransitioning
-															? "transform translate-y-0 opacity-100 blur-0"
-															: "transform translate-y-full opacity-0 blur-[8px]"
+														? "transform translate-y-0 opacity-100 blur-0"
 														: "transform translate-y-full opacity-0 blur-[8px]"
-											}`}
+													: "transform translate-y-full opacity-0 blur-[8px]"
+												}`}
 											style={{
 												aspectRatio: "8/2",
 												transitionDelay: `${index * 100}ms`,
@@ -407,17 +407,16 @@ export default function Hero() {
 									{group.map((svg, index) => (
 										<div
 											key={index}
-											className={`h-8 flex items-center justify-center transition-all duration-[1500ms] ease-in-out ${
-												groupIndex === currentGroup
+											className={`h-8 flex items-center justify-center transition-all duration-[1500ms] ease-in-out ${groupIndex === currentGroup
+												? isTransitioning
+													? "transform -translate-y-full opacity-0 blur-[8px]"
+													: "transform translate-y-0 opacity-100 blur-0"
+												: groupIndex === (currentGroup + 1) % svgGroups.length
 													? isTransitioning
-														? "transform -translate-y-full opacity-0 blur-[8px]"
-														: "transform translate-y-0 opacity-100 blur-0"
-													: groupIndex === (currentGroup + 1) % svgGroups.length
-														? isTransitioning
-															? "transform translate-y-0 opacity-100 blur-0"
-															: "transform translate-y-full opacity-0 blur-[8px]"
+														? "transform translate-y-0 opacity-100 blur-0"
 														: "transform translate-y-full opacity-0 blur-[8px]"
-											}`}
+													: "transform translate-y-full opacity-0 blur-[8px]"
+												}`}
 											style={{
 												aspectRatio: "8/2",
 												transitionDelay: `${index * 100}ms`,

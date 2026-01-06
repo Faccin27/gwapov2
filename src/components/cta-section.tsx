@@ -47,11 +47,11 @@ const CTASection = () => {
 					<div className="w-max mx-auto lg:mx-0">
 						<div className="flex size-20 mb-6">
 							<Image
-								src="/icons/heart.svg"
+								src="/logos-svg/5-1.svg"
 								alt="Gwapo Logo"
 								width={80}
 								height={80}
-								className="object-cover size-full rounded-lg"
+								className="object-contain size-full rounded-lg"
 							/>
 						</div>
 						<div className="flex flex-col lg:flex-row items-start lg:items-center gap-4">

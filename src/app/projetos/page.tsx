@@ -11,12 +11,12 @@ interface Project {
   name: string;
   image: string;
   type:
-    | "Sites Corporativos"
-    | "E-commerce"
-    | "Landing Pages"
-    | "Aplicativos Web"
-    | "Identidade Visual"
-    | "UI/UX Design";
+  | "Sites Corporativos"
+  | "E-commerce"
+  | "Landing Pages"
+  | "Aplicativos Web"
+  | "Identidade Visual"
+  | "UI/UX Design";
   description: string;
   forSale?: boolean;
   year: number;
@@ -156,6 +156,18 @@ export default function ProjectsPage() {
               <h1 className="text-2xl font-bold text-foreground">
                 Todos os Projetos<span className="text-rose-500">_</span>
               </h1>
+            </div>
+            <div className="flex hover:scale-105 transition-all duration-300">
+              <Link
+                href={'/'}>
+                <Image
+                  src="/logos-svg/5.svg"
+                  alt="Gwapo Logo"
+                  width={130}
+                  height={130}
+                  className="object-contain rounded-lg"
+                />
+              </Link>
             </div>
           </div>
         </div>

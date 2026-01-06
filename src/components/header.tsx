@@ -180,35 +180,26 @@ export default function Header() {
 					<div className="flex items-center space-x-8">
 						<Link href="/" className="flex items-center space-x-3">
 							<img
-								src="/logo.png"
+								src="/logos-svg/5.svg"
 								alt="Gwapo"
-								className="w-20 h-20 object-cover rounded"
+								className="w-36 h-36 object-contain rounded"
 							/>
-							<span
-								className={`text-2xl mb-2 -translate-x-4 font-aeonik font-bold transition-colors duration-300 ${
-									isOverWhiteSection ? "text-gray-900" : "text-white"
-								}`}
-							>
-								gwapo
-							</span>
 						</Link>
 
 						{/* Desktop Navigation */}
 						<nav className="hidden lg:flex items-center space-x-2">
 							<Link
 								href="/servicos"
-								className={`inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-bold transition-colors hover:bg-rose-50/10 hover:text-rose-400 focus:bg-rose-50/10 focus:text-rose-400 focus:outline-none ${
-									isOverWhiteSection ? "text-gray-900" : "text-white"
-								}`}
+								className={`inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-bold transition-colors hover:bg-rose-50/10 hover:text-rose-400 focus:bg-rose-50/10 focus:text-rose-400 focus:outline-none ${isOverWhiteSection ? "text-gray-900" : "text-white"
+									}`}
 							>
 								Serviços
 							</Link>
 
 							<Link
 								href="/producoes"
-								className={`inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-bold transition-colors hover:bg-rose-50/10 hover:text-rose-400 focus:bg-rose-50/10 focus:text-rose-400 focus:outline-none ${
-									isOverWhiteSection ? "text-gray-900" : "text-white"
-								}`}
+								className={`inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-bold transition-colors hover:bg-rose-50/10 hover:text-rose-400 focus:bg-rose-50/10 focus:text-rose-400 focus:outline-none ${isOverWhiteSection ? "text-gray-900" : "text-white"
+									}`}
 							>
 								Produções
 							</Link>
@@ -217,9 +208,8 @@ export default function Header() {
 							<div className="relative">
 								<button
 									ref={portfolioButtonRef}
-									className={`inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-bold transition-colors hover:bg-rose-50/10 hover:text-rose-400 focus:bg-rose-50/10 focus:text-rose-400 focus:outline-none ${
-										isOverWhiteSection ? "text-gray-900" : "text-white"
-									}`}
+									className={`inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-bold transition-colors hover:bg-rose-50/10 hover:text-rose-400 focus:bg-rose-50/10 focus:text-rose-400 focus:outline-none ${isOverWhiteSection ? "text-gray-900" : "text-white"
+										}`}
 									onClick={handlePortfolioClick}
 									onMouseEnter={handlePortfolioEnter}
 									onMouseLeave={handlePortfolioLeave}
@@ -351,9 +341,8 @@ export default function Header() {
 
 							<Link
 								href="/contato"
-								className={`inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-bold transition-colors hover:bg-rose-50/10 hover:text-rose-400 focus:bg-rose-50/10 focus:text-rose-400 focus:outline-none ${
-									isOverWhiteSection ? "text-gray-900" : "text-white"
-								}`}
+								className={`inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-bold transition-colors hover:bg-rose-50/10 hover:text-rose-400 focus:bg-rose-50/10 focus:text-rose-400 focus:outline-none ${isOverWhiteSection ? "text-gray-900" : "text-white"
+									}`}
 							>
 								Contato
 							</Link>
@@ -385,14 +374,11 @@ export default function Header() {
 						<div className="flex flex-col h-screen">
 							{/* Header */}
 							<div className="flex items-center justify-between p-4 border-b border-gray-800">
-								<div className="flex items-center space-x-3">
-									<img
-										src="/gwapo-logo.png"
-										alt="Gwapo"
-										className="w-8 h-8 object-cover rounded"
-									/>
-									<span className="text-xl font-bold text-rose-500">gwapo</span>
-								</div>
+								<img
+									src="/logos-svg/5.svg"
+									alt="Gwapo"
+									className="w-36 object-contain rounded"
+								/>
 								<Button
 									variant="ghost"
 									size="icon"
