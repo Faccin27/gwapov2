@@ -47,40 +47,57 @@
 }
 
 :root {
-    --background: #19191c /* #0f1211 */
-    --foreground: 160 14% 93%; /* #e7eceb */
+  --background: #19191c;
+  /* #0f1211 */
+  --foreground: 160 14% 93%;
+  /* #e7eceb */
 
-    --muted: 240 2% 16%; /* #27272a */
-    --muted-foreground: 160 14% 93% / 0.7; /* rgba(231, 236, 235, 0.7) */
-    --muted-foreground-light: 160 14% 93% / 0.5; /* rgba(231, 236, 235, 0.5) */
-    --muted-foreground-dark: 160 14% 93% / 0.6; /* rgba(231, 236, 235, 0.6) */
+  --muted: 240 2% 16%;
+  /* #27272a */
+  --muted-foreground: 160 14% 93% / 0.7;
+  /* rgba(231, 236, 235, 0.7) */
+  --muted-foreground-light: 160 14% 93% / 0.5;
+  /* rgba(231, 236, 235, 0.5) */
+  --muted-foreground-dark: 160 14% 93% / 0.6;
+  /* rgba(231, 236, 235, 0.6) */
 
-    --card: 220 17% 98% / 0.01;
-    --card-foreground: 160 14% 93%;
+  --card: 220 17% 98% / 0.01;
+  --card-foreground: 160 14% 93%;
 
-    --popover: 210 11% 7%;
-    --popover-foreground: 160 14% 93%;
+  --popover: 210 11% 7%;
+  --popover-foreground: 160 14% 93%;
 
-    /* Primary Accent Colors */
-    --primary: 165 96% 71%; /* #78fcd6 */
-    --primary-foreground: 160 8% 6%; /* #0d0f0e */
-    --primary-dark: 160 100% 50%; /* #00ffb6 */
-    --primary-light: 160 48% 87%; /* New variable for lighter teal/green shades */
+  /* Primary Accent Colors */
+  --primary: 165 96% 71%;
+  /* #78fcd6 */
+  --primary-foreground: 160 8% 6%;
+  /* #0d0f0e */
+  --primary-dark: 160 100% 50%;
+  /* #00ffb6 */
+  --primary-light: 160 48% 87%;
+  /* New variable for lighter teal/green shades */
 
-    /* Secondary Accent Colors (for buttons, etc.) */
-    --secondary: 160 14% 93%; /* #e7eceb */
-    --secondary-foreground: 165 14% 8%; /* #141a18 */
+  /* Secondary Accent Colors (for buttons, etc.) */
+  --secondary: 160 14% 93%;
+  /* #e7eceb */
+  --secondary-foreground: 165 14% 8%;
+  /* #141a18 */
 
-    --accent: 240 2% 25%; /* #3f3f42 */
-    --accent-foreground: 240 2% 96%; /* #f4f4f5 */
+  --accent: 240 2% 25%;
+  /* #3f3f42 */
+  --accent-foreground: 240 2% 96%;
+  /* #f4f4f5 */
 
-    --border: #27272a; /* rgba(255, 255, 255, 0.08) */
-    --border-light: 210 17% 6% / 0.1; /* rgba(16,24,40,0.1) */
-    --border-dark: 210 17% 6% / 0.05; /* rgba(16,24,40,0.05) */
+  --border: #27272a;
+  /* rgba(255, 255, 255, 0.08) */
+  --border-light: 210 17% 6% / 0.1;
+  /* rgba(16,24,40,0.1) */
+  --border-dark: 210 17% 6% / 0.05;
+  /* rgba(16,24,40,0.05) */
 
-    --ring: 165 96% 71%;
+  --ring: 165 96% 71%;
 
-    --radius: 0.5rem;
+  --radius: 0.5rem;
 }
 
 .dark {
@@ -117,13 +134,15 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
-html{
+html {
   background-color: #19191c;
 }
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -133,7 +152,6 @@ html{
   font-family: var(--font-aeonik), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, "Noto Sans", sans-serif;
 }
-
 
 .portfolio-carousel {
   display: flex;
@@ -150,7 +168,8 @@ html{
   display: flex;
   gap: 24px;
   flex-shrink: 0;
-  width: calc(7 * (320px + 24px)); /* 7 projetos * (largura + gap) */
+  width: calc(7 * (320px + 24px));
+  /* 7 projetos * (largura + gap) */
 }
 
 @media (max-width: 768px) {
@@ -163,11 +182,11 @@ html{
   0% {
     transform: translate3d(0, 0, 0);
   }
+
   100% {
     transform: translate3d(calc(-7 * (320px + 24px)), 0, 0);
   }
 }
-
 
 ::-webkit-scrollbar {
   display: none;
@@ -175,10 +194,110 @@ html{
 
 /* Para Firefox */
 html {
-  scrollbar-width: none; /* oculta a barra */
+  scrollbar-width: none;
+  /* oculta a barra */
 }
 
 /* Para IE/Edge antigo */
 body {
-  -ms-overflow-style: none; /* IE e Edge legado */
+  -ms-overflow-style: none;
+  /* IE e Edge legado */
+}
+
+.neon-glow:hover {
+  box-shadow: 0 0 2rem #fd366e52;
+}
+
+@layer utilities {
+  .btn-inner-exact {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.5rem;
+
+    /* Fundo  */
+    background: rgba(253, 54, 110, 0.04);
+
+    /* Luz interna vinda de baixo */
+    box-shadow: inset 0 -6px 10px rgba(253, 54, 110, 0.18);
+
+    transition: background 200ms ease, box-shadow 200ms ease;
+  }
+
+  .btn-inner-exact::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+
+    /* Grad superior*/
+    background: linear-gradient(
+      to bottom,
+      rgba(253, 54, 110, 0.05) 0%,
+      rgba(253, 54, 110, 0) 10%
+    );
+
+    pointer-events: none;
+  }
+
+  .btn-inner-exact::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+
+    /* Highlight branco topo */
+    background: radial-gradient(
+      42.86% 42.86% at 50.55% 0%,
+      rgba(255, 255, 255, 0.15) 0%,
+      rgba(255, 255, 255, 0) 70%
+    );
+
+    pointer-events: none;
+  }
+
+  .btn-inner-exact:hover {
+    background: rgba(253, 54, 110, 0.06);
+    box-shadow: inset 0 -8px 14px rgba(253, 54, 110, 0.14);
+  }
+
+  .btn-neon-border {
+    --border-angle: 0turn;
+
+    position: relative;
+    border: 1px solid transparent;
+    border-radius: 0.5rem;
+
+    background:
+      /* Fundo real do botão */
+      rgba(253, 54, 110, 0.04) padding-box,
+
+      /* Borda animada (inicialmente invisível) */
+      conic-gradient(
+        from var(--border-angle),
+        transparent 20%,
+        rgba(253, 54, 110, 0.9),
+        rgba(253, 54, 110, 0.6),
+        transparent 80%
+      ) border-box;
+
+    transition: background 200ms ease;
+  }
+
+  .btn-neon-border:hover {
+    animation: neon-spin 2.5s linear infinite;
+  }
+
+  @keyframes neon-spin {
+    to {
+      --border-angle: 1turn;
+    }
+  }
+  
+}
+
+/* Permite animar custom property */
+@property --border-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0turn;
 }
