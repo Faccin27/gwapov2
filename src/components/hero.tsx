@@ -282,22 +282,7 @@ export default function Hero() {
 								Vamos começar
 							</a>
 
-							<a
-								href="#"
-								className="
-								btn-inner-exact
-								btn-neon-border
-								flex items-center justify-center gap-x-2
-								py-2 px-5 lg:px-6
-								text-gray-200 font-medium
-								rounded-lg
-								text-sm lg:text-base
-								relative z-30
-							"
-							>
-								Ver Portfólio
-								<ArrowRight className="w-4 h-4 lg:w-5 lg:h-5" />
-							</a>
+							<a href="#" className="btn-inner-exact flex items-center justify-center gap-x-2 py-2 px-5 lg:px-6 text-gray-200 font-medium border border-[#fd356e] rounded-lg text-sm lg:text-base transition-colors duration-150 relative z-30" > Ver Portfólio <ArrowRight className="w-4 h-4 lg:w-5 lg:h-5" /> </a>
 
 						</div>
 					</div>
@@ -352,14 +337,14 @@ export default function Hero() {
 										<div
 											key={index}
 											className={`flex-1 max-w-[140px] md:max-w-[160px] lg:max-w-[200px] h-10 md:h-12 flex items-center justify-center transition-all duration-[1500ms] ease-in-out ${groupIndex === currentGroup
+												? isTransitioning
+													? "transform -translate-y-full opacity-0 blur-[8px]"
+													: "transform translate-y-0 opacity-100 blur-0"
+												: groupIndex === (currentGroup + 1) % svgGroups.length
 													? isTransitioning
-														? "transform -translate-y-full opacity-0 blur-[8px]"
-														: "transform translate-y-0 opacity-100 blur-0"
-													: groupIndex === (currentGroup + 1) % svgGroups.length
-														? isTransitioning
-															? "transform translate-y-0 opacity-100 blur-0"
-															: "transform translate-y-full opacity-0 blur-[8px]"
+														? "transform translate-y-0 opacity-100 blur-0"
 														: "transform translate-y-full opacity-0 blur-[8px]"
+													: "transform translate-y-full opacity-0 blur-[8px]"
 												}`}
 											style={{
 												aspectRatio: "8/2",
@@ -379,14 +364,14 @@ export default function Hero() {
 										<div
 											key={index}
 											className={`h-8 flex items-center justify-center transition-all duration-[1500ms] ease-in-out ${groupIndex === currentGroup
+												? isTransitioning
+													? "transform -translate-y-full opacity-0 blur-[8px]"
+													: "transform translate-y-0 opacity-100 blur-0"
+												: groupIndex === (currentGroup + 1) % svgGroups.length
 													? isTransitioning
-														? "transform -translate-y-full opacity-0 blur-[8px]"
-														: "transform translate-y-0 opacity-100 blur-0"
-													: groupIndex === (currentGroup + 1) % svgGroups.length
-														? isTransitioning
-															? "transform translate-y-0 opacity-100 blur-0"
-															: "transform translate-y-full opacity-0 blur-[8px]"
+														? "transform translate-y-0 opacity-100 blur-0"
 														: "transform translate-y-full opacity-0 blur-[8px]"
+													: "transform translate-y-full opacity-0 blur-[8px]"
 												}`}
 											style={{
 												aspectRatio: "8/2",
