@@ -40,7 +40,7 @@ export function BentoSection() {
   ]
 
   return (
-    <section className="w-full max-w-7xl mx-auto px-5 flex flex-col justify-center items-center overflow-visible bg-transparent pb-52">
+    <section className="w-full max-w-7xl mx-auto px-5 flex flex-col justify-center items-center overflow-visible bg-transparent">
       <div className="w-full relative flex flex-col justify-start items-start gap-6">
         <div className="self-stretch flex flex-col gap-4 md:gap-5 lg:gap-6 z-10">
           <div className="flex flex-col gap-4 md:hidden">
