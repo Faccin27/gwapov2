@@ -122,7 +122,13 @@ const projectsData = [
   },
 ]
 
-export default function ProjectDetail({ params }: { params: { id: string } }) {
+export default async function ProjectDetail({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+
+  return <ProjectDetailClient id={id} />
+}
+
+function ProjectDetailClient({ id }: { id: string }) {
   const [project, setProject] = useState<any>(null)
   const [relatedProjects, setRelatedProjects] = useState<any[]>([])
   const [selectedImage, setSelectedImage] = useState<string>("")
@@ -137,7 +143,7 @@ export default function ProjectDetail({ params }: { params: { id: string } }) {
     gsap.registerPlugin(ScrollTrigger)
 
     // Find the project based on the ID
-    const projectId = Number.parseInt(params.id)
+    const projectId = Number.parseInt(id)
     const foundProject = projectsData.find((p) => p.id === projectId)
 
     if (foundProject) {
@@ -243,7 +249,7 @@ export default function ProjectDetail({ params }: { params: { id: string } }) {
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
     }
-  }, [params.id])
+  }, [id])
 
   if (!project) {
     return (
