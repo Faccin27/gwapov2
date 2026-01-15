@@ -291,7 +291,7 @@ export default function Hero() {
               </a>
             </div>
           </div>
-          <div className="md:hidden lg:block w-full mt-8 lg:hidden">
+          <div className="md:hidden lg:block w-full mt-8">
             <div className="relative h-64 sm:h-80 w-full">
               <Image src="/image.png" fill className="object-cover rounded-lg" alt="Team working on a laptop" />
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent via-50% to-[#19191c] rounded-lg" />
