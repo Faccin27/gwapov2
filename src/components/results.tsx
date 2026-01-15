@@ -25,7 +25,7 @@ export default function MaximizeResultsSection() {
         </div>
 
         {/* Right Image Area */}
-        <div className="hidden md:flex flex-1 justify-center md:justify-end">
+        <div className="hidden lg:flex flex-1 justify-center md:justify-end">
           <div className="relative w-[533px] h-[570px] md:max-w-full sm:max-w-[75%] max-w-[60%]">
             <Image
               src="/woman.webp"

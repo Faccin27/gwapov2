@@ -24,34 +24,36 @@ export function Footer() {
 
   return (
     <footer className="text-white relative overflow-hidden">
-      <div className="px-6 lg:px-36 py-16 border-b border-white/10">
-        <div className="grid lg:grid-cols-3 gap-12">
-          <div className="space-y-6 text-center lg:text-left">
-            <h3 className="text-xl font-bold text-white mb-6">Entre em Contato</h3>
+      <div className="px-6 md:px-12 lg:px-36 py-12 md:py-14 lg:py-16 border-b border-white/10">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-8 lg:gap-12">
+          <div className="space-y-6 text-center md:text-left">
+            <h3 className="text-lg md:text-xl font-bold text-white mb-4 md:mb-6">Entre em Contato</h3>
             <div className="space-y-4">
-              <div className="flex items-center justify-center lg:justify-start gap-3 text-[#a0a0a0] hover:text-white transition-colors">
-                <Mail className="w-5 h-5 text-rose-400" />
-                <span>contact@gwapo.com.br</span>
+              <div className="flex items-center justify-center md:justify-start gap-3 text-[#a0a0a0] hover:text-white transition-colors">
+                <Mail className="w-5 h-5 text-rose-400 flex-shrink-0" />
+                <span className="text-sm md:text-base">contact@gwapo.com.br</span>
               </div>
-              <div className="flex items-center justify-center lg:justify-start gap-3 text-[#a0a0a0] hover:text-white transition-colors">
-                <Phone className="w-5 h-5 text-rose-400" />
-                <span>(49) 99921-5720</span>
+              <div className="flex items-center justify-center md:justify-start gap-3 text-[#a0a0a0] hover:text-white transition-colors">
+                <Phone className="w-5 h-5 text-rose-400 flex-shrink-0" />
+                <span className="text-sm md:text-base">(49) 99921-5720</span>
               </div>
-              <div className="flex items-center justify-center lg:justify-start gap-3 text-[#a0a0a0] hover:text-white transition-colors">
-                <Users className="w-5 h-5 text-rose-400" />
-                Guilherme <span className="text-rose-400">&&</span> Willian
+              <div className="flex items-center justify-center md:justify-start gap-3 text-[#a0a0a0] hover:text-white transition-colors">
+                <Users className="w-5 h-5 text-rose-400 flex-shrink-0" />
+                <span className="text-sm md:text-base">
+                  Guilherme <span className="text-rose-400">&&</span> Willian
+                </span>
               </div>
             </div>
           </div>
 
-          <div className="space-y-6 text-center lg:text-left">
-            <h3 className="text-xl font-bold text-white mb-6 lg:ml-28">Navegação</h3>
-            <nav className="grid grid-cols-2 gap-3 lg:ml-28 justify-items-center lg:justify-items-start">
+          <div className="space-y-6 text-center md:text-left">
+            <h3 className="text-lg md:text-xl font-bold text-white mb-4 md:mb-6">Navegação</h3>
+            <nav className="grid grid-cols-2 gap-3 justify-items-center md:justify-items-start">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-[#a0a0a0] hover:text-white transition-all hover:translate-x-1 duration-300 text-sm lg:text-base truncate"
+                  className="text-[#a0a0a0] hover:text-white transition-all hover:translate-x-1 duration-300 text-sm md:text-sm lg:text-base truncate w-full"
                 >
                   {link.label}
                 </Link>
@@ -59,9 +61,9 @@ export function Footer() {
             </nav>
           </div>
 
-          <div className="space-y-6 text-center lg:text-left">
-            <h3 className="text-xl font-bold text-white mb-6">Redes Sociais</h3>
-            <div className="flex gap-4 justify-center lg:justify-start">
+          <div className="space-y-6 text-center md:text-left md:col-span-2 lg:col-span-1">
+            <h3 className="text-lg md:text-xl font-bold text-white mb-4 md:mb-6">Redes Sociais</h3>
+            <div className="flex gap-4 justify-center md:justify-start">
               {socialLinks.map((social) => (
                 <Link
                   key={social.label}
@@ -82,16 +84,16 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="relative py-20 lg:py-36 lg:pt-8">
+      <div className="relative py-16 md:py-20 lg:py-36 lg:pt-8">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-10 left-10 w-32 h-32 bg-rose-400/5 rounded-full blur-2xl" />
           <div className="absolute bottom-10 right-10 w-48 h-48 bg-rose-400/5 rounded-full blur-3xl" />
         </div>
 
         {/* Large Text */}
-        <div className="relative z-10 px-6 lg:px-36">
+        <div className="relative z-10 px-6 md:px-12 lg:px-36">
           <div className="text-center">
-            <h2 className="text-[6rem] sm:text-[6rem] md:text-[8rem] lg:text-[14rem] xl:text-[20rem] font-black leading-none tracking-tighter text-white/10 animate-pulse select-none break-all">
+            <h2 className="text-[5rem] sm:text-[6rem] md:text-[10rem] lg:text-[14rem] xl:text-[20rem] font-black leading-none tracking-tighter text-white/10 animate-pulse select-none break-all">
               GWAPO
             </h2>
           </div>
@@ -100,10 +102,10 @@ export function Footer() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent pointer-events-none" />
       </div>
 
-      <div className="px-6 lg:px-36 py-6 border-t border-white/10">
-        <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
-          <div className="text-[#a0a0a0] text-sm">© 2025 Gwapo. Todos os direitos reservados.</div>
-          <div className="text-[#666] ">
+      <div className="px-6 md:px-12 lg:px-36 py-6 border-t border-white/10">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="text-[#a0a0a0] text-xs md:text-sm">© 2025 Gwapo. Todos os direitos reservados.</div>
+          <div className="text-[#666] text-xs md:text-sm">
             desenvolvido com{" "}
             <Link href="/" target="_blank" className="text-rose-400 hover:text-rose-400 transition-colors font-medium">
               Next.js
