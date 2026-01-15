@@ -11,12 +11,12 @@ interface Project {
   name: string;
   image: string;
   type:
-    | "Sites Corporativos"
-    | "E-commerce"
-    | "Landing Pages"
-    | "Aplicativos Web"
-    | "Identidade Visual"
-    | "UI/UX Design";
+  | "Sites Corporativos"
+  | "E-commerce"
+  | "Landing Pages"
+  | "Aplicativos Web"
+  | "Identidade Visual"
+  | "UI/UX Design";
   description: string;
   forSale?: boolean;
 }
@@ -223,7 +223,7 @@ export default function PortfolioSection() {
           {/* Call to Action */}
           <div className="text-center mt-16">
             <Link href="/projetos">
-              <button className="bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 text-white font-bold px-8 py-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+              <button className="btn-inner-exact cursor-pointer gap-x-2 py-3 px-5 lg:px-12 text-gray-200 font-medium border border-[#fd356e] rounded-lg text-sm lg:text-base transition-colors duration-150">
                 Ver todos os projetos
               </button>
             </Link>

@@ -351,7 +351,10 @@ export default function Header() {
 
 					{/* CTA Button */}
 					<div className="hidden lg:flex">
-						<Button className="bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 text-white font-bold px-6">
+						<Button
+							className={`btn-inner-exact flex items-center justify-center gap-x-2 py-2 px-5 lg:px-6
+							${isOverWhiteSection ? "text-gray-900" : "text-gray-200"} text-sm font-bold border border-[#fd356e] rounded-lg transition-colors duration-150`}
+						>
 							Crie meu projeto
 						</Button>
 					</div>

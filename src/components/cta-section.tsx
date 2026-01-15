@@ -55,7 +55,7 @@ const CTASection = () => {
 							/>
 						</div>
 						<div className="flex flex-col lg:flex-row items-start lg:items-center gap-4">
-							<Button className="bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 text-white font-bold px-8 py-4 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+							<Button className="neon-glow block font-semibold py-2 px-5 bg-[#fd356e] hover:bg-[#fd356e] text-white rounded-lg transition-all duration-300 hover:brightness-110">
 								Começar meu projeto
 							</Button>
 							<span className="text-sm text-zinc-300">

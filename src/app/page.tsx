@@ -49,13 +49,14 @@ export default function Home() {
 			<Header />
 			<div ref={smootherRef}>
 				<Hero />
-				<Cardsection />
-				<BentoSection />
 				<div className="bg-white max-w-[96%] mx-auto rounded-4xl">
 					<MaximizeResultsSection />
 					<MetricsSection />
 				</div>
 				<PortfolioSection />
+				<Cardsection />
+				<BentoSection />
+
 				<CTA />
 				<Footer />
 			</div>
