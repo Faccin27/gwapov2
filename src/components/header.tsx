@@ -180,7 +180,7 @@ export default function Header() {
 					<div className="flex items-center space-x-8">
 						<Link href="/" className="flex items-center space-x-3">
 							<img
-								src="/logos-svg/5.svg"
+								src={isOverWhiteSection ? "/logos-svg/7.svg" : "/logos-svg/5.svg"}
 								alt="Gwapo"
 								className="w-36 h-36 object-contain rounded"
 							/>
