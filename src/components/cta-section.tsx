@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 const CTASection = () => {
 	return (
-		<section className="flex flex-col items-center justify-center relative w-full max-w-6xl mx-auto py-16 lg:py-24 overflow-hidden px-4 sm:px-6">
+		<section id="contato" className="flex flex-col items-center justify-center relative w-full max-w-6xl mx-auto py-16 lg:py-24 overflow-hidden px-4 sm:px-6">
 			{/* Background blur effect - similar to other sections */}
 			<div className="w-[300px] h-[400px] absolute top-[50px] right-[30%] bg-rose-500/8 blur-[80px] z-0" />
 
@@ -55,8 +55,14 @@ const CTASection = () => {
 							/>
 						</div>
 						<div className="flex flex-col lg:flex-row items-start lg:items-center gap-4">
-							<Button className="neon-glow block font-semibold py-2 px-5 bg-[#fd356e] hover:bg-[#fd356e] text-white rounded-lg transition-all duration-300 hover:brightness-110">
-								Começar meu projeto
+							<Button asChild className="neon-glow block font-semibold py-2 px-5 bg-[#fd356e] hover:bg-[#fd356e] text-white rounded-lg transition-all duration-300 hover:brightness-110">
+								<a
+									href="https://wa.me/5549999215720"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									Começar meu projeto
+								</a>
 							</Button>
 							<span className="text-sm text-zinc-300">
 								4.9/5 estrelas <br />

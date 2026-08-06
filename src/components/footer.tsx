@@ -1,14 +1,14 @@
 import Link from "next/link"
-import { Mail, Phone, Instagram, Facebook, Twitter, Linkedin, Users } from "lucide-react"
+import { Mail, Phone, Instagram, Users } from "lucide-react"
 
 export function Footer() {
   const navLinks = [
-    { href: "#home", label: "Início" },
-    { href: "#about", label: "Serviços" },
-    { href: "#properties", label: "Produções" },
-    { href: "#services", label: "Portfolio" },
-    { href: "#testimonials", label: "Depoimentos" },
-    { href: "#contact", label: "Contato" },
+    { href: "/", label: "Início" },
+    { href: "/servicos", label: "Serviços" },
+    { href: "/producoes", label: "Produções" },
+    { href: "/projetos", label: "Portfolio" },
+    { href: "/#depoimentos", label: "Depoimentos" },
+    { href: "/#contato", label: "Contato" },
   ]
 
   const socialLinks = [
@@ -17,9 +17,6 @@ export function Footer() {
       href: "https://instagram.com/gui.faccin",
       label: "Instagram",
     },
-    { icon: Facebook, href: "https://faccindev.pro", label: "Facebook" },
-    { icon: Twitter, href: "https://faccindev.pro", label: "Twitter" },
-    { icon: Linkedin, href: "https://faccindev.pro", label: "LinkedIn" },
   ]
 
   return (
@@ -107,7 +104,7 @@ export function Footer() {
           <div className="text-[#a0a0a0] text-xs md:text-sm">© 2025 Gwapo. Todos os direitos reservados.</div>
           <div className="text-[#666] text-xs md:text-sm">
             desenvolvido com{" "}
-            <Link href="/" target="_blank" className="text-rose-400 hover:text-rose-400 transition-colors font-medium">
+            <Link href="https://nextjs.org" target="_blank" className="text-rose-400 hover:text-rose-400 transition-colors font-medium">
               Next.js
             </Link>
           </div>

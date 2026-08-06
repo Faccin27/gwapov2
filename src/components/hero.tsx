@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react"
 import { ArrowRight } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import AdminDashboard from "./admin-dashboard"
@@ -152,13 +153,15 @@ function ToolItem({ tool, index }: ToolItemProps) {
 			{/* Intense noise overlay */}
 			<div className="absolute inset-0 opacity-0 group-hover:opacity-90 transition-opacity duration-300 noise-bg-intense" />
 
-			<a href="#" className="flex items-center justify-center w-full h-full p-2 relative z-10">
-				<img
+			<div className="flex items-center justify-center w-full h-full p-2 relative z-10">
+				<Image
 					src={tool.icon || "/placeholder.svg"}
 					alt={tool.name}
+					width={32}
+					height={32}
 					className="w-7 h-7 md:w-8 md:h-8 object-contain transition-all duration-300 group-hover:scale-110 md:grayscale md:group-hover:grayscale-0"
 				/>
-			</a>
+			</div>
 
 			{/* Tooltip */}
 			<div className="absolute -top-16 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-50 whitespace-nowrap shadow-xl border border-gray-600">
@@ -276,13 +279,15 @@ export default function Hero() {
 							className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-x-3 relative z-20"
 						>
 							<a
-								href="#"
+								href="https://wa.me/5549999215720"
+								target="_blank"
+								rel="noopener noreferrer"
 								className="neon-glow block py-2 px-5 bg-[#fd356e] text-white rounded-lg transition-all duration-300 hover:brightness-110"
 							>
 								Vamos começar
 							</a>
 
-							<a href="#" className="btn-inner-exact flex items-center justify-center gap-x-2 py-2 px-5 lg:px-6 text-gray-200 font-medium border border-[#fd356e] rounded-lg text-sm lg:text-base transition-colors duration-150 relative z-30" > Ver Portfólio <ArrowRight className="w-4 h-4 lg:w-5 lg:h-5" /> </a>
+							<Link href="/projetos" className="btn-inner-exact flex items-center justify-center gap-x-2 py-2 px-5 lg:px-6 text-gray-200 font-medium border border-[#fd356e] rounded-lg text-sm lg:text-base transition-colors duration-150 relative z-30" > Ver Portfólio <ArrowRight className="w-4 h-4 lg:w-5 lg:h-5" /> </Link>
 
 						</div>
 					</div>
@@ -349,12 +354,14 @@ export default function Hero() {
 											style={{
 												aspectRatio: "8/2",
 												transitionDelay: `${index * 100}ms`,
+												position: "relative",
 											}}
 										>
-											<img
+											<Image
 												src={svg.src || "/placeholder.svg"}
 												alt={svg.name}
-												className="w-full h-full object-contain opacity-60 hover:opacity-100 transition-opacity duration-300"
+												fill
+												className="object-contain opacity-60 hover:opacity-100 transition-opacity duration-300"
 											/>
 										</div>
 									))}
@@ -376,12 +383,14 @@ export default function Hero() {
 											style={{
 												aspectRatio: "8/2",
 												transitionDelay: `${index * 100}ms`,
+												position: "relative",
 											}}
 										>
-											<img
+											<Image
 												src={svg.src || "/placeholder.svg"}
 												alt={svg.name}
-												className="w-full h-full object-contain opacity-60 hover:opacity-100 transition-opacity duration-300"
+												fill
+												className="object-contain opacity-60 hover:opacity-100 transition-opacity duration-300"
 											/>
 										</div>
 									))}

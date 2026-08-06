@@ -2,6 +2,7 @@
 
 import { Menu, X, ChevronDown } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -179,9 +180,11 @@ export default function Header() {
 				<div className="flex h-16 items-center justify-between">
 					<div className="flex items-center space-x-8">
 						<Link href="/" className="flex items-center space-x-3">
-							<img
+							<Image
 								src={isOverWhiteSection ? "/logos-svg/7.svg" : "/logos-svg/5.svg"}
 								alt="Gwapo"
+								width={144}
+								height={144}
 								className="w-36 h-36 object-contain rounded"
 							/>
 						</Link>
@@ -236,7 +239,7 @@ export default function Header() {
 													</h3>
 													<div className="grid grid-cols-2 gap-4">
 														<Link
-															href="/portfolio/websites-corporativos"
+															href="/projetos?tipo=Sites+Corporativos"
 															className="group block space-y-1 rounded-md p-3 hover:bg-zinc-700 transition-colors"
 														>
 															<div className="text-sm font-bold text-white group-hover:text-rose-400">
@@ -247,7 +250,7 @@ export default function Header() {
 															</div>
 														</Link>
 														<Link
-															href="/portfolio/e-commerce"
+															href="/projetos?tipo=E-commerce"
 															className="group block space-y-1 rounded-md p-3 hover:bg-zinc-700 transition-colors"
 														>
 															<div className="text-sm font-bold text-white group-hover:text-rose-400">
@@ -258,7 +261,7 @@ export default function Header() {
 															</div>
 														</Link>
 														<Link
-															href="/portfolio/landing-pages"
+															href="/projetos?tipo=Landing+Pages"
 															className="group block space-y-1 rounded-md p-3 hover:bg-zinc-700 transition-colors"
 														>
 															<div className="text-sm font-bold text-white group-hover:text-rose-400">
@@ -269,7 +272,7 @@ export default function Header() {
 															</div>
 														</Link>
 														<Link
-															href="/portfolio/aplicativos"
+															href="/projetos?tipo=Aplicativos+Web"
 															className="group block space-y-1 rounded-md p-3 hover:bg-zinc-700 transition-colors"
 														>
 															<div className="text-sm font-bold text-white group-hover:text-rose-400">
@@ -288,7 +291,7 @@ export default function Header() {
 													</h3>
 													<div className="grid grid-cols-2 gap-4">
 														<Link
-															href="/portfolio/identidade-visual"
+															href="/projetos?tipo=Identidade+Visual"
 															className="group block space-y-1 rounded-md p-3 hover:bg-zinc-700 transition-colors"
 														>
 															<div className="text-sm font-bold text-white group-hover:text-rose-400">
@@ -299,7 +302,7 @@ export default function Header() {
 															</div>
 														</Link>
 														<Link
-															href="/portfolio/ui-ux"
+															href="/projetos?tipo=UI%2FUX+Design"
 															className="group block space-y-1 rounded-md p-3 hover:bg-zinc-700 transition-colors"
 														>
 															<div className="text-sm font-bold text-white group-hover:text-rose-400">
@@ -315,9 +318,11 @@ export default function Header() {
 
 											<div className="relative">
 												<div className="sticky top-0">
-													<img
+													<Image
 														src="/modern-website-showcase.png"
 														alt="Portfolio showcase"
+														width={480}
+														height={300}
 														className="w-full h-[300px] object-cover rounded-lg shadow-lg"
 													/>
 													<div className="absolute inset-0 bg-gradient-to-t from-rose-600/20 to-transparent rounded-lg" />
@@ -340,7 +345,7 @@ export default function Header() {
 							</div>
 
 							<Link
-								href="/contato"
+								href="/#contato"
 								className={`inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-bold transition-colors hover:bg-rose-50/10 hover:text-rose-400 focus:bg-rose-50/10 focus:text-rose-400 focus:outline-none ${isOverWhiteSection ? "text-gray-900" : "text-white"
 									}`}
 							>
@@ -377,9 +382,11 @@ export default function Header() {
 						<div className="flex flex-col h-screen">
 							{/* Header */}
 							<div className="flex items-center justify-between p-4 border-b border-gray-800">
-								<img
+								<Image
 									src="/logos-svg/5.svg"
 									alt="Gwapo"
+									width={144}
+									height={48}
 									className="w-36 object-contain rounded"
 								/>
 								<Button
@@ -442,42 +449,42 @@ export default function Header() {
 										{isPortfolioOpen && (
 											<div className="pl-4 py-2 space-y-2 border-l border-gray-800">
 												<Link
-													href="/portfolio/websites-corporativos"
+													href="/projetos?tipo=Sites+Corporativos"
 													className="block text-gray-400 hover:text-white py-2 transition-colors"
 													onClick={() => setIsOpen(false)}
 												>
 													Sites Corporativos
 												</Link>
 												<Link
-													href="/portfolio/e-commerce"
+													href="/projetos?tipo=E-commerce"
 													className="block text-gray-400 hover:text-white py-2 transition-colors"
 													onClick={() => setIsOpen(false)}
 												>
 													E-commerce
 												</Link>
 												<Link
-													href="/portfolio/landing-pages"
+													href="/projetos?tipo=Landing+Pages"
 													className="block text-gray-400 hover:text-white py-2 transition-colors"
 													onClick={() => setIsOpen(false)}
 												>
 													Landing Pages
 												</Link>
 												<Link
-													href="/portfolio/aplicativos"
+													href="/projetos?tipo=Aplicativos+Web"
 													className="block text-gray-400 hover:text-white py-2 transition-colors"
 													onClick={() => setIsOpen(false)}
 												>
 													Aplicativos Web
 												</Link>
 												<Link
-													href="/portfolio/identidade-visual"
+													href="/projetos?tipo=Identidade+Visual"
 													className="block text-gray-400 hover:text-white py-2 transition-colors"
 													onClick={() => setIsOpen(false)}
 												>
 													Identidade Visual
 												</Link>
 												<Link
-													href="/portfolio/ui-ux"
+													href="/projetos?tipo=UI%2FUX+Design"
 													className="block text-gray-400 hover:text-white py-2 transition-colors"
 													onClick={() => setIsOpen(false)}
 												>
@@ -488,7 +495,7 @@ export default function Header() {
 									</div>
 
 									<Link
-										href="/contato"
+										href="/#contato"
 										className="block text-white hover:text-rose-400 py-4 text-lg transition-colors"
 										onClick={() => setIsOpen(false)}
 									>

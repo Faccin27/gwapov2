@@ -215,6 +215,7 @@ export default function MetricsSection() {
 
   return (
     <section
+      id="depoimentos"
       ref={sectionRef}
       data-section="metrics"
       className="relative w-full overflow-hidden bg-white  mx-auto rounded-b-4xl text-gray-900 border-0 shadow-none"

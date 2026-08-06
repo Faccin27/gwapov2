@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { use, useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { gsap } from "gsap"
@@ -122,8 +122,8 @@ const projectsData = [
   },
 ]
 
-export default async function ProjectDetail({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params
+export default function ProjectDetail({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
 
   return <ProjectDetailClient id={id} />
 }

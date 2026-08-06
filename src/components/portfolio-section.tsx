@@ -82,7 +82,7 @@ export default function PortfolioSection() {
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
 
   return (
-    <section className="w-full py-20 bg-transparent">
+    <section id="producoes" className="w-full py-20 bg-transparent">
       <div className="relative">
         {/* Background blur effect */}
         <div className="w-[400px] h-[600px] absolute top-[100px] left-[50%] transform -translate-x-1/2 bg-rose-500/5 blur-[100px] z-0" />

@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Gwapo
 
-## Getting Started
+Site institucional da Gwapo — agência de criação de sites. Landing page com apresentação de serviços, portfólio de projetos e captação de leads via WhatsApp.
 
-First, run the development server:
+## Stack
+
+- [Next.js 15](https://nextjs.org) (App Router)
+- [React 19](https://react.dev)
+- [Tailwind CSS 4](https://tailwindcss.com)
+- [GSAP](https://gsap.com) (animações e ScrollSmoother)
+- [Radix UI](https://www.radix-ui.com) (dropdown, dialog, navigation menu)
+- TypeScript
+
+## Rodando localmente
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+bun install
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abre em [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Outros scripts:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+bun run build   # build de produção
+bun run start   # roda o build de produção
+bun run lint    # eslint
+```
 
-## Learn More
+## Estrutura
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+  app/
+    page.tsx              # home
+    projetos/              # listagem de projetos (com filtro por tipo via ?tipo=)
+    projetos/[id]/          # detalhe de um projeto
+    layout.tsx             # metadata global, fonte
+    sitemap.ts / robots.ts # SEO
+  components/
+    header.tsx, footer.tsx, hero.tsx, cta-section.tsx, ...  # seções da home
+    bento/                 # showcase visual estilo "produto" (mockups, não interativo de verdade)
+    ui/                    # componentes base (button, dropdown, input, etc.)
+  lib/utils.ts
+public/                    # imagens, ícones, fontes
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Notas
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Os projetos exibidos em `/projetos` estão hardcoded no componente (`allProjects` em `src/app/projetos/page.tsx`). Adicionar um projeto novo hoje exige editar o código e fazer redeploy — não há CMS.
+- O CTA principal do site ("Começar meu projeto" / "Vamos começar") abre WhatsApp direto (`wa.me/5549999215720`).
+- O domínio usado em `layout.tsx`, `sitemap.ts` e `robots.ts` é `https://gwapo.com.br` — confirmar se é o domínio real de produção antes do deploy.

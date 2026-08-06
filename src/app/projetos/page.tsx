@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Eye, Filter, Search } from "lucide-react";
@@ -121,7 +122,21 @@ const typeColors = {
 };
 
 export default function ProjectsPage() {
-  const [selectedType, setSelectedType] = useState("Todos");
+  return (
+    <Suspense fallback={null}>
+      <ProjectsContent />
+    </Suspense>
+  );
+}
+
+function ProjectsContent() {
+  const searchParams = useSearchParams();
+  const tipoParam = searchParams.get("tipo");
+  const initialType = projectTypes.includes(tipoParam ?? "")
+    ? (tipoParam as string)
+    : "Todos";
+
+  const [selectedType, setSelectedType] = useState(initialType);
   const [searchTerm, setSearchTerm] = useState("");
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
   const [showOnlyForSale, setShowOnlyForSale] = useState(false);
