@@ -345,7 +345,7 @@ export default function Header() {
 							</div>
 
 							<Link
-								href="/#contato"
+								href="/contato"
 								className={`inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-bold transition-colors hover:bg-rose-50/10 hover:text-rose-400 focus:bg-rose-50/10 focus:text-rose-400 focus:outline-none ${isOverWhiteSection ? "text-gray-900" : "text-white"
 									}`}
 							>
@@ -495,7 +495,7 @@ export default function Header() {
 									</div>
 
 									<Link
-										href="/#contato"
+										href="/contato"
 										className="block text-white hover:text-rose-400 py-4 text-lg transition-colors"
 										onClick={() => setIsOpen(false)}
 									>

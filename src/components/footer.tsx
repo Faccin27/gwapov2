@@ -8,7 +8,7 @@ export function Footer() {
     { href: "/producoes", label: "Produções" },
     { href: "/projetos", label: "Portfolio" },
     { href: "/#depoimentos", label: "Depoimentos" },
-    { href: "/#contato", label: "Contato" },
+    { href: "/contato", label: "Contato" },
   ]
 
   const socialLinks = [
