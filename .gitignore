@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# SEO audit output (not part of the app, contains binary screenshots)
+/gwapo.com.br-audit/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

@@ -3,7 +3,7 @@
 import { Menu, X, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -12,6 +12,8 @@ import { Button } from "@/components/ui/button";
 if (typeof window !== "undefined") {
 	gsap.registerPlugin(ScrollTrigger);
 }
+
+const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 export default function Header() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -45,7 +47,7 @@ export default function Header() {
 		};
 	}, [isMegaMenuClicked]);
 
-	useEffect(() => {
+	useIsomorphicLayoutEffect(() => {
 		if (typeof window === "undefined") return;
 
 		const ctx = gsap.context(() => {

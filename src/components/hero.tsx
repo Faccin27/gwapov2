@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useLayoutEffect, useRef } from "react"
 import { ArrowRight } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -10,6 +10,8 @@ import AdminDashboard from "./admin-dashboard"
 if (typeof window !== "undefined") {
 	gsap.registerPlugin(ScrollTrigger)
 }
+
+const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect
 
 const tools = [
 	// Front-end
@@ -139,8 +141,9 @@ interface ToolItemProps {
 function ToolItem({ tool, index }: ToolItemProps) {
 	return (
 		<div
-			className={`group tech-item relative flex h-16 w-16 max-w-[72px] max-h-[72px] items-center justify-center border-dashed border-[#ffffff0f] md:mt-0 md:w-full md:max-w-full lg:border-r ${index === 0 ? "lg:border-l" : ""
+			className={`group tech-item tech-item-in relative flex h-16 w-16 max-w-[72px] max-h-[72px] items-center justify-center border-dashed border-[#ffffff0f] md:mt-0 md:w-full md:max-w-full lg:border-r ${index === 0 ? "lg:border-l" : ""
 				}`}
+			style={{ animationDelay: `${(index % 15) * 120}ms` }}
 		>
 			{/* Gradient background */}
 			<div
@@ -159,6 +162,7 @@ function ToolItem({ tool, index }: ToolItemProps) {
 					alt={tool.name}
 					width={32}
 					height={32}
+					priority
 					className="w-7 h-7 md:w-8 md:h-8 object-contain transition-all duration-300 group-hover:scale-110 md:grayscale md:group-hover:grayscale-0"
 				/>
 			</div>
@@ -195,31 +199,16 @@ export default function Hero() {
 		return () => clearInterval(interval)
 	}, [])
 
-	useEffect(() => {
+	useIsomorphicLayoutEffect(() => {
 		if (typeof window === "undefined") return
 
 		const ctx = gsap.context(() => {
 			// Hero entrance animations
+			// Note: the tech-item logos row uses a pure-CSS entrance animation
+			// (.tech-item-in in globals.css) instead of GSAP, so it starts as
+			// soon as the browser paints the element instead of waiting for
+			// React hydration + this effect to run.
 			const tl = gsap.timeline()
-
-			if (techSectionRef.current) {
-				const techItems = techSectionRef.current.querySelectorAll(".tech-item")
-
-				gsap.fromTo(
-					techItems,
-					{
-						x: 200,
-						opacity: 0,
-					},
-					{
-						x: 0,
-						opacity: 1,
-						duration: 0.6, // Slightly faster animation
-						ease: "power2.out",
-						stagger: 0.1, // Faster stagger for quicker completion
-					},
-				)
-			}
 
 			tl.fromTo(titleRef.current, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" })
 				.fromTo(
@@ -260,16 +249,16 @@ export default function Hero() {
 			<div className="max-w-screen-xl mx-auto px-4 sm:px-6 md:px-8 relative z-40">
 				<div className="flex flex-col md:flex-row md:items-start md:gap-x-8 lg:gap-x-12">
 					<div className="flex-none space-y-4 sm:space-y-5 max-w-full md:max-w-[60%] lg:max-w-[50%] xl:max-w-[50%]">
-						<h1 ref={titleRef} className="text-sm text-rose-400 font-medium">
+						<h2 ref={titleRef} className="text-sm text-rose-400 font-medium">
 							Mais de 200 projetos entregues com sucesso
-						</h1>
-						<h2
+						</h2>
+						<h1
 							ref={subtitleRef}
 							className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl text-gray-100 font-extrabold max-w-11/12 leading-tight"
 						>
 							Nós criamos sites que geram resultados
 							<span className="text-rose-500">_</span>
-						</h2>
+						</h1>
 						<p ref={descriptionRef} className="text-gray-300 text-base md:text-base lg:text-lg leading-relaxed">
 							Desenvolvemos sites modernos, rápidos e responsivos, pensados para impulsionar sua presença online e
 							atrair mais clientes para o seu negócio.
@@ -293,7 +282,14 @@ export default function Hero() {
 					</div>
 					<div className="md:hidden lg:block w-full mt-8">
 						<div className="relative h-64 sm:h-80 w-full">
-							<Image src="/image.png" fill className="object-cover rounded-lg" alt="Team working on a laptop" />
+							<Image
+								src="/image.png"
+								fill
+								priority
+								fetchPriority="high"
+								className="object-cover rounded-lg"
+								alt="Team working on a laptop"
+							/>
 							<div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent via-50% to-[#19191c] rounded-lg" />
 						</div>
 					</div>

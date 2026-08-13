@@ -20,10 +20,16 @@ const generateBarData = () => {
   }))
 }
 
+const initialBarData = Array.from({ length: 30 }, (_, i) => ({
+  height: 50,
+  delay: i * 50,
+}))
+
 export default function AdminDashboard() {
-  const [barData, setBarData] = useState(generateBarData())
+  const [barData, setBarData] = useState(initialBarData)
 
   useEffect(() => {
+    setBarData(generateBarData())
     const interval = setInterval(() => {
       setBarData(generateBarData())
     }, 3000)
@@ -77,7 +83,7 @@ export default function AdminDashboard() {
           <div className="flex items-center gap-2 text-zinc-400 text-sm mb-2">
             <span>Build</span>
           </div>
-          <h1 className="text-2xl font-semibold text-white mb-1">Gwapo Project</h1>
+          <p className="text-2xl font-semibold text-white mb-1">Gwapo Project</p>
           <div className="flex items-center gap-2">
             <span className="bg-zinc-800 text-zinc-300 px-2 py-1 rounded text-xs">Project ID</span>
           </div>

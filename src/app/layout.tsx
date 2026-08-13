@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Bai_Jamjuree } from "next/font/google";
 
 import "./globals.css";
+import ScrollToTop from "@/components/scroll-to-top";
 
 const baiJamjuree = Bai_Jamjuree({
 	weight: ["400", "700"],
@@ -11,15 +12,21 @@ const baiJamjuree = Bai_Jamjuree({
 	display: "swap",
 });
 
+const siteUrl = "https://www.gwapo.com.br";
+
 export const metadata: Metadata = {
+	metadataBase: new URL(siteUrl),
 	title: "Gwapo | Criação de sites que geram resultados",
 	description:
 		"Desenvolvemos sites modernos, rápidos e responsivos, pensados para impulsionar sua presença online e atrair mais clientes para o seu negócio. Mais de 200 projetos entregues.",
+	alternates: {
+		canonical: "/",
+	},
 	openGraph: {
 		title: "Gwapo | Criação de sites que geram resultados",
 		description:
 			"Desenvolvemos sites modernos, rápidos e responsivos, pensados para impulsionar sua presença online e atrair mais clientes para o seu negócio.",
-		url: "https://gwapo.com.br",
+		url: siteUrl,
 		siteName: "Gwapo",
 		locale: "pt_BR",
 		type: "website",
@@ -32,6 +39,39 @@ export const metadata: Metadata = {
 	},
 };
 
+const organizationJsonLd = {
+	"@context": "https://schema.org",
+	"@type": "Organization",
+	"@id": `${siteUrl}/#organization`,
+	name: "Gwapo",
+	url: siteUrl,
+	logo: `${siteUrl}/logo.png`,
+	description:
+		"Agência de desenvolvimento web que cria sites modernos, rápidos e responsivos para impulsionar a presença online e atrair mais clientes.",
+	email: "contact@gwapo.com.br",
+	contactPoint: [
+		{
+			"@type": "ContactPoint",
+			telephone: "+55-49-99921-5720",
+			contactType: "customer service",
+			email: "contact@gwapo.com.br",
+			areaServed: "BR",
+			availableLanguage: ["pt-BR"],
+		},
+	],
+	sameAs: ["https://instagram.com/gui.faccin"],
+};
+
+const websiteJsonLd = {
+	"@context": "https://schema.org",
+	"@type": "WebSite",
+	"@id": `${siteUrl}/#website`,
+	url: siteUrl,
+	name: "Gwapo",
+	publisher: { "@id": `${siteUrl}/#organization` },
+	inLanguage: "pt-BR",
+};
+
 export default function RootLayout({
 	children,
 }: Readonly<{
@@ -39,7 +79,18 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="pt-BR">
-			<body className={`${baiJamjuree.className} antialiased`}>{children}</body>
+			<body className={`${baiJamjuree.className} antialiased`}>
+				<script
+					type="application/ld+json"
+					dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+				/>
+				<script
+					type="application/ld+json"
+					dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+				/>
+				<ScrollToTop />
+				{children}
+			</body>
 		</html>
 	);
 }

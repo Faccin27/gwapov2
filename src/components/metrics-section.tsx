@@ -282,9 +282,10 @@ export default function MetricsSection() {
                       transform: "translateY(-50%)",
                     }}
                   >
-                    <p className="font-extrabold text-rose-600 mb-1 text-lg md:text-xl lg:text-2xl">
+                    <p className="font-extrabold text-rose-600 mb-1 text-lg md:text-xl lg:text-2xl" aria-hidden="true">
                       {formatValue(animatedCounts[index], metric.value)}
                     </p>
+                    <span className="sr-only">{metric.value}</span>
                     <p className="font-medium text-gray-800 text-base md:text-lg lg:text-xl">{metric.description}</p>
                   </div>
                 ))}
@@ -296,9 +297,10 @@ export default function MetricsSection() {
                   <div key={index} className="metric-item flex items-center gap-4">
                     <div className="w-1 h-16 bg-rose-500 rounded-full flex-shrink-0" />
                     <div className="flex flex-col">
-                      <p className="font-extrabold text-rose-600 mb-1 text-xl md:text-2xl">
+                      <p className="font-extrabold text-rose-600 mb-1 text-xl md:text-2xl" aria-hidden="true">
                         {formatValue(animatedCounts[index], metric.value)}
                       </p>
+                      <span className="sr-only">{metric.value}</span>
                       <p className="font-medium text-gray-800 text-lg md:text-xl">{metric.description}</p>
                     </div>
                   </div>

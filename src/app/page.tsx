@@ -28,7 +28,6 @@ export default function Home() {
 				wrapper: wrapperRef.current,
 				content: smootherRef.current,
 				smooth: 1.2,
-				effects: true,
 				normalizeScroll: true,
 			});
 		});

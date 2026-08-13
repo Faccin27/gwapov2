@@ -263,12 +263,12 @@ export default function ContactExperience() {
 				<div className="max-w-screen-xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 						<div>
-							<h1 className="text-sm text-rose-400 font-medium mb-4">Fale com a gente</h1>
-							<h2 className="text-4xl sm:text-5xl md:text-6xl text-gray-100 font-extrabold leading-tight">
+							<h2 className="text-sm text-rose-400 font-medium mb-4">Fale com a gente</h2>
+							<h1 className="text-4xl sm:text-5xl md:text-6xl text-gray-100 font-extrabold leading-tight">
 								Bora tirar sua ideia
 								<br />
 								do papel<span className="text-rose-500">_</span>
-							</h2>
+							</h1>
 							<p className="text-gray-300 text-base md:text-lg leading-relaxed max-w-xl mt-6">
 								Conte sobre seu projeto em poucos passos. A gente recebe direto e
 								retorna rapidinho — sem formulário perdido, sem espera.
