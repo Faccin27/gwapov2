@@ -4,6 +4,7 @@ import { Bai_Jamjuree } from "next/font/google";
 
 import "./globals.css";
 import ScrollToTop from "@/components/scroll-to-top";
+import PageTransition from "@/components/page-transition";
 
 const baiJamjuree = Bai_Jamjuree({
 	weight: ["400", "700"],
@@ -89,7 +90,7 @@ export default function RootLayout({
 					dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
 				/>
 				<ScrollToTop />
-				{children}
+				<PageTransition>{children}</PageTransition>
 			</body>
 		</html>
 	);

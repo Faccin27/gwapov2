@@ -227,7 +227,7 @@ export default function MetricsSection() {
           <div className="flex-1 text-center md:text-left max-w-2xl">
             <h2
               ref={titleRef}
-              className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-extrabold leading-tight mb-6"
+              className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-extrabold leading-tight mb-6 opacity-0 translate-y-[50px]"
             >
               Resultados que impulsionam o seu sucesso
             </h2>
@@ -275,7 +275,7 @@ export default function MetricsSection() {
                 {metrics.map((metric, index) => (
                   <div
                     key={index}
-                    className="metric-item absolute text-left text-gray-900 flex flex-col items-start"
+                    className="metric-item absolute text-left text-gray-900 flex flex-col items-start opacity-0"
                     style={{
                       top: metric.position.top,
                       left: metric.position.left,
@@ -294,7 +294,7 @@ export default function MetricsSection() {
               // Mobile layout - stack vertical com barrinha rosa
               <div className="flex flex-col justify-center h-full space-y-8 px-4">
                 {metrics.map((metric, index) => (
-                  <div key={index} className="metric-item flex items-center gap-4">
+                  <div key={index} className="metric-item flex items-center gap-4 opacity-0">
                     <div className="w-1 h-16 bg-rose-500 rounded-full flex-shrink-0" />
                     <div className="flex flex-col">
                       <p className="font-extrabold text-rose-600 mb-1 text-xl md:text-2xl" aria-hidden="true">

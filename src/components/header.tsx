@@ -47,22 +47,32 @@ export default function Header() {
 		};
 	}, [isMegaMenuClicked]);
 
+	// Cheap, purely visual: set before first paint so the header never
+	// flashes fully visible before animating in.
 	useIsomorphicLayoutEffect(() => {
 		if (typeof window === "undefined") return;
 
 		const ctx = gsap.context(() => {
-			// Smooth scroll
 			gsap.to("html", {
 				scrollBehavior: "smooth",
 			});
 
-			// Header entrance animation
 			gsap.fromTo(
 				headerRef.current,
 				{ y: -100, opacity: 0 },
 				{ y: 0, opacity: 1, duration: 0.8, ease: "power2.out" },
 			);
+		}, headerRef);
 
+		return () => ctx.revert();
+	}, []);
+
+	// Ongoing scroll-position tracking (not part of the entrance animation) —
+	// doesn't need to block first paint, so it stays a normal effect.
+	useEffect(() => {
+		if (typeof window === "undefined") return;
+
+		const ctx = gsap.context(() => {
 			ScrollTrigger.create({
 				trigger: "body",
 				start: "top top",
@@ -111,7 +121,7 @@ export default function Header() {
 					setIsOverWhiteSection(isOverWhite);
 				},
 			});
-		}, headerRef);
+		});
 
 		return () => ctx.revert();
 	}, []);
@@ -176,7 +186,7 @@ export default function Header() {
 	return (
 		<header
 			ref={headerRef}
-			className="fixed top-0 left-0 w-screen z-[101] bg-transparent backdrop-blur-lg border-b border-white/10 font-aeonik"
+			className="fixed top-0 left-0 w-screen z-[101] bg-transparent backdrop-blur-lg border-b border-white/10 font-aeonik opacity-0 -translate-y-[100px]"
 		>
 			<div className="container mx-auto px-4 lg:px-6">
 				<div className="flex h-16 items-center justify-between">

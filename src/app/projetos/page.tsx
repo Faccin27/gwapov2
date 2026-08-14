@@ -3,9 +3,10 @@
 import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowLeft, Eye, Filter, Search } from "lucide-react";
+import { Eye, Filter, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Header from "@/components/header";
+import { Footer } from "@/components/footer";
 
 interface Project {
   id: string;
@@ -155,38 +156,7 @@ function ProjectsContent() {
 
   return (
     <div className="min-h-screen bg-[#19191c] text-gray-200">
-      {/* Header */}
-      <div className="border-b border-white/10 bg-background/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Link
-                href="/"
-                className="flex items-center gap-2 text-zinc-300 hover:text-white transition-colors duration-300"
-              >
-                <ArrowLeft className="w-5 h-5" />
-                Voltar
-              </Link>
-              <div className="h-6 w-px bg-white/20" />
-              <h1 className="text-2xl font-bold text-foreground">
-                Todos os Projetos<span className="text-rose-500">_</span>
-              </h1>
-            </div>
-            <div className="flex hover:scale-105 transition-all duration-300">
-              <Link
-                href={'/'}>
-                <Image
-                  src="/logos-svg/5.svg"
-                  alt="Gwapo Logo"
-                  width={130}
-                  height={130}
-                  className="object-contain rounded-lg"
-                />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Header />
 
       <div className="animate-lighting absolute -top-12 left-0 z-0 h-screen w-[200vw] -translate-x-[25%] translate-y-8 rotate-12 overflow-hidden blur-3xl md:w-full bg-[image:radial-gradient(ellipse_390px_50px_at_10%_30%,_rgba(254,_149,_103,_0.5)_0%,_rgba(254,_149,_103,_0)_70%),_radial-gradient(ellipse_1100px_170px_at_15%_40%,_rgba(253,_54,_110,_0.4)_0%,_rgba(253,_54,_110,_0)_70%),_radial-gradient(ellipse_1200px_180px_at_30%_30%,_rgba(253,_54,_110,_0.4)_0%,_rgba(253,_54,_110,_0)_70%)] bg-position-[0%_0%] pointer-events-none" />
 
@@ -194,7 +164,11 @@ function ProjectsContent() {
 
       {/* Bottom glow effect */}
 
-      <div className="max-w-7xl mx-auto px-6 py-12">
+      <div className="max-w-7xl mx-auto px-6 pt-40 md:pt-48 pb-12">
+        <h1 className="text-3xl font-bold text-foreground mb-8">
+          Todos os Projetos<span className="text-rose-500">_</span>
+        </h1>
+
         {/* Filters and Search */}
         <div className="mb-12 space-y-6">
           {/* Search Bar */}
@@ -351,6 +325,8 @@ function ProjectsContent() {
           </div>
         )}
       </div>
+
+      <Footer />
     </div>
   );
 }

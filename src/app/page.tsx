@@ -22,17 +22,26 @@ export default function Home() {
 	const wrapperRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		const ctx = gsap.context(() => {
-			// Initialize ScrollSmoother
-			ScrollSmoother.create({
-				wrapper: wrapperRef.current,
-				content: smootherRef.current,
-				smooth: 1.2,
-				normalizeScroll: true,
+		let ctx: gsap.Context | undefined;
+
+		// Defer ScrollSmoother's (expensive) DOM wrapping/measurement past the
+		// first paint so the browser shows content before doing this work,
+		// instead of the setup itself delaying that first paint.
+		const raf = requestAnimationFrame(() => {
+			ctx = gsap.context(() => {
+				ScrollSmoother.create({
+					wrapper: wrapperRef.current,
+					content: smootherRef.current,
+					smooth: 1.2,
+					normalizeScroll: true,
+				});
 			});
 		});
 
-		return () => ctx.revert();
+		return () => {
+			cancelAnimationFrame(raf);
+			ctx?.revert();
+		};
 	}, []);
 
 	return (
