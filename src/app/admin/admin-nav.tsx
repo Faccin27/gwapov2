@@ -2,12 +2,14 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { LayoutGrid, FileText } from "lucide-react"
+import { LayoutGrid, FileText, BarChart3, Search } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const links = [
 	{ href: "/admin", label: "Projetos", icon: LayoutGrid, exact: true },
+	{ href: "/admin/analytics", label: "Analytics", icon: BarChart3, exact: false },
 	{ href: "/admin/conteudo", label: "Conteúdo do Site", icon: FileText, exact: false },
+	{ href: "/admin/seo", label: "SEO", icon: Search, exact: false },
 ]
 
 export function AdminNav({ variant = "sidebar" }: { variant?: "sidebar" | "mobile" }) {

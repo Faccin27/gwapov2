@@ -17,6 +17,12 @@ export default async function Home() {
 				primaryButtonLink: content.heroPrimaryButtonLink,
 				secondaryButtonText: content.heroSecondaryButtonText,
 			}}
+			ctaContent={{
+				titleLine1: content.ctaTitleLine1,
+				titleHighlight: content.ctaTitleHighlight,
+				buttonText: content.ctaButtonText,
+			}}
+			functionsHeading={content.functionsHeading}
 			footer={<Footer />}
 		/>
 	);

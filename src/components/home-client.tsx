@@ -18,10 +18,12 @@ if (typeof window !== "undefined") {
 
 interface HomeClientProps {
 	heroContent: ComponentProps<typeof Hero>;
+	ctaContent: ComponentProps<typeof CTA>;
+	functionsHeading: string;
 	footer: React.ReactNode;
 }
 
-export default function HomeClient({ heroContent, footer }: HomeClientProps) {
+export default function HomeClient({ heroContent, ctaContent, functionsHeading, footer }: HomeClientProps) {
 	const smootherRef = useRef<HTMLDivElement>(null);
 	const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -61,10 +63,10 @@ export default function HomeClient({ heroContent, footer }: HomeClientProps) {
 					<MetricsSection />
 				</div>
 				<PortfolioSection />
-				<Cardsection />
+				<Cardsection heading={functionsHeading} />
 				<BentoSection />
 
-				<CTA />
+				<CTA {...ctaContent} />
 				{footer}
 			</div>
 		</div>

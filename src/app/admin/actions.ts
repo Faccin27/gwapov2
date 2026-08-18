@@ -7,6 +7,7 @@ import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
 import { slugify, isValidProjectType } from "@/lib/projects"
 import { isValidBentoFeature } from "@/lib/bento-features"
+import { isValidCardTool } from "@/lib/card-tools"
 
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024
 
@@ -68,6 +69,7 @@ function readCommonFields(formData: FormData) {
   const yearRaw = String(formData.get("year") ?? "")
   const forSale = formData.get("forSale") === "on"
   const features = formData.getAll("features").map(String).filter(isValidBentoFeature)
+  const cardTools = formData.getAll("cardTools").map(String).filter(isValidCardTool)
 
   return {
     title,
@@ -79,6 +81,7 @@ function readCommonFields(formData: FormData) {
     year: Number.parseInt(yearRaw, 10),
     forSale,
     features,
+    cardTools,
   }
 }
 
@@ -88,7 +91,7 @@ export async function createProject(
 ): Promise<string | undefined> {
   await requireAdmin()
 
-  const { title, type, description, story, technologies, url, year, forSale, features } = readCommonFields(formData)
+  const { title, type, description, story, technologies, url, year, forSale, features, cardTools } = readCommonFields(formData)
 
   if (!title || !description) return "Título e descrição são obrigatórios."
   if (!isValidProjectType(type)) return "Categoria inválida."
@@ -114,11 +117,11 @@ export async function createProject(
   }
 
   await prisma.project.create({
-    data: { slug, title, type, description, story, images, technologies, url, year, forSale, features },
+    data: { slug, title, type, description, story, images, technologies, url, year, forSale, features, cardTools },
   })
 
   revalidatePath("/admin")
-  revalidatePath("/projetos")
+  revalidatePath("/projetos", "layout")
   revalidatePath("/")
   redirect("/admin")
 }
@@ -130,7 +133,7 @@ export async function updateProject(
 ): Promise<string | undefined> {
   await requireAdmin()
 
-  const { title, type, description, story, technologies, url, year, forSale, features } = readCommonFields(formData)
+  const { title, type, description, story, technologies, url, year, forSale, features, cardTools } = readCommonFields(formData)
 
   if (!title || !description) return "Título e descrição são obrigatórios."
   if (!isValidProjectType(type)) return "Categoria inválida."
@@ -161,59 +164,16 @@ export async function updateProject(
 
   await prisma.project.update({
     where: { id },
-    data: { title, type, description, story, images: finalImages, technologies, url, year, forSale, features },
+    data: { title, type, description, story, images: finalImages, technologies, url, year, forSale, features, cardTools },
   })
 
   await deleteBlobImages(removedImages)
 
   revalidatePath("/admin")
-  revalidatePath("/projetos")
+  revalidatePath("/projetos", "layout")
   revalidatePath(`/projetos/${current.slug}`)
   revalidatePath("/")
   redirect("/admin")
-}
-
-export async function updateSiteContent(
-  _prevState: string | undefined,
-  formData: FormData,
-): Promise<string | undefined> {
-  await requireAdmin()
-
-  const field = (name: string) => String(formData.get(name) ?? "").trim()
-
-  const data = {
-    heroBadge: field("heroBadge"),
-    heroTitle: field("heroTitle"),
-    heroDescription: field("heroDescription"),
-    heroPrimaryButtonText: field("heroPrimaryButtonText"),
-    heroPrimaryButtonLink: field("heroPrimaryButtonLink"),
-    heroSecondaryButtonText: field("heroSecondaryButtonText"),
-    projectsBadge: field("projectsBadge"),
-    projectsTitle: field("projectsTitle"),
-    projectsDescription: field("projectsDescription"),
-    footerEmail: field("footerEmail"),
-    footerPhone: field("footerPhone"),
-    footerTeamText: field("footerTeamText"),
-    footerSocialText: field("footerSocialText"),
-    footerInstagramUrl: field("footerInstagramUrl"),
-    footerCopyright: field("footerCopyright"),
-  }
-
-  for (const [key, value] of Object.entries(data)) {
-    if (!value) return `O campo "${key}" não pode ficar vazio.`
-  }
-
-  await prisma.siteContent.upsert({
-    where: { id: "main" },
-    create: { id: "main", ...data },
-    update: data,
-  })
-
-  revalidatePath("/admin/conteudo")
-  revalidatePath("/")
-  revalidatePath("/projetos")
-
-  return "Conteúdo atualizado com sucesso."
 }
 
 export async function deleteProject(id: string): Promise<void> {
@@ -226,6 +186,6 @@ export async function deleteProject(id: string): Promise<void> {
   await prisma.project.delete({ where: { id } })
 
   revalidatePath("/admin")
-  revalidatePath("/projetos")
+  revalidatePath("/projetos", "layout")
   revalidatePath("/")
 }
