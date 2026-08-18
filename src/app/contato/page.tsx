@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import Header from "@/components/header";
 import { Footer } from "@/components/footer";
 import ContactExperience from "@/components/contact-experience";
+import { getSiteContent } from "@/lib/site-content";
+import { parseContactQuestions } from "@/lib/contact-questions";
+
+export const revalidate = 300;
 
 export const metadata: Metadata = {
 	title: "Contato | Gwapo",
@@ -21,7 +25,9 @@ const breadcrumbJsonLd = {
 	],
 };
 
-export default function ContatoPage() {
+export default async function ContatoPage() {
+	const content = await getSiteContent();
+
 	return (
 		<div className="bg-[#19191c] text-gray-200 min-h-screen font-aeonik">
 			<script
@@ -29,7 +35,13 @@ export default function ContatoPage() {
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
 			/>
 			<Header />
-			<ContactExperience />
+			<ContactExperience
+				contactEmail={content.footerEmail}
+				contactPhone={content.footerPhone}
+				instagramUrl={content.footerInstagramUrl}
+				whatsappNumber={content.contactWhatsappNumber}
+				questions={parseContactQuestions(content.contactQuestions)}
+			/>
 			<Footer />
 		</div>
 	);

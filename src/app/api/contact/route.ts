@@ -1,16 +1,18 @@
 import { NextResponse } from "next/server";
+import { getSiteContent } from "@/lib/site-content";
+
+interface ContactAnswer {
+	question: string;
+	answer: string;
+}
 
 interface ContactPayload {
 	name: string;
 	email?: string;
 	phone?: string;
 	businessName?: string;
-	segment?: string;
 	currentSite?: string;
-	goal?: string;
-	service?: string;
-	budget?: string;
-	timeline?: string;
+	answers?: ContactAnswer[];
 	message?: string;
 }
 
@@ -20,10 +22,11 @@ function field(name: string, value: string | undefined, inline = true) {
 }
 
 export async function POST(request: Request) {
-	const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
+	const content = await getSiteContent();
+	const webhookUrl = content.contactWebhookUrl || process.env.DISCORD_WEBHOOK_URL;
 	if (!webhookUrl) {
 		return NextResponse.json(
-			{ error: "DISCORD_WEBHOOK_URL não configurada no servidor." },
+			{ error: "Nenhum webhook configurado. Defina um em /admin/conteudo/contato." },
 			{ status: 500 }
 		);
 	}
@@ -39,16 +42,16 @@ export async function POST(request: Request) {
 		return NextResponse.json({ error: "Nome é obrigatório." }, { status: 400 });
 	}
 
+	const dynamicFields = Array.isArray(body.answers)
+		? body.answers.slice(0, 20).map((a) => field((a.question || "Pergunta").slice(0, 200), a.answer))
+		: [];
+
 	const fields = [
 		field("E-mail", body.email),
 		field("Telefone", body.phone),
 		field("Negócio", body.businessName),
-		field("Segmento", body.segment),
-		field("Objetivo principal", body.goal),
 		field("Site/rede atual", body.currentSite, false),
-		field("Serviço de interesse", body.service),
-		field("Orçamento", body.budget),
-		field("Prazo desejado", body.timeline),
+		...dynamicFields,
 		field("Detalhes do projeto", body.message, false),
 	].filter((f): f is { name: string; value: string; inline: boolean } => f !== null);
 

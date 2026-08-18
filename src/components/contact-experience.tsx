@@ -17,8 +17,8 @@ import {
 	ChevronDown,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const WHATSAPP_NUMBER = "5549999215720";
+import type { ContactQuestion } from "@/lib/contact-questions";
+import Link from "next/link";
 
 const previewChat = [
 	{ from: "user" as const, text: "Oi! Preciso de um site pra minha loja 🛍️" },
@@ -54,72 +54,13 @@ const faqs = [
 	},
 ];
 
-const segmentOptions = [
-	"Varejo / E-commerce",
-	"Serviços",
-	"Saúde",
-	"Educação",
-	"Alimentação",
-	"Tecnologia",
-	"Imobiliário",
-	"Outro",
-];
-
-const goalOptions = [
-	"Vender online",
-	"Gerar leads e contatos",
-	"Passar mais credibilidade",
-	"Divulgar portfólio",
-	"Automatizar um processo interno",
-];
-
-const serviceOptions = [
-	"Site institucional",
-	"E-commerce",
-	"Landing page",
-	"Aplicativo web",
-	"Identidade visual",
-	"UI/UX Design",
-	"Ainda não sei",
-];
-
-const budgetOptions = [
-	"Até R$ 2 mil",
-	"R$ 2 mil – R$ 5 mil",
-	"R$ 5 mil – R$ 10 mil",
-	"Acima de R$ 10 mil",
-	"Prefiro conversar",
-];
-
-const timelineOptions = [
-	"Urgente (até 2 semanas)",
-	"Até 1 mês",
-	"2 a 3 meses",
-	"Sem pressa definida",
-];
-
-const contactChannels = [
-	{
-		icon: Mail,
-		label: "E-mail",
-		value: "contact@gwapo.com.br",
-		href: "mailto:contact@gwapo.com.br",
-	},
-	{
-		icon: Phone,
-		label: "WhatsApp",
-		value: "(49) 99921-5720",
-		href: `https://wa.me/${WHATSAPP_NUMBER}`,
-	},
-	{
-		icon: Instagram,
-		label: "Instagram",
-		value: "@gui.faccin",
-		href: "https://instagram.com/gui.faccin",
-	},
-];
-
-const stepLabels = ["Você", "Negócio", "Serviço", "Orçamento", "Prazo", "Detalhes"];
+interface ContactExperienceProps {
+	contactEmail?: string;
+	contactPhone?: string;
+	instagramUrl?: string;
+	whatsappNumber?: string;
+	questions?: ContactQuestion[];
+}
 
 interface Particle {
 	tx: number;
@@ -141,7 +82,27 @@ function buildParticles(): Particle[] {
 	});
 }
 
-export default function ContactExperience() {
+export default function ContactExperience({
+	contactEmail = "contact@gwapo.com.br",
+	contactPhone = "(49) 99921-5720",
+	instagramUrl = "https://instagram.com/gui.faccin",
+	whatsappNumber = "5549999215720",
+	questions = [],
+}: ContactExperienceProps) {
+	const instagramHandle = instagramUrl.replace(/^https?:\/\/(www\.)?instagram\.com\//, "@").replace(/\/$/, "");
+
+	const contactChannels = [
+		{ icon: Mail, label: "E-mail", value: contactEmail, href: `mailto:${contactEmail}` },
+		{ icon: Phone, label: "WhatsApp", value: contactPhone, href: `https://wa.me/${whatsappNumber}` },
+		{ icon: Instagram, label: "Instagram", value: instagramHandle, href: instagramUrl },
+	];
+
+	// Fixed steps: "Você" (0) and "Negócio" (1) always exist; then one step per
+	// admin-defined question; then a final free-text "Detalhes" step.
+	const questionStepStart = 2;
+	const totalSteps = questionStepStart + questions.length + 1;
+	const detailsStep = totalSteps - 1;
+
 	const spotlightRef = useRef<HTMLDivElement>(null);
 
 	const [step, setStep] = useState(0);
@@ -149,12 +110,8 @@ export default function ContactExperience() {
 	const [email, setEmail] = useState("");
 	const [phone, setPhone] = useState("");
 	const [businessName, setBusinessName] = useState("");
-	const [segment, setSegment] = useState<string | null>(null);
 	const [currentSite, setCurrentSite] = useState("");
-	const [goal, setGoal] = useState<string | null>(null);
-	const [service, setService] = useState<string | null>(null);
-	const [budget, setBudget] = useState<string | null>(null);
-	const [timeline, setTimeline] = useState<string | null>(null);
+	const [answers, setAnswers] = useState<Record<string, string>>({});
 	const [message, setMessage] = useState("");
 
 	const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
@@ -174,22 +131,25 @@ export default function ContactExperience() {
 		return () => window.removeEventListener("mousemove", handleMove);
 	}, []);
 
-	const canContinue =
-		step === 0
-			? name.trim().length > 1
-			: step === 1
-				? businessName.trim().length > 1
-				: step === 2
-					? !!service
-					: step === 3
-						? !!budget
-						: step === 4
-							? !!timeline
-							: true;
+	const currentQuestion =
+		step >= questionStepStart && step < questionStepStart + questions.length
+			? questions[step - questionStepStart]
+			: null;
+
+	const canContinue = (() => {
+		if (step === 0) return name.trim().length > 1;
+		if (step === 1) return businessName.trim().length > 1;
+		if (currentQuestion) {
+			if (!currentQuestion.required) return true;
+			const value = answers[currentQuestion.id];
+			return currentQuestion.type === "choice" ? !!value : !!value?.trim();
+		}
+		return true;
+	})();
 
 	const goNext = () => {
 		if (!canContinue) return;
-		setStep((s) => Math.min(stepLabels.length - 1, s + 1));
+		setStep((s) => Math.min(totalSteps - 1, s + 1));
 	};
 	const goBack = () => setStep((s) => Math.max(0, s - 1));
 
@@ -200,6 +160,10 @@ export default function ContactExperience() {
 		setErrorMessage(null);
 
 		try {
+			const answerPairs = questions
+				.map((q) => ({ question: q.question, answer: (answers[q.id] ?? "").trim() }))
+				.filter((a) => a.answer);
+
 			const res = await fetch("/api/contact", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
@@ -208,12 +172,8 @@ export default function ContactExperience() {
 					email,
 					phone,
 					businessName,
-					segment,
 					currentSite,
-					goal,
-					service,
-					budget,
-					timeline,
+					answers: answerPairs,
 					message,
 				}),
 			});
@@ -244,6 +204,13 @@ export default function ContactExperience() {
 			// clipboard unavailable — silently ignore
 		}
 	};
+
+	const stepHeading = (() => {
+		if (step === 0) return "Você";
+		if (step === 1) return "Negócio";
+		if (currentQuestion) return currentQuestion.question;
+		return "Detalhes";
+	})();
 
 	return (
 		<>
@@ -364,7 +331,7 @@ export default function ContactExperience() {
 						))}
 
 						<a
-							href={`https://wa.me/${WHATSAPP_NUMBER}`}
+							href={`https://wa.me/${whatsappNumber}`}
 							target="_blank"
 							rel="noopener noreferrer"
 							className="flex items-center justify-center gap-2 rounded-2xl border border-dashed border-white/15 p-5 text-sm font-medium text-gray-300 hover:border-rose-500/40 hover:text-rose-300 hover:bg-white/[0.02] transition-all duration-300"
@@ -421,18 +388,23 @@ export default function ContactExperience() {
 										Recebemos sua mensagem e já vamos te chamar. Enquanto isso, fica
 										à vontade pra dar uma olhada nos nossos projetos.
 									</p>
+									<Link href="/projetos" className="btn-inner-exact flex items-center justify-center gap-x-2 mt-6 py-2 px-5 lg:px-6 text-gray-200 font-medium border border-[#fd356e] rounded-lg text-sm lg:text-base transition-colors duration-150 relative z-30">
+										Ver Portfólio
+										<ArrowRight className="w-4 h-4 lg:w-5 lg:h-5" />
+									</Link>
+
 								</div>
 							) : (
 								<>
-									<div className="flex items-center justify-between mb-8">
-										<span className="text-xs font-semibold uppercase tracking-widest text-rose-400">
-											Passo {step + 1} de {stepLabels.length} — {stepLabels[step]}
+									<div className="flex items-center justify-between mb-8 gap-4">
+										<span className="text-xs font-semibold uppercase tracking-widest text-rose-400 line-clamp-1">
+											Passo {step + 1} de {totalSteps} — {stepHeading}
 										</span>
 										<a
-											href={`https://wa.me/${WHATSAPP_NUMBER}`}
+											href={`https://wa.me/${whatsappNumber}`}
 											target="_blank"
 											rel="noopener noreferrer"
-											className="inline-flex items-center gap-1.5 rounded-full border border-white/10 px-3 py-1 text-xs text-gray-400 hover:border-rose-500/40 hover:text-rose-300 transition-all duration-300"
+											className="shrink-0 inline-flex items-center gap-1.5 rounded-full border border-white/10 px-3 py-1 text-xs text-gray-400 hover:border-rose-500/40 hover:text-rose-300 transition-all duration-300"
 										>
 											Pular pro WhatsApp
 											<ArrowRight className="w-3 h-3" />
@@ -486,49 +458,6 @@ export default function ContactExperience() {
 													placeholder="Nome da empresa ou marca"
 													className="w-full bg-transparent border-b-2 border-white/10 focus:border-rose-500 outline-none text-xl md:text-2xl text-white placeholder:text-gray-600 py-3 transition-colors duration-300"
 												/>
-
-												<p className="text-xs uppercase tracking-widest text-gray-500 mt-8 mb-3">
-													Segmento
-												</p>
-												<div className="flex flex-wrap gap-2">
-													{segmentOptions.map((opt) => (
-														<button
-															type="button"
-															key={opt}
-															onClick={() => setSegment(opt)}
-															className={cn(
-																"rounded-full border px-4 py-2 text-sm transition-all duration-300",
-																segment === opt
-																	? "border-rose-500/60 bg-rose-500/10 text-rose-300"
-																	: "border-white/10 bg-white/[0.02] text-gray-300 hover:border-white/20 hover:bg-white/[0.05]"
-															)}
-														>
-															{opt}
-														</button>
-													))}
-												</div>
-
-												<p className="text-xs uppercase tracking-widest text-gray-500 mt-8 mb-3">
-													Objetivo principal
-												</p>
-												<div className="flex flex-wrap gap-2">
-													{goalOptions.map((opt) => (
-														<button
-															type="button"
-															key={opt}
-															onClick={() => setGoal(opt)}
-															className={cn(
-																"rounded-full border px-4 py-2 text-sm transition-all duration-300",
-																goal === opt
-																	? "border-rose-500/60 bg-rose-500/10 text-rose-300"
-																	: "border-white/10 bg-white/[0.02] text-gray-300 hover:border-white/20 hover:bg-white/[0.05]"
-															)}
-														>
-															{opt}
-														</button>
-													))}
-												</div>
-
 												<input
 													value={currentSite}
 													onChange={(e) => setCurrentSite(e.target.value)}
@@ -538,82 +467,46 @@ export default function ContactExperience() {
 											</div>
 										)}
 
-										{step === 2 && (
+										{currentQuestion && (
 											<div>
 												<h3 className="text-2xl md:text-3xl font-bold text-white mb-6">
-													Qual serviço você precisa?
+													{currentQuestion.question}
 												</h3>
-												<div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-													{serviceOptions.map((opt) => (
-														<button
-															type="button"
-															key={opt}
-															onClick={() => setService(opt)}
-															className={cn(
-																"rounded-xl border px-4 py-3 text-sm text-left transition-all duration-300",
-																service === opt
-																	? "border-rose-500/60 bg-rose-500/10 text-rose-300"
-																	: "border-white/10 bg-white/[0.02] text-gray-300 hover:border-white/20 hover:bg-white/[0.05]"
-															)}
-														>
-															{opt}
-														</button>
-													))}
-												</div>
+												{currentQuestion.type === "choice" ? (
+													<div className="flex flex-wrap gap-2">
+														{currentQuestion.options.map((opt) => (
+															<button
+																type="button"
+																key={opt}
+																onClick={() =>
+																	setAnswers((a) => ({ ...a, [currentQuestion.id]: opt }))
+																}
+																className={cn(
+																	"rounded-full border px-4 py-2 text-sm transition-all duration-300",
+																	answers[currentQuestion.id] === opt
+																		? "border-rose-500/60 bg-rose-500/10 text-rose-300"
+																		: "border-white/10 bg-white/[0.02] text-gray-300 hover:border-white/20 hover:bg-white/[0.05]"
+																)}
+															>
+																{opt}
+															</button>
+														))}
+													</div>
+												) : (
+													<textarea
+														value={answers[currentQuestion.id] ?? ""}
+														onChange={(e) =>
+															setAnswers((a) => ({ ...a, [currentQuestion.id]: e.target.value }))
+														}
+														rows={5}
+														placeholder="Sua resposta"
+														className="w-full rounded-xl border border-white/10 bg-white/[0.02] focus:border-rose-500 outline-none text-sm md:text-base text-white placeholder:text-gray-600 p-4 transition-colors duration-300 resize-none"
+													/>
+												)}
 											</div>
 										)}
 
-										{step === 3 && (
-											<div>
-												<h3 className="text-2xl md:text-3xl font-bold text-white mb-6">
-													Qual sua faixa de orçamento?
-												</h3>
-												<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-													{budgetOptions.map((opt) => (
-														<button
-															type="button"
-															key={opt}
-															onClick={() => setBudget(opt)}
-															className={cn(
-																"rounded-xl border px-4 py-3 text-sm text-left transition-all duration-300",
-																budget === opt
-																	? "border-rose-500/60 bg-rose-500/10 text-rose-300"
-																	: "border-white/10 bg-white/[0.02] text-gray-300 hover:border-white/20 hover:bg-white/[0.05]"
-															)}
-														>
-															{opt}
-														</button>
-													))}
-												</div>
-											</div>
-										)}
-
-										{step === 4 && (
-											<div>
-												<h3 className="text-2xl md:text-3xl font-bold text-white mb-6">
-													Qual o prazo desejado?
-												</h3>
-												<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-													{timelineOptions.map((opt) => (
-														<button
-															type="button"
-															key={opt}
-															onClick={() => setTimeline(opt)}
-															className={cn(
-																"rounded-xl border px-4 py-3 text-sm text-left transition-all duration-300",
-																timeline === opt
-																	? "border-rose-500/60 bg-rose-500/10 text-rose-300"
-																	: "border-white/10 bg-white/[0.02] text-gray-300 hover:border-white/20 hover:bg-white/[0.05]"
-															)}
-														>
-															{opt}
-														</button>
-													))}
-												</div>
-											</div>
-										)}
-
-										{step === 5 && (
+										{step === detailsStep && (
 											<div>
 												<h3 className="text-2xl md:text-3xl font-bold text-white mb-6">
 													Conte mais sobre seu projeto
@@ -626,7 +519,7 @@ export default function ContactExperience() {
 													className="w-full rounded-xl border border-white/10 bg-white/[0.02] focus:border-rose-500 outline-none text-sm md:text-base text-white placeholder:text-gray-600 p-4 transition-colors duration-300 resize-none"
 												/>
 												<div className="flex flex-wrap gap-2 mt-5">
-													{[businessName, segment, goal, service, budget, timeline]
+													{[businessName, ...Object.values(answers)]
 														.filter(Boolean)
 														.map((tag) => (
 															<span
@@ -659,7 +552,7 @@ export default function ContactExperience() {
 										</button>
 
 										<div className="flex items-center gap-2">
-											{stepLabels.map((_, i) => (
+											{Array.from({ length: totalSteps }).map((_, i) => (
 												<span
 													key={i}
 													className={cn(
@@ -670,7 +563,7 @@ export default function ContactExperience() {
 											))}
 										</div>
 
-										{step < stepLabels.length - 1 ? (
+										{step < totalSteps - 1 ? (
 											<button
 												type="button"
 												onClick={goNext}
@@ -716,7 +609,7 @@ export default function ContactExperience() {
 				</div>
 			</section>
 
-						{/* FAQ */}
+			{/* FAQ */}
 			<section className="relative z-10 py-16 md:py-20 border-b border-[#ffffff0f]">
 				<div className="max-w-screen-xl mx-auto px-4 sm:px-6 md:px-8">
 					<div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] gap-10 items-start">
