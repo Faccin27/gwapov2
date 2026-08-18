@@ -44,7 +44,7 @@ const DatabaseBentoContent: React.FC<DatabaseBentoContentProps> = ({ isHovered }
       >
         <div className="flex items-center gap-2 mb-4">
           <Users className="w-5 h-5 text-primary" />
-          <h3 className="text-foreground text-lg font-semibold">Users Database</h3>
+          <p className="text-foreground text-lg font-semibold">Users Database</p>
           <span className="ml-auto text-sm text-muted-foreground">{users.length} records</span>
         </div>
 

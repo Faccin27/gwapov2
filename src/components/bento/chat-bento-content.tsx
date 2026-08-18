@@ -120,14 +120,14 @@ const ChatBentoContent: React.FC<ChatBentoContentProps> = ({ isHovered }) => {
           </svg>
         </div>
         <div>
-          <h3
+          <p
             className={cn(
               "font-semibold text-sm transition-all duration-300",
               isHovered ? "text-foreground" : "text-muted-foreground",
             )}
           >
             Assistente IA
-          </h3>
+          </p>
           <p
             className={cn(
               "text-xs transition-all duration-300",

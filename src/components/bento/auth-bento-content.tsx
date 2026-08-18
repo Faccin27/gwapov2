@@ -87,7 +87,7 @@ const AuthBentoContent: React.FC<AuthBentoContentProps> = ({ isHovered }) => {
         <div className="w-full space-y-2">
           {/* Header */}
           <div className="text-center mb-3">
-            <h3 className="text-white text-sm font-semibold mb-0.5">Welcome back</h3>
+            <p className="text-white text-sm font-semibold mb-0.5">Welcome back</p>
             <p className="text-gray-400 text-xs">Sign in to your account</p>
           </div>
 

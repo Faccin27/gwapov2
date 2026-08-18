@@ -13,20 +13,20 @@ const baiJamjuree = Bai_Jamjuree({
 	display: "swap",
 });
 
-const siteUrl = "https://www.gwapo.com.br";
+const siteUrl = "https://gwapo.com.br";
 
 export const metadata: Metadata = {
 	metadataBase: new URL(siteUrl),
 	title: "Gwapo | Criação de sites que geram resultados",
 	description:
-		"Desenvolvemos sites modernos, rápidos e responsivos, pensados para impulsionar sua presença online e atrair mais clientes para o seu negócio. Mais de 200 projetos entregues.",
+		"Criação de sites profissionais, rápidos e responsivos para gerar mais clientes. +200 projetos entregues com a Gwapo. Peça seu orçamento sem compromisso.",
 	alternates: {
 		canonical: "/",
 	},
 	openGraph: {
 		title: "Gwapo | Criação de sites que geram resultados",
 		description:
-			"Desenvolvemos sites modernos, rápidos e responsivos, pensados para impulsionar sua presença online e atrair mais clientes para o seu negócio.",
+			"Criação de sites profissionais, rápidos e responsivos para gerar mais clientes. +200 projetos entregues com a Gwapo. Peça seu orçamento sem compromisso.",
 		url: siteUrl,
 		siteName: "Gwapo",
 		locale: "pt_BR",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 		card: "summary_large_image",
 		title: "Gwapo | Criação de sites que geram resultados",
 		description:
-			"Desenvolvemos sites modernos, rápidos e responsivos, pensados para impulsionar sua presença online e atrair mais clientes para o seu negócio.",
+			"Criação de sites profissionais, rápidos e responsivos para gerar mais clientes. +200 projetos entregues com a Gwapo. Peça seu orçamento sem compromisso.",
 	},
 };
 

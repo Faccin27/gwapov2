@@ -17,8 +17,8 @@ const breadcrumbJsonLd = {
 	"@context": "https://schema.org",
 	"@type": "BreadcrumbList",
 	itemListElement: [
-		{ "@type": "ListItem", position: 1, name: "Início", item: "https://www.gwapo.com.br" },
-		{ "@type": "ListItem", position: 2, name: "Serviços", item: "https://www.gwapo.com.br/servicos" },
+		{ "@type": "ListItem", position: 1, name: "Início", item: "https://gwapo.com.br" },
+		{ "@type": "ListItem", position: 2, name: "Serviços", item: "https://gwapo.com.br/servicos" },
 	],
 };
 

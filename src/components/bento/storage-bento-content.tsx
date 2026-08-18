@@ -112,14 +112,14 @@ const StorageBentoContent: React.FC<StorageBentoContentProps> = ({ isHovered }) 
           </div>
 
           <div className="text-center space-y-1">
-            <h4
+            <p
               className={cn(
                 "text-foreground font-semibold text-sm transition-opacity duration-150", // Changed to opacity transition
                 isTextTransitioning ? "opacity-0" : "opacity-100",
               )}
             >
               {isHovered ? "Ready to upload!" : "Drag & drop files"}
-            </h4>
+            </p>
             <p
               className={cn(
                 "text-muted-foreground text-xs transition-opacity duration-150", // Changed to opacity transition

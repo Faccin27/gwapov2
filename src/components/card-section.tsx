@@ -16,37 +16,37 @@ export default function cardsection() {
 							<div className="bg-zinc-700/40 flex h-full w-fit items-center justify-center gap-2 rounded-full px-3 py-2 backdrop-blur-lg">
 								<span className="text-[#f4f4f4] flex items-center justify-center gap-1 font-medium">
 									<Image src="/auth.png" alt="Auth" width={32} height={32} className="w-8 h-8" />
-									<h3 className="text-label text-[#f4f4f4]">Auth</h3>
+									<span className="text-label text-[#f4f4f4]">Auth</span>
 								</span>
 							</div>
 							<div className="bg-zinc-700/40 flex h-full w-fit items-center justify-center gap-2 rounded-full px-3 py-2 backdrop-blur-lg">
 								<span className="text-[#f4f4f4] flex items-center justify-center gap-1 font-medium">
 									<Image src="/databases.png" alt="Databases" width={32} height={32} className="w-8 h-8" />
-									<h3 className="text-label text-[#f4f4f4]">Databases</h3>
+									<span className="text-label text-[#f4f4f4]">Databases</span>
 								</span>
 							</div>
 							<div className="bg-zinc-700/40 flex h-full w-fit items-center justify-center gap-2 rounded-full px-3 py-2 backdrop-blur-lg">
 								<span className="text-[#f4f4f4] flex items-center justify-center gap-1 font-medium">
 									<Image src="/storage.png" alt="Storage" width={32} height={32} className="w-8 h-8" />
-									<h3 className="text-label text-[#f4f4f4]">Storage</h3>
+									<span className="text-label text-[#f4f4f4]">Storage</span>
 								</span>
 							</div>
 							<div className="bg-zinc-700/40 flex h-full w-fit items-center justify-center gap-2 rounded-full px-3 py-2 backdrop-blur-lg">
 								<span className="text-[#f4f4f4] flex items-center justify-center gap-1 font-medium">
 									<Image src="/functions.png" alt="Functions" width={32} height={32} className="w-8 h-8" />
-									<h3 className="text-label text-[#f4f4f4]">Functions</h3>
+									<span className="text-label text-[#f4f4f4]">Functions</span>
 								</span>
 							</div>
 							<div className="bg-zinc-700/40 flex h-full w-fit items-center justify-center gap-2 rounded-full px-3 py-2 backdrop-blur-lg">
 								<span className="text-[#f4f4f4] flex items-center justify-center gap-1 font-medium">
 									<Image src="/realtime.png" alt="Realtime" width={32} height={32} className="w-8 h-8" />
-									<h3 className="text-label text-[#f4f4f4]">Realtime</h3>
+									<span className="text-label text-[#f4f4f4]">Realtime</span>
 								</span>
 							</div>
 							<div className="bg-zinc-700/40 flex h-full w-fit items-center justify-center gap-2 rounded-full px-3 py-2 backdrop-blur-lg">
 								<span className="text-[#f4f4f4] flex items-center justify-center gap-1 font-medium">
 									<Image src="/messaging.png" alt="Messaging" width={32} height={32} className="w-8 h-8" />
-									<h3 className="text-label text-[#f4f4f4]">Messaging</h3>
+									<span className="text-label text-[#f4f4f4]">Messaging</span>
 								</span>
 							</div>
 						</div>
@@ -59,7 +59,7 @@ export default function cardsection() {
 						<div className="bg-zinc-700/40 flex h-full w-fit items-center justify-center gap-2 rounded-full px-3 py-2 backdrop-blur-lg">
 							<span className="text-[#f4f4f4] flex items-center justify-center gap-1 font-medium">
 								<Image src="/sites.png" alt="Sites" width={32} height={32} className="w-8 h-8" />
-								<h3 className="text-xs text-[#f4f4f4]">Sites</h3>
+								<span className="text-xs text-[#f4f4f4]">Sites</span>
 							</span>
 						</div>
 					</div>
