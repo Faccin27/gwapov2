@@ -31,6 +31,23 @@ model SiteContent {
   footerSocialText        String   @default("Siga-nos nas redes sociais para acompanhar bastidores e novidades.")
   footerInstagramUrl      String   @default("https://instagram.com/gui.faccin")
   footerCopyright         String   @default("© 2026 Gwapo. Todos os direitos reservados.")
+  seoTitle                String   @default("Gwapo | Criação de sites que geram resultados")
+  seoDescription          String   @default("Criação de sites profissionais, rápidos e responsivos para gerar mais clientes. +200 projetos entregues com a Gwapo. Peça seu orçamento sem compromisso.")
+  ctaTitleLine1           String   @default("Transforme sua")
+  ctaTitleHighlight       String   @default("ideia em realidade")
+  ctaButtonText           String   @default("Começar meu projeto")
+  functionsHeading        String   @default("Todas as funções que você precisa, em um só lugar")
+  seoKeywords             String   @default("")
+  ogImageUrl              String   @default("")
+  twitterHandle           String   @default("")
+  googleSiteVerification  String   @default("")
+  organizationName        String   @default("Gwapo")
+  organizationDescription String   @default("Agência de desenvolvimento web que cria sites modernos, rápidos e responsivos para impulsionar a presença online e atrair mais clientes.")
+  organizationLogoUrl     String   @default("/logo.png")
+  robotsIndexingEnabled   Boolean  @default(true)
+  contactWhatsappNumber   String   @default("5549999215720")
+  contactWebhookUrl       String   @default("")
+  contactQuestions        Json     @default("[]")
   updatedAt               DateTime @updatedAt
 }
 
@@ -45,9 +62,20 @@ model Project {
   technologies String[]
   url          String?
   features     String[] @default([])
+  cardTools    String[] @default([])
   forSale      Boolean  @default(false)
   year         Int
   order        Int      @default(0)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+}
+
+model PageView {
+  id        String   @id @default(cuid())
+  path      String
+  referrer  String?
+  createdAt DateTime @default(now())
+
+  @@index([path])
+  @@index([createdAt])
 }

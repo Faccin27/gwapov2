@@ -1,0 +1,16 @@
+-- AlterTable
+ALTER TABLE "SiteContent" ADD COLUMN     "contactBudgetOptions" TEXT[] DEFAULT ARRAY['Até R$ 2 mil', 'R$ 2 mil – R$ 5 mil', 'R$ 5 mil – R$ 10 mil', 'Acima de R$ 10 mil', 'Prefiro conversar']::TEXT[],
+ADD COLUMN     "contactGoalOptions" TEXT[] DEFAULT ARRAY['Vender online', 'Gerar leads e contatos', 'Passar mais credibilidade', 'Divulgar portfólio', 'Automatizar um processo interno']::TEXT[],
+ADD COLUMN     "contactSegmentOptions" TEXT[] DEFAULT ARRAY['Varejo / E-commerce', 'Serviços', 'Saúde', 'Educação', 'Alimentação', 'Tecnologia', 'Imobiliário', 'Outro']::TEXT[],
+ADD COLUMN     "contactServiceOptions" TEXT[] DEFAULT ARRAY['Site institucional', 'E-commerce', 'Landing page', 'Aplicativo web', 'Identidade visual', 'UI/UX Design', 'Ainda não sei']::TEXT[],
+ADD COLUMN     "contactTimelineOptions" TEXT[] DEFAULT ARRAY['Urgente (até 2 semanas)', 'Até 1 mês', '2 a 3 meses', 'Sem pressa definida']::TEXT[],
+ADD COLUMN     "contactWebhookUrl" TEXT NOT NULL DEFAULT '',
+ADD COLUMN     "contactWhatsappNumber" TEXT NOT NULL DEFAULT '5549999215720',
+ADD COLUMN     "googleSiteVerification" TEXT NOT NULL DEFAULT '',
+ADD COLUMN     "ogImageUrl" TEXT NOT NULL DEFAULT '',
+ADD COLUMN     "organizationDescription" TEXT NOT NULL DEFAULT 'Agência de desenvolvimento web que cria sites modernos, rápidos e responsivos para impulsionar a presença online e atrair mais clientes.',
+ADD COLUMN     "organizationLogoUrl" TEXT NOT NULL DEFAULT '/logo.png',
+ADD COLUMN     "organizationName" TEXT NOT NULL DEFAULT 'Gwapo',
+ADD COLUMN     "robotsIndexingEnabled" BOOLEAN NOT NULL DEFAULT true,
+ADD COLUMN     "seoKeywords" TEXT NOT NULL DEFAULT '',
+ADD COLUMN     "twitterHandle" TEXT NOT NULL DEFAULT '';
