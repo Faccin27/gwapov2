@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, Calendar, Layers } from "lucide-react";
 import Header from "@/components/header";
 import { Footer } from "@/components/footer";
+import MetricsSection from "@/components/metrics-section";
+import CTASection from "@/components/cta-section";
 import { getProjectBySlug, getRelatedProjects } from "@/lib/projects-db";
 import { ProjectGallery } from "./project-gallery";
 
@@ -144,6 +146,14 @@ export default async function ProjectDetailPage({
 					</div>
 				</section>
 			)}
+
+			<MetricsSection />
+
+			<CTASection
+				titleLine1="Gostou desse projeto?"
+				titleHighlight="Vamos criar o seu"
+				buttonText="Quero um projeto assim"
+			/>
 
 			<Footer />
 		</div>
