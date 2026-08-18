@@ -4,7 +4,7 @@ import { getProjects } from "@/lib/projects-db";
 import { getSiteContent } from "@/lib/site-content";
 import { ProjectsGrid } from "./projects-grid";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 export default async function ProjectsPage() {
 	const [projects, content] = await Promise.all([getProjects(), getSiteContent()]);

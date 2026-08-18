@@ -5,14 +5,15 @@ import { ArrowLeft, ArrowUpRight, Calendar, Layers } from "lucide-react";
 import Header from "@/components/header";
 import { Footer } from "@/components/footer";
 import CTASection from "@/components/cta-section";
-import Cardsection from "@/components/card-section";
+import { ProjectCardTools } from "@/components/project-card-tools";
 import { ProjectFeaturesBento } from "@/components/project-features-bento";
 import { TechShowcase } from "@/components/tech-showcase";
 import { toTechIcons } from "@/lib/tech-icons";
 import { getProjectBySlug, getRelatedProjects } from "@/lib/projects-db";
+import { getSiteContent } from "@/lib/site-content";
 import { ProjectPhotoScroll } from "./project-photo-scroll";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 export default async function ProjectDetailPage({
 	params,
@@ -23,7 +24,10 @@ export default async function ProjectDetailPage({
 	const project = await getProjectBySlug(slug);
 	if (!project) notFound();
 
-	const relatedProjects = await getRelatedProjects(project.type, project.id, 3);
+	const [relatedProjects, content] = await Promise.all([
+		getRelatedProjects(project.type, project.id, 3),
+		getSiteContent(),
+	]);
 
 	const breadcrumbJsonLd = {
 		"@context": "https://schema.org",
@@ -121,14 +125,16 @@ export default async function ProjectDetailPage({
 				</section>
 			)}
 
-			<div className="border-t border-[#ffffff0f] py-8 md:py-12">
-				<Cardsection />
-				{project.features.length > 0 && (
-					<div className="mt-4 md:mt-6">
-						<ProjectFeaturesBento features={project.features} />
-					</div>
-				)}
-			</div>
+			{(project.cardTools.length > 0 || project.features.length > 0) && (
+				<div className="border-t border-[#ffffff0f] py-8 md:py-12">
+					<ProjectCardTools selected={project.cardTools} heading={content.functionsHeading} />
+					{project.features.length > 0 && (
+						<div className="mt-4 md:mt-6">
+							<ProjectFeaturesBento features={project.features} />
+						</div>
+					)}
+				</div>
+			)}
 
 			{relatedProjects.length > 0 && (
 				<section className="py-16 md:py-20 border-t border-[#ffffff0f]">

@@ -2,9 +2,10 @@
 
 import { useActionState, useEffect, useRef, useState } from "react"
 import Image from "next/image"
-import { X } from "lucide-react"
+import { X, ChevronLeft, ChevronRight } from "lucide-react"
 import { PROJECT_TYPES } from "@/lib/projects"
 import { BENTO_FEATURES } from "@/lib/bento-features"
+import { CARD_TOOLS } from "@/lib/card-tools"
 import type { Project } from "@prisma/client"
 
 type ProjectAction = (
@@ -23,6 +24,16 @@ export function ProjectForm({
 }) {
   const [error, formAction, pending] = useActionState(action, undefined)
   const [keepImages, setKeepImages] = useState<string[]>(project?.images ?? [])
+
+  function moveKeepImage(index: number, direction: -1 | 1) {
+    setKeepImages((imgs) => {
+      const target = index + direction
+      if (target < 0 || target >= imgs.length) return imgs
+      const next = [...imgs]
+      ;[next[index], next[target]] = [next[target], next[index]]
+      return next
+    })
+  }
 
   return (
     <form
@@ -150,7 +161,7 @@ export function ProjectForm({
       <div className="flex flex-col gap-2">
         <span className="text-sm font-medium text-gray-200">Funcionalidades exibidas na página do projeto</span>
         <p className="text-xs text-gray-500">
-          Só as funcionalidades marcadas aparecem na seção de destaques do projeto.
+          Só as funcionalidades marcadas aparecem na seção de destaques (os cards grandes) do projeto.
         </p>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
           {BENTO_FEATURES.map((feature) => (
@@ -172,17 +183,55 @@ export function ProjectForm({
       </div>
 
       <div className="flex flex-col gap-2">
+        <span className="text-sm font-medium text-gray-200">
+          Opções exibidas em &quot;Todas as funções que você precisa, em um só lugar&quot;
+        </span>
+        <p className="text-xs text-gray-500">
+          Só as marcadas aparecem nas pilulas Build/Deploy abaixo desse título, na página do projeto.
+        </p>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          {CARD_TOOLS.map((tool) => (
+            <label
+              key={tool.key}
+              className="flex items-center gap-2 rounded-lg border border-white/10 bg-[#0f0f11] px-3 py-2.5 text-sm text-gray-200"
+            >
+              <input
+                type="checkbox"
+                name="cardTools"
+                value={tool.key}
+                defaultChecked={project?.cardTools.includes(tool.key)}
+                className="h-4 w-4 rounded border-white/10 bg-[#0f0f11] accent-rose-500"
+              />
+              {tool.label}
+              <span className="ml-auto text-[10px] uppercase text-gray-500">{tool.group}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-2">
         <span className="text-sm font-medium text-gray-200">Fotos do projeto</span>
+        <p className="text-xs text-gray-500">
+          Use as setas para reordenar. A primeira foto (marcada como &quot;Capa&quot;) é usada como thumbnail do
+          projeto.
+        </p>
 
         {keepImages.length > 0 && (
           <div className="flex flex-wrap gap-3">
-            {keepImages.map((url) => (
+            {keepImages.map((url, index) => (
               <div
                 key={url}
                 className="group relative h-24 w-24 overflow-hidden rounded-xl border border-[#ffffff1f] bg-white/5"
               >
                 <Image src={url} alt="" fill className="object-cover" />
                 <input type="hidden" name="keepImages" value={url} />
+
+                {index === 0 && (
+                  <span className="absolute left-1 top-1 rounded-full bg-rose-500 px-2 py-0.5 text-[10px] font-semibold text-white">
+                    Capa
+                  </span>
+                )}
+
                 <button
                   type="button"
                   onClick={() => setKeepImages((imgs) => imgs.filter((u) => u !== url))}
@@ -191,16 +240,37 @@ export function ProjectForm({
                 >
                   <X className="h-3.5 w-3.5" />
                 </button>
+
+                <div className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-black/60 px-1 py-1 opacity-0 transition-opacity group-hover:opacity-100">
+                  <button
+                    type="button"
+                    onClick={() => moveKeepImage(index, -1)}
+                    disabled={index === 0}
+                    aria-label="Mover para a esquerda"
+                    className="flex h-6 w-6 items-center justify-center rounded-full text-white disabled:opacity-30"
+                  >
+                    <ChevronLeft className="h-3.5 w-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => moveKeepImage(index, 1)}
+                    disabled={index === keepImages.length - 1}
+                    aria-label="Mover para a direita"
+                    className="flex h-6 w-6 items-center justify-center rounded-full text-white disabled:opacity-30"
+                  >
+                    <ChevronRight className="h-3.5 w-3.5" />
+                  </button>
+                </div>
               </div>
             ))}
           </div>
         )}
 
-        <NewImagesPicker />
+        <NewImagesPicker showCoverBadge={keepImages.length === 0} />
         <p className="text-xs text-gray-500">
           {project
-            ? "Adicione novas fotos ou remova as existentes acima."
-            : "Selecione uma ou mais fotos. A primeira vira a capa."}{" "}
+            ? "Novas fotos entram no fim da lista — se quiser usar uma delas como capa, salve e reordene em seguida."
+            : "Selecione uma ou mais fotos e reordene abaixo. A primeira vira a capa."}{" "}
           Máximo 5MB por imagem.
         </p>
       </div>
@@ -218,7 +288,7 @@ export function ProjectForm({
   )
 }
 
-function NewImagesPicker() {
+function NewImagesPicker({ showCoverBadge }: { showCoverBadge: boolean }) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [items, setItems] = useState<{ file: File; url: string }[]>([])
 
@@ -236,6 +306,14 @@ function NewImagesPicker() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  function moveItem(index: number, direction: -1 | 1) {
+    const target = index + direction
+    if (target < 0 || target >= items.length) return
+    const next = [...items]
+    ;[next[index], next[target]] = [next[target], next[index]]
+    syncInput(next)
+  }
+
   return (
     <div className="flex flex-col gap-2">
       {items.length > 0 && (
@@ -246,6 +324,13 @@ function NewImagesPicker() {
               className="group relative h-24 w-24 overflow-hidden rounded-xl border border-rose-500/40 bg-white/5"
             >
               <Image src={item.url} alt="" fill className="object-cover" />
+
+              {showCoverBadge && i === 0 && (
+                <span className="absolute left-1 top-1 rounded-full bg-rose-500 px-2 py-0.5 text-[10px] font-semibold text-white">
+                  Capa
+                </span>
+              )}
+
               <button
                 type="button"
                 onClick={() => {
@@ -257,6 +342,27 @@ function NewImagesPicker() {
               >
                 <X className="h-3.5 w-3.5" />
               </button>
+
+              <div className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-black/60 px-1 py-1 opacity-0 transition-opacity group-hover:opacity-100">
+                <button
+                  type="button"
+                  onClick={() => moveItem(i, -1)}
+                  disabled={i === 0}
+                  aria-label="Mover para a esquerda"
+                  className="flex h-6 w-6 items-center justify-center rounded-full text-white disabled:opacity-30"
+                >
+                  <ChevronLeft className="h-3.5 w-3.5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => moveItem(i, 1)}
+                  disabled={i === items.length - 1}
+                  aria-label="Mover para a direita"
+                  className="flex h-6 w-6 items-center justify-center rounded-full text-white disabled:opacity-30"
+                >
+                  <ChevronRight className="h-3.5 w-3.5" />
+                </button>
+              </div>
             </div>
           ))}
         </div>
