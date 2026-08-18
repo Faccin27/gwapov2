@@ -4,10 +4,13 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, Calendar, Layers } from "lucide-react";
 import Header from "@/components/header";
 import { Footer } from "@/components/footer";
-import MetricsSection from "@/components/metrics-section";
 import CTASection from "@/components/cta-section";
+import Cardsection from "@/components/card-section";
+import { ProjectFeaturesBento } from "@/components/project-features-bento";
+import { TechShowcase } from "@/components/tech-showcase";
+import { toTechIcons } from "@/lib/tech-icons";
 import { getProjectBySlug, getRelatedProjects } from "@/lib/projects-db";
-import { ProjectGallery } from "./project-gallery";
+import { ProjectPhotoScroll } from "./project-photo-scroll";
 
 export const dynamic = "force-dynamic";
 
@@ -94,11 +97,11 @@ export default async function ProjectDetailPage({
 				</div>
 			</section>
 
-			<section className="py-16 md:py-20">
-				<div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
-					{project.images.length > 1 ? (
-						<ProjectGallery images={project.images} title={project.title} />
-					) : (
+			{project.images.length > 1 ? (
+				<ProjectPhotoScroll images={project.images} title={project.title} />
+			) : (
+				<section className="py-16 md:py-20">
+					<div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
 						<div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-white/10">
 							<Image
 								src={project.images[0] || "/placeholder.svg"}
@@ -108,9 +111,24 @@ export default async function ProjectDetailPage({
 								className="object-cover"
 							/>
 						</div>
-					)}
-				</div>
-			</section>
+					</div>
+				</section>
+			)}
+
+			{project.technologies.length > 0 && (
+				<section className="py-16 md:py-20 border-t border-[#ffffff0f]">
+					<TechShowcase label="Tecnologias utilizadas neste projeto" items={toTechIcons(project.technologies)} />
+				</section>
+			)}
+
+			<div className="border-t border-[#ffffff0f] py-8 md:py-12">
+				<Cardsection />
+				{project.features.length > 0 && (
+					<div className="mt-4 md:mt-6">
+						<ProjectFeaturesBento features={project.features} />
+					</div>
+				)}
+			</div>
 
 			{relatedProjects.length > 0 && (
 				<section className="py-16 md:py-20 border-t border-[#ffffff0f]">
@@ -146,8 +164,6 @@ export default async function ProjectDetailPage({
 					</div>
 				</section>
 			)}
-
-			<MetricsSection />
 
 			<CTASection
 				titleLine1="Gostou desse projeto?"

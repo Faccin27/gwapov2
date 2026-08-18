@@ -4,6 +4,7 @@ import { useActionState, useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { X } from "lucide-react"
 import { PROJECT_TYPES } from "@/lib/projects"
+import { BENTO_FEATURES } from "@/lib/bento-features"
 import type { Project } from "@prisma/client"
 
 type ProjectAction = (
@@ -145,6 +146,30 @@ export function ProjectForm({
         />
         Projeto à venda
       </label>
+
+      <div className="flex flex-col gap-2">
+        <span className="text-sm font-medium text-gray-200">Funcionalidades exibidas na página do projeto</span>
+        <p className="text-xs text-gray-500">
+          Só as funcionalidades marcadas aparecem na seção de destaques do projeto.
+        </p>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          {BENTO_FEATURES.map((feature) => (
+            <label
+              key={feature.key}
+              className="flex items-center gap-2 rounded-lg border border-white/10 bg-[#0f0f11] px-3 py-2.5 text-sm text-gray-200"
+            >
+              <input
+                type="checkbox"
+                name="features"
+                value={feature.key}
+                defaultChecked={project?.features.includes(feature.key)}
+                className="h-4 w-4 rounded border-white/10 bg-[#0f0f11] accent-rose-500"
+              />
+              {feature.title}
+            </label>
+          ))}
+        </div>
+      </div>
 
       <div className="flex flex-col gap-2">
         <span className="text-sm font-medium text-gray-200">Fotos do projeto</span>

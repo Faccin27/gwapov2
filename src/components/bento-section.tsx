@@ -4,40 +4,21 @@ import DatabaseBentoContent from "./bento/database-bento-content"
 import StorageBentoContent from "./bento/storage-bento-content"
 import FunctionsBentoContent from "./bento/functions-bento-content"
 import ChatBentoContent from "./bento/chat-bento-content"
+import { BENTO_FEATURES } from "@/lib/bento-features"
+
+const componentByKey = {
+  auth: AuthBentoContent,
+  storage: StorageBentoContent,
+  functions: FunctionsBentoContent,
+  messaging: ChatBentoContent,
+  databases: DatabaseBentoContent,
+} as const
 
 export function BentoSection() {
-  const cards = [
-    {
-      title: "Auth",
-      description: "Gerencie o acesso de usuários com segurança e facilidade.",
-      Component: AuthBentoContent,
-      icon: "/auth.png",
-    },
-    {
-      title: "Storage",
-      description: "Armazene e gerencie seus arquivos de forma segura e escalável.",
-      Component: StorageBentoContent,
-      icon: "/storage.png",
-    },
-    {
-      title: "Functions",
-      description: "Execute lógica de backend sem gerenciar servidores.",
-      Component: FunctionsBentoContent,
-      icon: "/functions.png",
-    },
-    {
-      title: "Messaging",
-      description: "Conecte-se facilmente com pessoas ou com nossa IA nos chats.",
-      Component: ChatBentoContent,
-      icon: "/messaging.png",
-    },
-    {
-      title: "Databases",
-      description: "Conecte e gerencie seus bancos de dados sem esforço.",
-      Component: DatabaseBentoContent,
-      icon: "/databases.png",
-    },
-  ]
+  const cards = BENTO_FEATURES.map(({ key, ...feature }) => ({
+    ...feature,
+    Component: componentByKey[key as keyof typeof componentByKey],
+  }))
 
   return (
     <section className="w-full max-w-7xl mx-auto px-5 flex flex-col justify-center items-center overflow-visible bg-transparent">

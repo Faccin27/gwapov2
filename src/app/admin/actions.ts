@@ -6,6 +6,7 @@ import { put, del } from "@vercel/blob"
 import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
 import { slugify, isValidProjectType } from "@/lib/projects"
+import { isValidBentoFeature } from "@/lib/bento-features"
 
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024
 
@@ -66,6 +67,7 @@ function readCommonFields(formData: FormData) {
   const url = String(formData.get("url") ?? "").trim()
   const yearRaw = String(formData.get("year") ?? "")
   const forSale = formData.get("forSale") === "on"
+  const features = formData.getAll("features").map(String).filter(isValidBentoFeature)
 
   return {
     title,
@@ -76,6 +78,7 @@ function readCommonFields(formData: FormData) {
     url: url || null,
     year: Number.parseInt(yearRaw, 10),
     forSale,
+    features,
   }
 }
 
@@ -85,7 +88,7 @@ export async function createProject(
 ): Promise<string | undefined> {
   await requireAdmin()
 
-  const { title, type, description, story, technologies, url, year, forSale } = readCommonFields(formData)
+  const { title, type, description, story, technologies, url, year, forSale, features } = readCommonFields(formData)
 
   if (!title || !description) return "Título e descrição são obrigatórios."
   if (!isValidProjectType(type)) return "Categoria inválida."
@@ -111,7 +114,7 @@ export async function createProject(
   }
 
   await prisma.project.create({
-    data: { slug, title, type, description, story, images, technologies, url, year, forSale },
+    data: { slug, title, type, description, story, images, technologies, url, year, forSale, features },
   })
 
   revalidatePath("/admin")
@@ -127,7 +130,7 @@ export async function updateProject(
 ): Promise<string | undefined> {
   await requireAdmin()
 
-  const { title, type, description, story, technologies, url, year, forSale } = readCommonFields(formData)
+  const { title, type, description, story, technologies, url, year, forSale, features } = readCommonFields(formData)
 
   if (!title || !description) return "Título e descrição são obrigatórios."
   if (!isValidProjectType(type)) return "Categoria inválida."
@@ -158,7 +161,7 @@ export async function updateProject(
 
   await prisma.project.update({
     where: { id },
-    data: { title, type, description, story, images: finalImages, technologies, url, year, forSale },
+    data: { title, type, description, story, images: finalImages, technologies, url, year, forSale, features },
   })
 
   await deleteBlobImages(removedImages)

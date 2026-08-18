@@ -44,6 +44,7 @@ model Project {
   images       String[]
   technologies String[]
   url          String?
+  features     String[] @default([])
   forSale      Boolean  @default(false)
   year         Int
   order        Int      @default(0)
