@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Plus, FolderKanban, Tag, Star } from "lucide-react";
+import { Plus, FolderKanban, Tag, Star, Pencil } from "lucide-react";
 import { getProjects } from "@/lib/projects-db";
 import { DeleteButton } from "./delete-button";
 
@@ -24,7 +24,7 @@ export default async function AdminDashboardPage() {
 				</div>
 				<Link
 					href="/admin/projetos/novo"
-					className="inline-flex items-center gap-2 rounded-full bg-[#fd356e] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:brightness-110"
+					className="neon-glow inline-flex items-center gap-2 rounded-full bg-[#fd356e] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:brightness-110"
 				>
 					<Plus className="h-4 w-4" />
 					Novo projeto
@@ -35,7 +35,7 @@ export default async function AdminDashboardPage() {
 				{stats.map((stat) => (
 					<div
 						key={stat.label}
-						className="flex items-center gap-4 rounded-2xl border border-[#ffffff0f] bg-[#1f1f23] p-5"
+						className="flex items-center gap-4 rounded-2xl border border-white/5 bg-gradient-to-b from-white/[0.04] to-transparent p-5"
 					>
 						<div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-rose-500/15 text-rose-400">
 							<stat.icon className="h-5 w-5" />
@@ -48,35 +48,50 @@ export default async function AdminDashboardPage() {
 				))}
 			</div>
 
-			<div className="mt-8 flex flex-col gap-3">
+			<div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
 				{projects.map((p) => (
 					<div
 						key={p.id}
-						className="flex items-center gap-4 rounded-2xl border border-[#ffffff0f] bg-[#1f1f23] p-4 shadow-sm"
+						className="group overflow-hidden rounded-2xl border border-white/5 bg-white/[0.02] transition-colors hover:border-white/10"
 					>
-						<div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-white/5">
-							<Image src={p.images[0] || "/placeholder.svg"} alt={p.title} fill className="object-cover" />
+						<div className="relative aspect-video overflow-hidden bg-white/5">
+							<Image
+								src={p.images[0] || "/placeholder.svg"}
+								alt={p.title}
+								fill
+								className="object-cover transition-transform duration-500 group-hover:scale-105"
+							/>
+							{p.forSale && (
+								<span className="absolute right-3 top-3 rounded-full bg-red-500 px-2.5 py-1 text-[11px] font-semibold text-white">
+									À Venda
+								</span>
+							)}
+							<div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+								<p className="truncate text-base font-semibold text-white">{p.title}</p>
+								<p className="truncate text-xs text-gray-300">
+									{p.type} · {p.year}
+								</p>
+							</div>
 						</div>
-						<div className="min-w-0 flex-1">
-							<p className="truncate text-base font-semibold text-gray-100">{p.title}</p>
-							<p className="truncate text-sm text-gray-400">
-								/projetos/{p.slug} · {p.type}
-							</p>
-						</div>
-						<div className="flex shrink-0 items-center gap-2">
-							<Link
-								href={`/admin/projetos/${p.id}`}
-								className="rounded-full border border-[#ffffff1f] px-4 py-2 text-sm font-medium text-gray-200 transition-colors hover:bg-white/5"
-							>
-								Editar
-							</Link>
-							<DeleteButton id={p.id} title={p.title} />
+
+						<div className="flex items-center justify-between gap-2 p-3">
+							<span className="truncate text-xs text-gray-500">/projetos/{p.slug}</span>
+							<div className="flex shrink-0 items-center gap-1.5">
+								<Link
+									href={`/admin/projetos/${p.id}`}
+									aria-label="Editar"
+									className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
+								>
+									<Pencil className="h-4 w-4" />
+								</Link>
+								<DeleteButton id={p.id} title={p.title} />
+							</div>
 						</div>
 					</div>
 				))}
 
 				{projects.length === 0 && (
-					<p className="rounded-2xl border border-dashed border-[#ffffff1f] p-8 text-center text-sm text-gray-400">
+					<p className="col-span-full rounded-2xl border border-dashed border-white/10 p-8 text-center text-sm text-gray-400">
 						Nenhum projeto cadastrado ainda.
 					</p>
 				)}

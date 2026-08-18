@@ -7,8 +7,9 @@ export default function AdminLoginPage() {
   const [error, formAction, pending] = useActionState(loginAction, undefined)
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[#19191c] px-5 font-aeonik">
-      <div className="w-full max-w-sm rounded-2xl border border-[#ffffff0f] bg-[#1f1f23] p-8 shadow-sm">
+    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#0f0f11] px-5 font-aeonik">
+      <div className="pointer-events-none absolute -top-40 left-1/2 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-rose-500/10 blur-[120px]" />
+      <div className="relative w-full max-w-sm rounded-2xl border border-white/5 bg-[#1a1a1e] p-8 shadow-2xl shadow-black/40">
         <h1 className="text-xl font-bold text-gray-100">Painel Gwapo</h1>
         <p className="mt-1 text-sm text-gray-400">Entre com sua conta de administrador.</p>
 

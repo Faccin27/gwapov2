@@ -24,7 +24,10 @@ export function ProjectForm({
   const [keepImages, setKeepImages] = useState<string[]>(project?.images ?? [])
 
   return (
-    <form action={formAction} className="mt-8 flex flex-col gap-6">
+    <form
+      action={formAction}
+      className="mt-8 flex flex-col gap-6 rounded-2xl border border-white/5 bg-white/[0.02] p-6"
+    >
       <div className="flex flex-col gap-1.5">
         <label htmlFor="title" className="text-sm font-medium text-gray-200">
           Título
@@ -35,7 +38,7 @@ export function ProjectForm({
           type="text"
           required
           defaultValue={project?.title}
-          className="rounded-lg border border-[#ffffff1f] bg-[#1f1f23] px-3.5 py-2.5 text-sm text-gray-100 focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20"
+          className="rounded-lg border border-white/10 bg-[#0f0f11] px-3.5 py-2.5 text-sm text-gray-100 focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20"
         />
       </div>
 
@@ -49,7 +52,7 @@ export function ProjectForm({
           required
           rows={2}
           defaultValue={project?.description}
-          className="rounded-lg border border-[#ffffff1f] bg-[#1f1f23] px-3.5 py-2.5 text-sm text-gray-100 focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20"
+          className="rounded-lg border border-white/10 bg-[#0f0f11] px-3.5 py-2.5 text-sm text-gray-100 focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20"
         />
       </div>
 
@@ -62,7 +65,7 @@ export function ProjectForm({
           name="story"
           rows={4}
           defaultValue={project?.story ?? ""}
-          className="rounded-lg border border-[#ffffff1f] bg-[#1f1f23] px-3.5 py-2.5 text-sm text-gray-100 focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20"
+          className="rounded-lg border border-white/10 bg-[#0f0f11] px-3.5 py-2.5 text-sm text-gray-100 focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20"
         />
         <p className="text-xs text-gray-500">
           Se deixado em branco, a página do projeto usa a descrição curta.
@@ -79,7 +82,7 @@ export function ProjectForm({
             name="type"
             required
             defaultValue={project?.type ?? PROJECT_TYPES[0]}
-            className="rounded-lg border border-[#ffffff1f] bg-[#1f1f23] px-3.5 py-2.5 text-sm text-gray-100 focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20"
+            className="rounded-lg border border-white/10 bg-[#0f0f11] px-3.5 py-2.5 text-sm text-gray-100 focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20"
           >
             {PROJECT_TYPES.map((t) => (
               <option key={t} value={t}>
@@ -101,7 +104,7 @@ export function ProjectForm({
             min={2000}
             max={2100}
             defaultValue={project?.year ?? new Date().getFullYear()}
-            className="rounded-lg border border-[#ffffff1f] bg-[#1f1f23] px-3.5 py-2.5 text-sm text-gray-100 focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20"
+            className="rounded-lg border border-white/10 bg-[#0f0f11] px-3.5 py-2.5 text-sm text-gray-100 focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20"
           />
         </div>
       </div>
@@ -116,7 +119,7 @@ export function ProjectForm({
           type="url"
           placeholder="https://"
           defaultValue={project?.url ?? ""}
-          className="rounded-lg border border-[#ffffff1f] bg-[#1f1f23] px-3.5 py-2.5 text-sm text-gray-100 focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20"
+          className="rounded-lg border border-white/10 bg-[#0f0f11] px-3.5 py-2.5 text-sm text-gray-100 focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20"
         />
       </div>
 
@@ -129,7 +132,7 @@ export function ProjectForm({
           name="technologies"
           rows={4}
           defaultValue={project?.technologies.join("\n")}
-          className="rounded-lg border border-[#ffffff1f] bg-[#1f1f23] px-3.5 py-2.5 text-sm text-gray-100 focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20"
+          className="rounded-lg border border-white/10 bg-[#0f0f11] px-3.5 py-2.5 text-sm text-gray-100 focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20"
         />
       </div>
 
@@ -138,7 +141,7 @@ export function ProjectForm({
           type="checkbox"
           name="forSale"
           defaultChecked={project?.forSale}
-          className="h-4 w-4 rounded border-[#ffffff1f] bg-[#1f1f23] accent-rose-500"
+          className="h-4 w-4 rounded border-white/10 bg-[#0f0f11] accent-rose-500"
         />
         Projeto à venda
       </label>
