@@ -14,6 +14,26 @@ model User {
   createdAt    DateTime @default(now())
 }
 
+model SiteContent {
+  id                      String   @id @default("main")
+  heroBadge               String   @default("Mais de 200 projetos entregues com sucesso")
+  heroTitle               String   @default("Nós criamos sites que geram resultados")
+  heroDescription         String   @default("Desenvolvemos sites modernos, rápidos e responsivos, pensados para impulsionar sua presença online e atrair mais clientes para o seu negócio.")
+  heroPrimaryButtonText   String   @default("Vamos começar")
+  heroPrimaryButtonLink   String   @default("https://wa.me/5549999215720")
+  heroSecondaryButtonText String   @default("Ver Portfólio")
+  projectsBadge           String   @default("Nosso trabalho")
+  projectsTitle           String   @default("Todos os Projetos")
+  projectsDescription     String   @default("Conheça os projetos que já desenvolvemos para nossos clientes.")
+  footerEmail             String   @default("contact@gwapo.com.br")
+  footerPhone             String   @default("(49) 99921-5720")
+  footerTeamText          String   @default("Guilherme && Willian")
+  footerSocialText        String   @default("Siga-nos nas redes sociais para acompanhar bastidores e novidades.")
+  footerInstagramUrl      String   @default("https://instagram.com/gui.faccin")
+  footerCopyright         String   @default("© 2026 Gwapo. Todos os direitos reservados.")
+  updatedAt               DateTime @updatedAt
+}
+
 model Project {
   id           String   @id @default(cuid())
   slug         String   @unique

@@ -176,7 +176,23 @@ function ToolItem({ tool, index }: ToolItemProps) {
 	)
 }
 
-export default function Hero() {
+interface HeroProps {
+	badge?: string
+	title?: string
+	description?: string
+	primaryButtonText?: string
+	primaryButtonLink?: string
+	secondaryButtonText?: string
+}
+
+export default function Hero({
+	badge = "Mais de 200 projetos entregues com sucesso",
+	title = "Nós criamos sites que geram resultados",
+	description = "Desenvolvemos sites modernos, rápidos e responsivos, pensados para impulsionar sua presença online e atrair mais clientes para o seu negócio.",
+	primaryButtonText = "Vamos começar",
+	primaryButtonLink = "https://wa.me/5549999215720",
+	secondaryButtonText = "Ver Portfólio",
+}: HeroProps = {}) {
 	const [currentGroup, setCurrentGroup] = useState(0)
 	const [isTransitioning, setIsTransitioning] = useState(false)
 
@@ -250,33 +266,32 @@ export default function Hero() {
 				<div className="flex flex-col md:flex-row md:items-start md:gap-x-8 lg:gap-x-12">
 					<div className="flex-none space-y-4 sm:space-y-5 max-w-full md:max-w-[60%] lg:max-w-[50%] xl:max-w-[50%]">
 						<h2 ref={titleRef} className="text-sm text-rose-400 font-medium opacity-0 translate-y-[50px]">
-							Mais de 200 projetos entregues com sucesso
+							{badge}
 						</h2>
 						<h1
 							ref={subtitleRef}
 							className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl text-gray-100 font-extrabold max-w-11/12 leading-tight opacity-0 translate-y-[30px]"
 						>
-							Nós criamos sites que geram resultados
+							{title}
 							<span className="text-rose-500">_</span>
 						</h1>
 						<p ref={descriptionRef} className="text-gray-300 text-base md:text-base lg:text-lg leading-relaxed opacity-0 translate-y-[20px]">
-							Desenvolvemos sites modernos, rápidos e responsivos, pensados para impulsionar sua presença online e
-							atrair mais clientes para o seu negócio.
+							{description}
 						</p>
 						<div
 							ref={buttonsRef}
 							className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-x-3 relative z-20 opacity-0 translate-y-[20px]"
 						>
 							<a
-								href="https://wa.me/5549999215720"
+								href={primaryButtonLink}
 								target="_blank"
 								rel="noopener noreferrer"
 								className="neon-glow block py-2 px-5 bg-[#fd356e] text-white rounded-lg transition-all duration-300 hover:brightness-110"
 							>
-								Vamos começar
+								{primaryButtonText}
 							</a>
 
-							<Link href="/projetos" className="btn-inner-exact flex items-center justify-center gap-x-2 py-2 px-5 lg:px-6 text-gray-200 font-medium border border-[#fd356e] rounded-lg text-sm lg:text-base transition-colors duration-150 relative z-30" > Ver Portfólio <ArrowRight className="w-4 h-4 lg:w-5 lg:h-5" /> </Link>
+							<Link href="/projetos" className="btn-inner-exact flex items-center justify-center gap-x-2 py-2 px-5 lg:px-6 text-gray-200 font-medium border border-[#fd356e] rounded-lg text-sm lg:text-base transition-colors duration-150 relative z-30" > {secondaryButtonText} <ArrowRight className="w-4 h-4 lg:w-5 lg:h-5" /> </Link>
 
 						</div>
 					</div>
@@ -288,7 +303,7 @@ export default function Hero() {
 								priority
 								fetchPriority="high"
 								className="object-cover rounded-lg"
-								alt="Team working on a laptop"
+								alt="Equipe Gwapo desenvolvendo um site"
 							/>
 							<div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent via-50% to-[#19191c] rounded-lg" />
 						</div>

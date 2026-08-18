@@ -1,12 +1,13 @@
 import Header from "@/components/header";
 import { Footer } from "@/components/footer";
 import { getProjects } from "@/lib/projects-db";
+import { getSiteContent } from "@/lib/site-content";
 import { ProjectsGrid } from "./projects-grid";
 
 export const dynamic = "force-dynamic";
 
 export default async function ProjectsPage() {
-	const projects = await getProjects();
+	const [projects, content] = await Promise.all([getProjects(), getSiteContent()]);
 
 	return (
 		<div className="min-h-screen bg-[#19191c] text-gray-200">
@@ -17,9 +18,14 @@ export default async function ProjectsPage() {
 			<div className="w-[300px] h-[400px] absolute bottom-[-40dvh] right-[1%] bg-rose-500/20 blur-[80px] z-0" />
 
 			<div className="max-w-7xl mx-auto px-6 pt-40 md:pt-48 pb-12">
-				<h1 className="text-3xl font-bold text-foreground mb-8">
-					Todos os Projetos<span className="text-rose-500">_</span>
-				</h1>
+				<div className="mb-10 max-w-2xl">
+					<span className="text-sm text-rose-400 font-medium">{content.projectsBadge}</span>
+					<h1 className="mt-2 text-3xl md:text-4xl font-extrabold text-foreground leading-tight">
+						{content.projectsTitle}
+						<span className="text-rose-500">_</span>
+					</h1>
+					<p className="mt-4 text-gray-300 leading-relaxed">{content.projectsDescription}</p>
+				</div>
 
 				<ProjectsGrid projects={projects} />
 			</div>

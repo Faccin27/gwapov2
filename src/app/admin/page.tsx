@@ -1,18 +1,26 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Plus } from "lucide-react";
+import { Plus, FolderKanban, Tag, Star } from "lucide-react";
 import { getProjects } from "@/lib/projects-db";
 import { DeleteButton } from "./delete-button";
 
 export default async function AdminDashboardPage() {
 	const projects = await getProjects();
+	const forSaleCount = projects.filter((p) => p.forSale).length;
+	const typeCount = new Set(projects.map((p) => p.type)).size;
+
+	const stats = [
+		{ label: "Projetos cadastrados", value: projects.length, icon: FolderKanban },
+		{ label: "Categorias em uso", value: typeCount, icon: Tag },
+		{ label: "À venda", value: forSaleCount, icon: Star },
+	];
 
 	return (
 		<div>
-			<div className="flex items-center justify-between gap-4">
+			<div className="flex flex-wrap items-center justify-between gap-4">
 				<div>
 					<h1 className="text-2xl font-bold text-gray-100">Projetos</h1>
-					<p className="mt-1 text-sm text-gray-400">{projects.length} projetos cadastrados</p>
+					<p className="mt-1 text-sm text-gray-400">Gerencie os projetos exibidos em /projetos</p>
 				</div>
 				<Link
 					href="/admin/projetos/novo"
@@ -21,6 +29,23 @@ export default async function AdminDashboardPage() {
 					<Plus className="h-4 w-4" />
 					Novo projeto
 				</Link>
+			</div>
+
+			<div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+				{stats.map((stat) => (
+					<div
+						key={stat.label}
+						className="flex items-center gap-4 rounded-2xl border border-[#ffffff0f] bg-[#1f1f23] p-5"
+					>
+						<div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-rose-500/15 text-rose-400">
+							<stat.icon className="h-5 w-5" />
+						</div>
+						<div>
+							<p className="text-2xl font-bold text-gray-100">{stat.value}</p>
+							<p className="text-sm text-gray-400">{stat.label}</p>
+						</div>
+					</div>
+				))}
 			</div>
 
 			<div className="mt-8 flex flex-col gap-3">

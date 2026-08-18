@@ -1,7 +1,10 @@
 import Link from "next/link"
 import { Mail, Phone, Instagram, Users } from "lucide-react"
+import { getSiteContent } from "@/lib/site-content"
 
-export function Footer() {
+export async function Footer() {
+  const content = await getSiteContent()
+
   const navLinks = [
     { href: "/", label: "Início" },
     { href: "/servicos", label: "Serviços" },
@@ -14,7 +17,7 @@ export function Footer() {
   const socialLinks = [
     {
       icon: Instagram,
-      href: "https://instagram.com/gui.faccin",
+      href: content.footerInstagramUrl,
       label: "Instagram",
     },
   ]
@@ -28,17 +31,15 @@ export function Footer() {
             <div className="space-y-4">
               <div className="flex items-center justify-center md:justify-start gap-3 text-[#a0a0a0] hover:text-white transition-colors">
                 <Mail className="w-5 h-5 text-rose-400 flex-shrink-0" />
-                <span className="text-sm md:text-base">contact@gwapo.com.br</span>
+                <span className="text-sm md:text-base">{content.footerEmail}</span>
               </div>
               <div className="flex items-center justify-center md:justify-start gap-3 text-[#a0a0a0] hover:text-white transition-colors">
                 <Phone className="w-5 h-5 text-rose-400 flex-shrink-0" />
-                <span className="text-sm md:text-base">(49) 99921-5720</span>
+                <span className="text-sm md:text-base">{content.footerPhone}</span>
               </div>
               <div className="flex items-center justify-center md:justify-start gap-3 text-[#a0a0a0] hover:text-white transition-colors">
                 <Users className="w-5 h-5 text-rose-400 flex-shrink-0" />
-                <span className="text-sm md:text-base">
-                  Guilherme <span className="text-rose-400">&&</span> Willian
-                </span>
+                <span className="text-sm md:text-base">{content.footerTeamText}</span>
               </div>
             </div>
           </div>
@@ -73,9 +74,7 @@ export function Footer() {
               ))}
             </div>
             <div className="space-y-3">
-              <p className="text-[#a0a0a0] text-sm leading-relaxed">
-                Siga-nos nas redes sociais para ficar por dentro das melhores oportunidades imobiliárias.
-              </p>
+              <p className="text-[#a0a0a0] text-sm leading-relaxed">{content.footerSocialText}</p>
             </div>
           </div>
         </div>
@@ -90,9 +89,9 @@ export function Footer() {
         {/* Large Text */}
         <div className="relative z-10 px-6 md:px-12 lg:px-36">
           <div className="text-center">
-            <h2 className="text-[5rem] sm:text-[6rem] md:text-[10rem] lg:text-[14rem] xl:text-[20rem] font-black leading-none tracking-tighter text-white/10 animate-pulse select-none break-all">
+            <p aria-hidden="true" className="text-[5rem] sm:text-[6rem] md:text-[10rem] lg:text-[14rem] xl:text-[20rem] font-black leading-none tracking-tighter text-white/10 animate-pulse select-none break-all">
               GWAPO
-            </h2>
+            </p>
           </div>
         </div>
 
@@ -101,7 +100,7 @@ export function Footer() {
 
       <div className="px-6 md:px-12 lg:px-36 py-6 border-t border-white/10">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="text-[#a0a0a0] text-xs md:text-sm">© 2025 Gwapo. Todos os direitos reservados.</div>
+          <div className="text-[#a0a0a0] text-xs md:text-sm">{content.footerCopyright}</div>
           <div className="text-[#666] text-xs md:text-sm">
             desenvolvido com{" "}
             <Link href="https://nextjs.org" target="_blank" className="text-rose-400 hover:text-rose-400 transition-colors font-medium">

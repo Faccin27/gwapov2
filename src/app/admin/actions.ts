@@ -170,6 +170,49 @@ export async function updateProject(
   redirect("/admin")
 }
 
+export async function updateSiteContent(
+  _prevState: string | undefined,
+  formData: FormData,
+): Promise<string | undefined> {
+  await requireAdmin()
+
+  const field = (name: string) => String(formData.get(name) ?? "").trim()
+
+  const data = {
+    heroBadge: field("heroBadge"),
+    heroTitle: field("heroTitle"),
+    heroDescription: field("heroDescription"),
+    heroPrimaryButtonText: field("heroPrimaryButtonText"),
+    heroPrimaryButtonLink: field("heroPrimaryButtonLink"),
+    heroSecondaryButtonText: field("heroSecondaryButtonText"),
+    projectsBadge: field("projectsBadge"),
+    projectsTitle: field("projectsTitle"),
+    projectsDescription: field("projectsDescription"),
+    footerEmail: field("footerEmail"),
+    footerPhone: field("footerPhone"),
+    footerTeamText: field("footerTeamText"),
+    footerSocialText: field("footerSocialText"),
+    footerInstagramUrl: field("footerInstagramUrl"),
+    footerCopyright: field("footerCopyright"),
+  }
+
+  for (const [key, value] of Object.entries(data)) {
+    if (!value) return `O campo "${key}" não pode ficar vazio.`
+  }
+
+  await prisma.siteContent.upsert({
+    where: { id: "main" },
+    create: { id: "main", ...data },
+    update: data,
+  })
+
+  revalidatePath("/admin/conteudo")
+  revalidatePath("/")
+  revalidatePath("/projetos")
+
+  return "Conteúdo atualizado com sucesso."
+}
+
 export async function deleteProject(id: string): Promise<void> {
   await requireAdmin()
 
