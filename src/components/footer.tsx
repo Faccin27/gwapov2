@@ -1,6 +1,12 @@
 import Link from "next/link"
+import localFont from "next/font/local"
 import { Mail, Phone, Instagram, Users } from "lucide-react"
 import { getSiteContent } from "@/lib/site-content"
+
+const gwapoDisplayFont = localFont({
+  src: "../../public/fonts/GWAPO-THEMIRU-Smooth.ttf",
+  display: "swap",
+})
 
 export async function Footer() {
   const content = await getSiteContent()
@@ -89,25 +95,16 @@ export async function Footer() {
         {/* Large Text */}
         <div className="relative z-10 px-6 md:px-12 lg:px-36">
           <div className="text-center">
-            <p aria-hidden="true" className="text-[5rem] sm:text-[6rem] md:text-[10rem] lg:text-[14rem] xl:text-[20rem] font-black leading-none tracking-tighter text-white/10 animate-pulse select-none break-all">
+            <p
+              aria-hidden="true"
+              className={`${gwapoDisplayFont.className} text-[5rem] sm:text-[6rem] md:text-[10rem] lg:text-[14rem] xl:text-[20rem] leading-none tracking-tighter text-white/10 animate-pulse select-none break-all`}
+            >
               GWAPO
             </p>
           </div>
         </div>
 
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent pointer-events-none" />
-      </div>
-
-      <div className="px-6 md:px-12 lg:px-36 py-6 border-t border-white/10">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="text-[#a0a0a0] text-xs md:text-sm">{content.footerCopyright}</div>
-          <div className="text-[#666] text-xs md:text-sm">
-            desenvolvido com{" "}
-            <Link href="https://nextjs.org" target="_blank" className="text-rose-400 hover:text-rose-400 transition-colors font-medium">
-              Next.js
-            </Link>
-          </div>
-        </div>
       </div>
     </footer>
   )
