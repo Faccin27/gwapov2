@@ -42,13 +42,19 @@ export const DEFAULT_SITE_CONTENT: Omit<SiteContent, "id" | "updatedAt"> = {
   contactQuestions: DEFAULT_CONTACT_QUESTIONS as unknown as Prisma.JsonValue,
 }
 
-export const getSiteContent = cache(async (): Promise<SiteContent> => {
-  const content = await prisma.siteContent.findUnique({ where: { id: "main" } })
-  if (content) return content
+const FALLBACK_SITE_CONTENT: SiteContent = {
+  id: "main",
+  updatedAt: new Date(),
+  ...DEFAULT_SITE_CONTENT,
+}
 
-  return {
-    id: "main",
-    updatedAt: new Date(),
-    ...DEFAULT_SITE_CONTENT,
+export const getSiteContent = cache(async (): Promise<SiteContent> => {
+  try {
+    const content = await prisma.siteContent.findUnique({ where: { id: "main" } })
+    if (content) return content
+  } catch (error) {
+    console.error("getSiteContent: db unreachable, using fallback", error)
   }
+
+  return FALLBACK_SITE_CONTENT
 })
