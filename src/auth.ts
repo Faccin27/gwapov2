@@ -2,13 +2,10 @@ import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import bcrypt from "bcryptjs"
 import { prisma } from "@/lib/prisma"
+import authConfig from "@/auth.config"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  trustHost: true,
-  session: { strategy: "jwt" },
-  pages: {
-    signIn: "/admin/login",
-  },
+  ...authConfig,
   providers: [
     Credentials({
       credentials: {
@@ -30,13 +27,4 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
-  callbacks: {
-    authorized: ({ auth, request }) => {
-      const isAdminRoute = request.nextUrl.pathname.startsWith("/admin")
-      const isLoginRoute = request.nextUrl.pathname === "/admin/login"
-      if (isLoginRoute) return true
-      if (isAdminRoute) return !!auth?.user
-      return true
-    },
-  },
 })
